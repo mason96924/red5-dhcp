@@ -6,6 +6,9 @@ __pycache__/
 # Extracted source material (regenerate from the supplied archives)
 _source/
 
+# OCR working dir (tessdata binaries + generated text)
+_ocr/
+
 # Large provided source documents — kept locally, NOT tracked in git
 *.zip
 *.pdf
