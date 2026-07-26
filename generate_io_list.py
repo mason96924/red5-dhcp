@@ -157,9 +157,21 @@ FANS = [
     ("EF-98", 27, False), ("RF-7", 3, False), ("RF-8", 4, False), ("RF-9", 26, False),
 ]
 
-# FCU zones (36/37F 4-pipe) -- quantity INFERRED, confirm against as-built
-FCU = [(f"FCU-36-{i}", "36F guest/office zone", "LCP-PH") for i in range(1, 5)] + \
-      [(f"FCU-37-{i}", "37F Club/guest zone", "LCP-PH") for i in range(1, 5)]
+# FCU BMS zone-GROUPS (guest rooms 4-pipe on DHC water), confirmed from the
+# Azbil graphic: 5~20F FCU (N/S/SE/SW) low-rise + 20~35F FCU high-rise, each
+# batch-monitored (冷水BV/温水BV一括故障). Per-room FCUs are locally controlled;
+# the BMS supervises them by riser/orientation group.
+FCU_GROUPS = [
+    ("FCU-L-N",  "Low-rise guest rooms 5-20F (N)",  "LCP-4F"),
+    ("FCU-L-S",  "Low-rise guest rooms 5-20F (S)",  "LCP-4F"),
+    ("FCU-L-SE", "Low-rise guest rooms 5-20F (SE)", "LCP-4F"),
+    ("FCU-L-SW", "Low-rise guest rooms 5-20F (SW)", "LCP-4F"),
+    ("FCU-H-N",  "High-rise guest rooms 20-35F (N)",  "LCP-PH"),
+    ("FCU-H-S",  "High-rise guest rooms 20-35F (S)",  "LCP-PH"),
+    ("FCU-H-SE", "High-rise guest rooms 20-35F (SE)", "LCP-PH"),
+    ("FCU-H-SW", "High-rise guest rooms 20-35F (SW)", "LCP-PH"),
+    ("FCU-3637", "36/37F FCU (4-pipe + free cooling)", "LCP-PH"),
+]
 
 # --------------------------------------------------------------------------
 # Point templates
@@ -169,7 +181,8 @@ def chiller_points(dev, area):
     add(f"{dev}.RUN", "Heat source", dev, "Water-cooled chiller", area, "Run status", BI, "status", alarm="", trend="Y")
     add(f"{dev}.TRIP", "Heat source", dev, "Water-cooled chiller", area, "Common fault / trip", BI, "status", alarm="Y")
     add(f"{dev}.LR", "Heat source", dev, "Water-cooled chiller", area, "Local/Remote status", BI, "status")
-    add(f"{dev}.SS", "Heat source", dev, "Water-cooled chiller", area, "Start/Stop command", BO, "cmd", sp="Y", notes="Lead/lag staged")
+    add(f"{dev}.SS", "Heat source", dev, "Water-cooled chiller", area, "Start/Stop command", BO, "cmd", sp="Y",
+        notes="BACKUP to DHC chilled water; lead/lag staged; source seq 順序切替")
     add(f"{dev}.DMD", "Heat source", dev, "Water-cooled chiller", area, "Capacity/demand limit", AO, "pct", sp="Y", notes="Demand-limit / soft-load")
     add(f"{dev}.CHWST", "Heat source", dev, "Water-cooled chiller", area, "CHW supply (leaving) temp", AI, "temp", alarm="Y", trend="Y", notes="Design 7°C")
     add(f"{dev}.CHWRT", "Heat source", dev, "Water-cooled chiller", area, "CHW return (entering) temp", AI, "temp", trend="Y", notes="Design 12°C")
@@ -204,6 +217,20 @@ def tower_points(dev, area):
     add(f"{dev}.LVL", "Heat source", dev, "Cooling tower cell", area, "Basin water level", AI, "level", alarm="Y")
     add(f"{dev}.MU", "Heat source", dev, "Cooling tower cell", area, "Make-up water valve", BO, "cmd")
     add(f"{dev}.BLD", "Heat source", dev, "Cooling tower cell", area, "Bleed/blowdown valve", BO, "cmd")
+
+def dhc_chw_points(dev, area, tier):
+    """DHC chilled-water intake (冷水受入設備) -> HEX-1 primary. Confirmed from
+    the Azbil BMS graphic (DHC冷水受入ヘッダ / 返送ヘッダ / DHCプラント)."""
+    PANEL_HINT[dev] = "LCP-PH" if tier == "high" else "LCP-B2"
+    add(f"{dev}.ST", "DHC interface", dev, "DHC chilled-water intake", area, "Intake (supply header) temp", AI, "temp", alarm="Y", trend="Y", notes="DHC冷水受入ヘッダ ~7°C")
+    add(f"{dev}.RT", "DHC interface", dev, "DHC chilled-water intake", area, "Return header temp", AI, "temp", trend="Y", notes="DHC冷水返送ヘッダ")
+    add(f"{dev}.FLW", "DHC interface", dev, "DHC chilled-water intake", area, "Intake flow", AI, "flow", trend="Y")
+    add(f"{dev}.CV", "DHC interface", dev, "DHC chilled-water intake", area, "Intake control valve", AO, "pct", sp="Y", notes="Modulate to load; DHC primary")
+    add(f"{dev}.CVFB", "DHC interface", dev, "DHC chilled-water intake", area, "Intake valve position fb", AI, "pctfb")
+    add(f"{dev}.ISOL", "DHC interface", dev, "DHC chilled-water intake", area, "Intake isolation valve open/close", BO, "cmd", sp="Y")
+    add(f"{dev}.ISOL-ST", "DHC interface", dev, "DHC chilled-water intake", area, "Isolation valve status", BI, "status", alarm="Y")
+    add(f"{dev}.SEQ", "DHC interface", dev, "DHC chilled-water intake", area, "Source sequence changeover (DHC<->chiller)", BO, "cmd", sp="Y", notes="順序切替; DHC lead, chiller backup")
+    add(f"{dev}.ENERGY", "DHC interface", dev, "DHC chilled-water intake", area, "Chilled-water energy meter", AI, "pulse", units="GJ", trend="Y", notes="Thermal-demand control")
 
 def hex_points(dev, area):
     PANEL_HINT[dev] = "LCP-PH"
@@ -270,14 +297,19 @@ def evu_points(n):
     add(f"{dev}.FLT", "Air side", dev, "Outdoor-air unit (OAU)", area, "Filter dirty (DP)", BI, "status", alarm="Y")
     add(f"{dev}.FRZ", "Air side", dev, "Outdoor-air unit (OAU)", area, "Freeze protection stat", BI, "status", alarm="Y")
 
-def fcu_points(dev, area, panel):
+def fcu_group_points(dev, area, panel):
+    """BMS batch monitoring for a 4-pipe guest-room FCU group (per riser /
+    orientation). Individual FCUs run on local room thermostats; the BMS
+    supervises the group and its DHC 4-pipe header valves."""
     PANEL_HINT[dev] = panel
-    add(f"{dev}.SS", "Air side", dev, "FCU (4-pipe)", area, "On/Off + fan speed", BO, "cmd", sp="Y", notes="INFERRED qty; 4-pipe + free cooling")
-    add(f"{dev}.RUN", "Air side", dev, "FCU (4-pipe)", area, "Run status", BI, "status")
-    add(f"{dev}.ST", "Air side", dev, "FCU (4-pipe)", area, "Space temp", AI, "temp", sp="Y", trend="Y")
-    add(f"{dev}.CCV", "Air side", dev, "FCU (4-pipe)", area, "Cooling valve", AO, "pct", sp="Y")
-    add(f"{dev}.HCV", "Air side", dev, "FCU (4-pipe)", area, "Heating valve", AO, "pct", sp="Y", notes="Deadband vs cooling")
-    add(f"{dev}.TRIP", "Air side", dev, "FCU (4-pipe)", area, "Fault", BI, "status", alarm="Y")
+    ff = "36/37F: free-cooling changeover" if dev == "FCU-3637" else "DHC 4-pipe; season changeover"
+    add(f"{dev}.EN", "Air side", dev, "FCU zone group (4-pipe)", area, "Group enable / schedule", BO, "cmd", sp="Y", notes=ff)
+    add(f"{dev}.MODE", "Air side", dev, "FCU zone group (4-pipe)", area, "Cooling/Heating changeover status", BI, "status", notes="順序/季節切替")
+    add(f"{dev}.CWV", "Air side", dev, "FCU zone group (4-pipe)", area, "Chilled-water group valve", AO, "pct", sp="Y")
+    add(f"{dev}.HWV", "Air side", dev, "FCU zone group (4-pipe)", area, "Hot-water group valve", AO, "pct", sp="Y", notes="Deadband vs cooling")
+    add(f"{dev}.CWBV-F", "Air side", dev, "FCU zone group (4-pipe)", area, "Chilled-water BV batch fault", BI, "status", alarm="Y", notes="冷水BV一括故障")
+    add(f"{dev}.HWBV-F", "Air side", dev, "FCU zone group (4-pipe)", area, "Hot-water BV batch fault", BI, "status", alarm="Y", notes="温水BV一括故障")
+    add(f"{dev}.RT", "Air side", dev, "FCU zone group (4-pipe)", area, "Zone reference/return temp", AI, "temp", sp="Y", trend="Y")
 
 def fan_points(tag, parent_ac, inv):
     area = f"Serves AC-{parent_ac} ({AC_AREAS.get(parent_ac,'')})"
@@ -326,20 +358,26 @@ for i in (1, 2, 3):
                     notes_dp="Interlock w/ chiller; VFD")
 for i in (1, 2, 3):
     cwpump_points(f"CWP-{i}", "PH / outdoor")
-for i in (1, 2):
-    tower_points(f"CT-{i}", "Rooftop")
+# Cooling towers: CT-1 & CT-2, each with two INV fan cells (confirmed:
+# CT-1-1/CT-1-2 INV on the Azbil graphic).
+for c in (1, 2):
+    for f in (1, 2):
+        tower_points(f"CT-{c}-{f}", "Rooftop")
 hex_points("HEX-1", "Outdoor / PH")
-# Secondary distribution + hot-water pumps (INFERRED)
-for i in (1, 2, 3):
-    PANEL_HINT[f"SCHWP-{i}"] = "LCP-PH"
-    vfd_pump_points(f"SCHWP-{i}", "Secondary CHW distribution pump", "PH machine room",
-                    "Heat source", notes_dp="INFERRED; DP-reset from most-open valve")
+# Secondary CHW distribution pump CP-7 (confirmed tag; 発停/故障 on BMS graphic).
+for i in (1, 2):
+    PANEL_HINT[f"CP-7-{i}"] = "LCP-PH"
+    vfd_pump_points(f"CP-7-{i}", "Secondary CHW distribution pump", "PH machine room",
+                    "Heat source", notes_dp="CP-7 secondary loop; DP-reset from most-open valve (qty per as-built)")
+# Hot-water pumps for the 4-pipe FCU / coil heating loop off the steam HEX (INFERRED)
 for i in (1, 2):
     PANEL_HINT[f"HWP-{i}"] = "LCP-B2"
     vfd_pump_points(f"HWP-{i}", "Hot-water pump (steam-HEX loop)", "B2F machine room",
-                    "Heat source", notes_dp="INFERRED; heating loop off steam HEX")
+                    "Heat source", notes_dp="INFERRED; serves 4-pipe FCU/coil heating")
 
-# DHC steam interfaces
+# DHC intake: chilled water (冷水受入) + steam (蒸気受入), low-rise & high-rise
+dhc_chw_points("DHC-CHW-L", "B2F chilled-water intake (low-rise)", "low")
+dhc_chw_points("DHC-CHW-H", "PH chilled-water intake (high-rise)", "high")
 steam_points("DHC-STEAM-L", "B2F low-rise steam main", "low")
 steam_points("DHC-STEAM-H", "Rooftop/PH high-rise steam main", "high")
 
@@ -348,8 +386,8 @@ for n in range(1, 28):
     ahu_points(n)
 for n in range(1, 16):
     evu_points(n)
-for tag, area, panel in FCU:
-    fcu_points(tag, area, panel)
+for tag, area, panel in FCU_GROUPS:
+    fcu_group_points(tag, area, panel)
 
 # Ventilation fans
 for tag, parent, inv in FANS:
@@ -375,11 +413,13 @@ def dev_category(d: str) -> str:
     """Class used to keep unlike equipment off the same DDC controller."""
     if d.startswith("RC-1"): return "chiller"
     if d.startswith("CP-8"): return "pchwp"
+    if d.startswith("CP-7"): return "schwp"
     if d.startswith("CWP-"): return "cwp"
     if d.startswith("CT-"): return "tower"
     if d.startswith("HEX-"): return "hex"
     if d.startswith("SCHWP-"): return "schwp"
     if d.startswith("HWP-"): return "hwp"
+    if d.startswith("DHC-CHW"): return "dhc_chw"
     if d.startswith("DHC-STEAM"): return "steam"
     if d.startswith("MTR-"): return "meter"
     if d.startswith("POOL"): return "pool"
@@ -391,7 +431,7 @@ def dev_category(d: str) -> str:
 
 # Order categories so controllers list reads plant -> DHC -> air -> vent -> meters
 CAT_ORDER = ["chiller", "pchwp", "cwp", "tower", "hex", "schwp", "hwp",
-             "steam", "ahu", "oau", "fcu", "fan", "pool", "oa", "meter"]
+             "dhc_chw", "steam", "ahu", "oau", "fcu", "fan", "pool", "oa", "meter"]
 
 dev_controller = {}
 controllers = []   # (ctrl_id, panel, devices)
@@ -451,9 +491,9 @@ ws["A2"].font = SUB_FONT
 cover = [
     ("", ""),
     ("Building", "SRC, B3–37F, ~98,331 m²; Azbil (savic-net) BMS"),
-    ("Energy source", "District Heating & Cooling (steam low-rise @B2F + high-rise @rooftop) + local water-cooled chillers"),
-    ("Local plant", "RC-1 chillers ×3 (370 kW, COP 4.51), CP-8 primary CHW pumps ×3, HEX-1 plate HX (395 kW), cooling towers, condenser pumps"),
-    ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units (guest-room/function zones), FCUs (36/37F 4-pipe), EF/SF/RF fans"),
+    ("Energy source", "District Heating & Cooling: DHC chilled-water intake (冷水受入, low+high) via HEX-1 + DHC steam (蒸気受入, low @B2F / high @rooftop). Local chillers are BACKUP (順序切替)."),
+    ("Local plant", "RC-1 chillers ×3 (370 kW, COP 4.51, DHC backup), CP-8 primary CHW pumps ×3, CP-7 secondary distribution, HEX-1 plate HX (395 kW), CT-1/CT-2 (2 INV fans each), condenser pumps"),
+    ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 20-35F N/S/SE/SW, 4-pipe on DHC water), EF/SF/RF fans"),
     ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
     ("", ""),
     ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),

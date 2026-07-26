@@ -16,7 +16,7 @@ kitchen ventilation fleet (EF/SF/RF).
 | File | Purpose |
 |------|---------|
 | `generate_io_list.py` | Reproducible generator for the BMS I/O list + panel / controller schedule |
-| `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 820 points, 115 devices, 7 panels, 48 DDC controllers |
+| `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 862 points, 119 devices, 7 panels, 52 DDC controllers |
 
 ## Regenerate the I/O list
 
@@ -39,8 +39,19 @@ Key basis documents:
 - `空調機スケジュール_20251127.xlsx` — AHU/OAU operating, temperature & INV schedules
 - `Azbil 納入仕様書` — full delivery spec / points list (scanned; needs OCR)
 
+## Topology (OCR-verified from Azbil BMS graphics + 計装図)
+
+- **DHC is the primary source**: chilled-water intake (冷水受入, low + high risers)
+  through **HEX-1**, plus **steam intake** (蒸気受入, low @B2F / high @rooftop).
+- **Local chillers RC-1 ×3 are BACKUP** with source sequence changeover (順序切替).
+- **CP-8** = primary CHW pumps; **CP-7** = secondary distribution pump.
+- **CT-1 / CT-2** cooling towers, two INV fans each.
+- **Guest-room FCUs (4-pipe on DHC water)** are BMS-supervised as riser/orientation
+  **zone-groups** — 5–20F and 20–35F, N/S/SE/SW — with batch valve-fault monitoring
+  (冷水BV / 温水BV 一括故障). Individual room FCUs run on local thermostats.
+
 ## Notes
 
-Items flagged **INFERRED** in the workbook (secondary CHW distribution pumps,
-hot-water pumps off the steam HEX, FCU quantities) must be confirmed against
-the as-builts / Azbil 納入仕様書.
+Items still flagged **INFERRED** (hot-water pumps off the steam HEX, exact CP-7
+quantity, per-group FCU counts) should be confirmed against the as-builts /
+Azbil 納入仕様書 (144-page scanned spec; OCR the equipment schedule to finalize).
