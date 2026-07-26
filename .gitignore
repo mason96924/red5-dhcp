@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Extracted source material (regenerate from the supplied archives)
+_source/
+
+# Large provided source documents — kept locally, NOT tracked in git
+*.zip
+*.pdf
+*.xlsx
+
+# ...but DO track the generated BMS deliverable
+!Red5-DHCP_BMS_IO_List.xlsx
+
+# OS / editor
+.DS_Store
+Thumbs.db
