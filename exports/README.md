@@ -17,6 +17,7 @@ Each dataset comes in three forms:
 | `red5-dhcp_lighting`    | Common-area & facade lighting (照明一覧, `LCP-LTG`) | 1 · 3 · 16 |
 | `red5-dhcp_electrical`  | Electrical cross-cut: energy meters, per-device kW, electrical-protection points | 7 · 26 · 62 |
 | `red5-dhcp_switchboard` | ESCO retrofit power-panel / MCC schedule (RC-1 chiller + CP-8 pump feeders) | 3 panels · 7 circuits · 90.7 kW |
+| `red5-dhcp_controller-cutover-plan` | savic-net FX2 → new DDC replacement plan (Apr–May shoulder-season phasing) | 84 controllers · 7 phases; HTML is print-to-PDF |
 
 The first three are generated from the device/point model in
 [`../generate_io_list.py`](../generate_io_list.py); the switchboard schedule is
@@ -28,6 +29,7 @@ transcribed from the as-built electrical drawings.
 cd red5-dhcp
 .venv/bin/python build_exports.py       # full / lighting / electrical
 .venv/bin/python build_switchboard.py   # switchboard schedule
+.venv/bin/python build_cutover.py       # controller-replacement cutover plan
 ```
 
 ## Sources

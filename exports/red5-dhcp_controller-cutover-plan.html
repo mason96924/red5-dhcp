@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red5-DHCP — BMS controller replacement: minimal-interruption cutover</title>
+<style>
+  :root { --ink:#1b2430; --dim:#5b6675; --line:#d8dee7; --band:#1F3864; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+          color:var(--ink); background:#f4f6f9; padding:28px; }
+  .page { max-width:1180px; margin:0 auto; background:#fff; border:1px solid var(--line);
+           border-radius:10px; padding:28px 32px; }
+  h1 { font-size:22px; margin:0 0 4px; } .sub { color:var(--dim); margin:0 0 18px; max-width:90ch; }
+  h2 { font-size:16px; margin:26px 0 8px; border-bottom:2px solid var(--band); padding-bottom:4px; color:var(--band); }
+  .stats { display:flex; gap:26px; flex-wrap:wrap; margin:0 0 16px; }
+  .stat b { font-size:22px; display:block; } .stat span { color:var(--dim); font-size:12px; }
+  .cols { display:flex; gap:14px; flex-wrap:wrap; }
+  .call { flex:1; min-width:280px; border:1px solid var(--line); border-radius:8px; padding:12px 14px; }
+  .call b { display:block; margin-bottom:4px; } .call p { margin:0; color:#33404f; font-size:13px; }
+  table { border-collapse:collapse; width:100%; margin:6px 0 6px; font-size:13px; }
+  th, td { border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top; }
+  thead th { background:var(--band); color:#fff; } td.c, th.c { text-align:center; white-space:nowrap; }
+  .note { color:var(--dim); font-size:12px; margin:4px 0 0; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .foot { color:var(--dim); font-size:12px; margin-top:22px; }
+  @media print { body { background:#fff; padding:0; } .page { border:0; } }
+</style></head>
+<body><div class="page">
+<h1>Red5-DHCP — BMS controller replacement: minimal-interruption cutover</h1>
+<p class="sub">Migrate 84 Azbil savic-net FX2 field controllers across 11 panels to new DDC in the April–May shoulder season, using OA economizer free-cooling and local manual operation to keep the hotel conditioned throughout.</p>
+<div class="stats"><div class="stat"><b>84</b><span>Field controllers to replace</span></div><div class="stat"><b>11</b><span>Field panels (+ head-end)</span></div><div class="stat"><b>1160</b><span>I/O points (commissioning checklist)</span></div><div class="stat"><b>Apr–May</b><span>Cutover window (Mar prep)</span></div></div>
+<div class="cols">
+  <div class="call" style="background:#e7f6ec"><b>Why April–May</b><p>Tokyo shoulder-season OA (~10–22 °C, low enthalpy) lets the airside economizer meet the load with no mechanical cooling, so the towers (LCP-CT) and R-1 chiller are already idle and swap cold. Heating is over, so hot-water hydronics are low-risk. DHC stays live as a warm-spell safety net and is migrated last.</p></div>
+  <div class="call" style="background:#eef2fb"><b>The enabler: local/remote at every starter</b><p>Each motor starter has a 手元/遠方 (local/remote) selector + DC24V ext start-stop + status feedback (confirmed on E-01/13-4). During a swap the equipment runs in LOCAL manual — fan hand-on, OA damper fixed ~100%, pump fixed-speed — independent of the BMS.</p></div>
+</div>
+<h2>Phased sequence — coldest/idle first, primary source last</h2>
+<p class="note">Row shading = comfort/continuity risk during that phase. One system in manual at a time; guest floors overnight.</p>
+<table><thead><tr><th class=c>#</th><th>Window</th><th>Panels (controllers)</th><th>Shoulder-season state</th><th>Swap method</th><th class=c>Risk</th></tr></thead>
+<tbody><tr style="background:#eef2fb"><td class=c>0</td><td>March (hot)</td><td>BMS-CENTRAL + network backbone</td><td>n/a — runs in parallel</td><td>Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs I/O list</td><td class=c><b>Prep</b></td></tr><tr style="background:#e7f6ec"><td class=c>1</td><td>early Apr</td><td>LCP-CT (8) + R-1 / condenser loop in LCP-3637</td><td>Idle — no mechanical cooling</td><td>Power down &amp; swap cold; recommission before any warm spell</td><td class=c><b>Low</b></td></tr><tr style="background:#fdf2df"><td class=c>2</td><td>April</td><td>LCP-1F (3), 2F (4), 3F (4), 4F (7) + air-side of HSL/HSH/3637</td><td>Economizer free-cooling carries load</td><td>AHU→local, fan hand-on, OA damper ~100%; one AHU at a time; guest floors overnight</td><td class=c><b>Moderate</b></td></tr><tr style="background:#fdf2df"><td class=c>3</td><td>Apr–May</td><td>LCP-HSL (17), LCP-HSH (11) — pumps / HX / hydronics</td><td>Heating off; only trickle CHW needed</td><td>One pump local fixed-speed / manual bypass; duty &amp; standby never both down</td><td class=c><b>Moderate</b></td></tr><tr style="background:#fbe3e3"><td class=c>4</td><td>May (last)</td><td>LCP-DHC (7) — DHC chilled-water + steam intake</td><td>Primary source; economizer covers building</td><td>DHC valves/pumps to local manual + district coordination; low-occupancy weekend</td><td class=c><b>Critical</b></td></tr><tr style="background:#fbe3e3"><td class=c>A</td><td>any time</td><td>LCP-PKG (7) — IT / electrical-room packaged DX</td><td>Runs 24/7 (not seasonal)</td><td>DX to local thermostat; fast one-at-a-time; spare/portable cooling staged</td><td class=c><b>Critical</b></td></tr><tr style="background:#fdf2df"><td class=c>B</td><td>any time</td><td>LCP-LTG (3) — common-area &amp; facade lighting</td><td>Runs to schedule</td><td>Local switch/override; aviation obstruction light on independent circuit — never dark</td><td class=c><b>Moderate</b></td></tr></tbody></table>
+<p class="note">Split panels (LCP-3637 / HSL / HSH mix air-side + heat-source controllers) are migrated across phases by sub-system, not all at once.</p>
+<h2>Manual-operation playbook (during each controller's swap)</h2>
+<table><thead><tr><th>System</th><th>Local-mode setup while BMS is disconnected</th><th>Watch-out</th></tr></thead>
+<tbody><tr><td><b>AHU / OAU fans</b></td><td>COS→手元, fan hand-ON, OA damper fixed ~100% (economizer), DHC coil valve left manually crackable</td><td>Warm spell → be able to open the cooling valve within minutes</td></tr><tr><td><b>CHW / HW pumps</b></td><td>One pump hand-ON at fixed speed; DP/bypass set manually</td><td>Keep duty OR standby always available; protect domestic-hot-water continuity</td></tr><tr><td><b>Cooling towers / condenser / R-1</b></td><td>Leave isolated &amp; de-energised</td><td>None — off-season; recommission before enabling mechanical cooling</td></tr><tr><td><b>DHC intake</b></td><td>Intake isolation + energy valves and pumps to local manual, fixed position</td><td>Primary source — coordinate with district operator; do this phase last</td></tr><tr><td><b>Packaged units (IT/elec rooms)</b></td><td>DX on local thermostat, continuous run</td><td>24/7 critical rooms — stage spare/portable cooling; swap one unit at a time</td></tr><tr><td><b>Lighting</b></td><td>Local switching / manual override per circuit</td><td>Aviation obstruction light is regulatory life-safety — independent circuit, always lit</td></tr></tbody></table>
+<h2>Risk controls & rollback</h2>
+<div class="grid2"><div class="call" style="background:#fdf2df"><b>Cutover discipline</b><p>Only one system in manual at any time. Guest-facing zones swapped overnight, back-of-house first. Old controller stays landed on a marshalling strip so you can revert to FX2 within minutes. Freeze all scope changes during the window; spares on site.</p></div><div class="call" style="background:#fbe3e3"><b>Never interrupt</b><p>Life-safety interlocks — smoke control, stair pressurization, exhaust — remain live and coordinated with the fire-alarm system. Aviation obstruction light and IT/electrical-room cooling stay energised.</p></div><div class="call" style="background:#eef2fb"><b>Verify every point</b><p>The 1,160-point I/O list is the master checklist. Per controller: point-to-point verify each AI/AO/BI/BO, functional-test, then trend 24–48 h before returning to auto.</p></div><div class="call" style="background:#e7f6ec"><b>Weather safety net</b><p>DHC stays operational until Phase 4, so a warm spell is covered. The sequence guarantees the building always has either economizer free-cooling or the DHC source available.</p></div></div>
+<p class="foot">Generated 2026-07-27 · Red5-DHCP · savic-net FX2 → new DDC migration. Print to PDF for distribution.</p>
+</div></body></html>

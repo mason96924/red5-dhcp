@@ -1,0 +1,17 @@
+﻿Phase,Window,Panels (controllers),Shoulder-season state,Swap method,Risk
+0,March (hot),BMS-CENTRAL + network backbone,n/a — runs in parallel,Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs I/O list,Prep
+1,early Apr,LCP-CT (8) + R-1 / condenser loop in LCP-3637,Idle — no mechanical cooling,Power down & swap cold; recommission before any warm spell,Low
+2,April,"LCP-1F (3), 2F (4), 3F (4), 4F (7) + air-side of HSL/HSH/3637",Economizer free-cooling carries load,"AHU→local, fan hand-on, OA damper ~100%; one AHU at a time; guest floors overnight",Moderate
+3,Apr–May,"LCP-HSL (17), LCP-HSH (11) — pumps / HX / hydronics",Heating off; only trickle CHW needed,One pump local fixed-speed / manual bypass; duty & standby never both down,Moderate
+4,May (last),LCP-DHC (7) — DHC chilled-water + steam intake,Primary source; economizer covers building,DHC valves/pumps to local manual + district coordination; low-occupancy weekend,Critical
+A,any time,LCP-PKG (7) — IT / electrical-room packaged DX,Runs 24/7 (not seasonal),DX to local thermostat; fast one-at-a-time; spare/portable cooling staged,Critical
+B,any time,LCP-LTG (3) — common-area & facade lighting,Runs to schedule,Local switch/override; aviation obstruction light on independent circuit — never dark,Moderate
+
+Manual-operation playbook
+System,Local-mode setup,Watch-out
+AHU / OAU fans,"COS→手元, fan hand-ON, OA damper fixed ~100% (economizer), DHC coil valve left manually crackable",Warm spell → be able to open the cooling valve within minutes
+CHW / HW pumps,One pump hand-ON at fixed speed; DP/bypass set manually,Keep duty OR standby always available; protect domestic-hot-water continuity
+Cooling towers / condenser / R-1,Leave isolated & de-energised,None — off-season; recommission before enabling mechanical cooling
+DHC intake,"Intake isolation + energy valves and pumps to local manual, fixed position",Primary source — coordinate with district operator; do this phase last
+Packaged units (IT/elec rooms),"DX on local thermostat, continuous run",24/7 critical rooms — stage spare/portable cooling; swap one unit at a time
+Lighting,Local switching / manual override per circuit,"Aviation obstruction light is regulatory life-safety — independent circuit, always lit"
