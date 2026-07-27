@@ -6,8 +6,9 @@ building "driver" (time-of-day occupancy load + outdoor conditions) so the
 dashboard reads coherently: e.g. chiller CHW supply sits near 7 C, valve %
 tracks load, pumps that pair with a stopped chiller read 0 %.
 
-The DHC network is the PRIMARY cooling/heating source; the local RC-1 chillers
-are staged as BACKUP only at high load (matches the as-built 順序切替 logic).
+The DHC network is the PRIMARY cooling/heating source; the local R-1 chiller
+(36/37F) is staged as BACKUP only at high load (matches the as-built
+チラーバックアップ / 順序切替 logic).
 """
 from __future__ import annotations
 
@@ -54,44 +55,96 @@ def running_state(ctx: dict) -> tuple[dict, set]:
     load = ctx["load"]
     occ = ctx["occupied"]
     heating = ctx["heating"]
+    wb = ctx["wetbulb"]
     run: dict = {}
     locked: set = set()
 
-    # Chillers -- BACKUP: staged only above 50% load.
-    if load < 0.50:
-        n_chill = 0
-    else:
-        n_chill = min(3, 1 + int((load - 0.50) / 0.17))
-    for i in (1, 2, 3):
-        run[f"RC-1-{i}"] = i <= n_chill
-        run[f"CP-8-{i}"] = i <= n_chill        # primary CHW pump paired 1:1
-        run[f"CWP-{i}"] = i <= n_chill         # condenser pump paired 1:1
+    def stage(prefix, idxs, thresholds):
+        """Stage a like-pump group: pump i runs when load exceeds thresholds[i]."""
+        for k, i in enumerate(idxs):
+            run[f"{prefix}-{i}"] = load > thresholds[min(k, len(thresholds) - 1)]
 
-    # Cooling-tower cells scale with chillers online.
-    cells = 0 if n_chill == 0 else min(4, n_chill * 2)
-    order = [("CT-1-1"), ("CT-1-2"), ("CT-2-1"), ("CT-2-2")]
-    for idx, cid in enumerate(order):
-        run[cid] = idx < cells
+    # --- DHC intake = PRIMARY source ---
+    run["DHC-CHW"] = load > 0.05
+    run["DHC-STEAM"] = heating
+    run["HWT-1"] = heating            # hot-well active with steam
 
-    # HEX-1 (DHC chilled-water plate HX) is the primary path -- active whenever
-    # there is any cooling demand.  The DHC intakes track the same demand;
-    # steam intakes follow the heating season.
-    run["HEX-1"] = load > 0.05
-    run["DHC-CHW-L"] = load > 0.05
-    run["DHC-CHW-H"] = load > 0.05
-    run["DHC-STEAM-L"] = heating
-    run["DHC-STEAM-H"] = heating
+    # --- Low-rise / high-rise primary CHW pumps (CP-1/CP-2 x3, sequenced) ---
+    stage("CP-1", (1, 2, 3), (0.05, 0.45, 0.75))
+    stage("CP-2", (1, 2, 3), (0.05, 0.45, 0.75))
+    # High-rise INV + changeover pumps
+    stage("CP-3", (1, 2), (0.05, 0.65))
+    run["CP-6-1"] = load > 0.05       # №1 priority
+    run["CP-6-2"] = load > 0.70
+    # Kitchen pumps (occupied)
+    for p in ("CP-4", "CP-5"):
+        run[f"{p}-1"] = occ
+        run[f"{p}-2"] = occ and load > 0.6
 
-    # Secondary CHW distribution pumps: lead always on when occupied, lag on
-    # at higher load.
-    run["CP-7-1"] = load > 0.08
-    run["CP-7-2"] = load > 0.60
-
-    # Hot-water pumps: heating season only.
+    # --- Hot-water pumps (HP-1/HP-2 x3): heating season only ---
+    for grp in ("HP-1", "HP-2"):
+        for i in (1, 2, 3):
+            run[f"{grp}-{i}"] = heating and load > (0.05 + 0.30 * (i - 1))
+            if not heating:
+                locked.add(f"{grp}-{i}")
+    # Hot-well pumps: HP-5 condensate-return (with steam), HP-3 kitchen AHU
     for i in (1, 2):
-        run[f"HWP-{i}"] = heating and load > 0.10
+        run[f"HP-5-{i}"] = heating and (i == 1 or load > 0.6)
+        run[f"HP-3-{i}"] = occ and (i == 1 or load > 0.6)
         if not heating:
-            locked.add(f"HWP-{i}")
+            locked.add(f"HP-5-{i}")
+
+    # --- Condenser water for packaged units + refrigeration (always some) ---
+    # CDP-1 (x3) + CDP-2 (x2) lead 24/7 (electrical-room PACs), scale with load.
+    run["CDP-1-1"] = True
+    run["CDP-1-2"] = load > 0.35
+    run["CDP-1-3"] = load > 0.70
+    run["CDP-2-1"] = True
+    run["CDP-2-2"] = load > 0.55
+    cdp_on = sum(1 for k in ("CDP-1-1", "CDP-1-2", "CDP-1-3", "CDP-2-1", "CDP-2-2") if run[k])
+    # CT-1/CT-2 cells scale with condenser pumps online.
+    ct_cells = ["CT-1-1", "CT-1-2", "CT-2-1", "CT-2-2"]
+    for idx, cid in enumerate(ct_cells):
+        run[cid] = idx < max(1, min(4, cdp_on - 1))
+    run["CT-1"] = True                # tower body (level/treatment) always monitored
+    run["CT-2"] = True
+    # Winter free-cooling + emergency HX: normally off (enabled cold/low-WB).
+    run["EX-1"] = heating and wb < 8.0
+    run["EMHX-1"] = False
+    run["EMHX-2"] = False
+
+    # --- 36/37F local plant: R-1 is BACKUP, staged only at high load ---
+    r1 = load > 0.62
+    run["R-1"] = r1
+    run["CDP-3-1"] = r1
+    run["CDP-3-2"] = r1 and load > 0.85
+    run["CT-3-1"] = r1
+    run["CT-3"] = True
+    run["HEX-1"] = load > 0.05        # DHC HX feeding 36/37F loop (primary path)
+    for i in (1, 2, 3):
+        run[f"CP-8-{i}"] = load > (0.05 + 0.35 * (i - 1))   # DHC-side pumps
+    run["CP-7-1"] = r1                # R-1 CHW pumps only in chiller mode
+    run["CP-7-2"] = r1 and load > 0.85
+    run["HP-4-1"] = load > 0.05       # 36/37F secondary loop pumps
+    run["HP-4-2"] = load > 0.70
+    for v in ("EX4", "EXT-1", "EXT-2", "EXT-3"):
+        run[v] = True                 # vessels: monitored (level)
+    run["CHGV-1"] = r1                # R-1 branch valve open in chiller mode
+    run["CHGV-2"] = not r1            # through-main open in DHC bypass mode
+
+    # --- Packaged units: electrical-room PACs run 24/7, others occupied ---
+    always_pac = {"PAC-1-1", "PAC-1-2", "PAC-2", "PAC-3", "PAC-4", "PAC-5"}
+    for d in DEVICES.values():
+        did = d["id"]
+        if did.startswith(("PAC-", "PCU-", "PMAC")):
+            run[did] = True if did in always_pac else (occ and load > 0.03)
+
+    # --- Lighting: facade at night, common areas when occupied ---
+    night = ctx["hour"] < 6.0 or ctx["hour"] >= 18.0
+    for d in DEVICES.values():
+        did = d["id"]
+        if did.startswith("LTG-"):
+            run[did] = night if ("NEON" in did or "AVIATION" in did or "BALCONY" in did) else occ
 
     # Air side.
     for d in DEVICES.values():
@@ -210,12 +263,14 @@ def _isol_open(p, ctx):
 def _command(p, suf, on, ctx):
     if suf in ("ISOL",):
         return _bin(_isol_open(p, ctx), "Open", "Closed")
-    if suf == "SEQ":
-        return _bin(True, "DHC lead", "Chiller")
+    if suf == "CMD" and p["device_id"].startswith("CHGV"):
+        return _bin(on, "Open", "Closed")
     if suf == "EN":
-        return _bin(ctx["occupied"], "Enabled", "Disabled")
-    if suf in ("MU", "BLD"):
-        return _bin(False, "Open", "Closed")
+        return _bin(on, "Enabled", "Disabled")
+    if suf in ("MU", "BLD", "EH"):
+        return _bin(False, "Open" if suf != "EH" else "On", "Closed" if suf != "EH" else "Off")
+    if suf == "FILT-SS":
+        return _bin(on, "On", "Off")
     return _bin(on, "On", "Off")
 
 
@@ -250,9 +305,19 @@ def _temp(p, suf, on, ctx):
     oat = ctx["oat"]
     did = p["device_id"]
     v = 20.0
-    if suf in ("CHWST", "P-IN", "ST"):
+    if suf in ("CS-T",):
+        v = 7.0
+    elif suf in ("CR-T",):
+        v = 12.0
+    elif suf == "WB":
+        v = ctx["wetbulb"]
+    elif did.startswith("ST-") and suf == "T":
+        v = oat
+    elif suf in ("CHWST", "P-IN"):
         v = (7.0 if on else 12.0)
-    elif suf in ("CHWRT", "P-OUT", "RT") and did.startswith(("RC-", "HEX", "DHC-CHW")):
+    elif suf == "ST":                 # HX/valve/free-cool leaving temp
+        v = (7.0 if on else 12.0)
+    elif suf in ("CHWRT", "P-OUT", "RT") and did.startswith(("R-1", "HEX", "DHC-CHW")):
         v = 12.0
     elif suf == "S-IN":
         v = 15.0
@@ -288,9 +353,9 @@ def _power(p, suf, on, ctx):
     load = ctx["load"]
     did = p["device_id"]
     v = 0.0
-    if did.startswith("RC-1"):
+    if did.startswith("R-1"):
         v = 335.0 * (0.45 + 0.55 * load) if on else 0.0     # ~370 kW class
-    elif did.startswith(("CP-8", "CWP", "CP-7", "HWP")):
+    elif did.startswith(("CP-", "CDP-", "HP-")):
         v = (5 + load * 12) if on else 0.0
     elif did.startswith("CT-"):
         v = (2 + load * 9) if on else 0.0
@@ -316,23 +381,39 @@ def _device_summary(did, dtype, running, locked, pvals):
     def g(suf):
         return by_suf.get(suf)
 
-    if did.startswith("RC-1"):
+    if did.startswith("R-1"):
         if not running:
             return "Off — DHC backup"
         kw = g("KW"); return f"{g('CHWST')['value']:.1f}°C CHWS · {kw['value']:.0f} kW" if kw else "Running"
-    if did.startswith(("CP-8", "CP-7", "CWP", "HWP")):
+    if did.startswith(("CP-", "CDP-", "HP-")):
         if locked:
             return "Locked (season)"
-        return f"{g('SPD')['value']:.0f}% speed" if running and g("SPD") else ("Off" if running is False else "—")
-    if did.startswith("CT-"):
+        if running and g("SPD"):
+            return f"{g('SPD')['value']:.0f}% speed"
+        return "Running" if running else ("Off" if running is False else "—")
+    if did.startswith("CT-") and "-" in did[3:]:
         return f"fan {g('SPD')['value']:.0f}%" if running and g("SPD") else "Off"
+    if did.startswith("CT-"):
+        lvl = g("LVL"); return f"basin {lvl['value']:.0f}%" if lvl else "Monitored"
     if did == "HEX-1":
         return f"S-out {g('S-OUT')['value']:.1f}°C" if g("S-OUT") else "Active"
+    if did.startswith("EX") or did.startswith("EMHX"):
+        so = g("S-OUT") or g("ST"); return f"{so['value']:.1f}°C" if so else ("Enabled" if running else "Off")
+    if did.startswith("CHGV"):
+        return "R-1 mode" if running else "DHC bypass"
+    if did == "HWT-1":
+        lvl = g("LVL"); return f"level {lvl['value']:.0f}%" if lvl else "Hot-well"
     if did.startswith("DHC-CHW"):
-        cv = g("CV"); return f"valve {cv['value']:.0f}% · {g('ST')['value']:.1f}°C" if cv else "Intake"
+        cv = g("CV"); return f"valve {cv['value']:.0f}% · {g('CS-T')['value']:.1f}°C" if cv else "Intake"
     if did.startswith("DHC-STEAM"):
         st = g("ISOL-ST")
-        return f"{st['display']} · {g('HTEMP')['value']:.0f}°C" if st else "Interface"
+        return f"{st['display']} steam" if st else "Interface"
+    if did.startswith(("PAC-", "PCU-", "PMAC")):
+        return "Running" if running else "Off"
+    if did.startswith("LTG-"):
+        return "On" if running else "Off"
+    if did == "REFR-1":
+        return "Monitored"
     if did.startswith("AC-"):
         return f"SAT {g('SAT')['value']:.1f}°C" if running and g("SAT") else "Off"
     if did.startswith("EVU-"):

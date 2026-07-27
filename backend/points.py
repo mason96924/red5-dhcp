@@ -51,11 +51,11 @@ def _point_kind(tag: str, io: str, units: str) -> str:
         return "rh"
     if u == "MPa":
         return "press"
-    if u == "L/min":
+    if u in ("L/min", "m³/h"):
         return "flow"
     if u == "kW":
         return "power"
-    if u in ("GJ", "kWh", "m³"):
+    if u in ("GJ", "MJ", "kWh", "kg", "t/h", "L", "m³"):
         return "energy"
     if u == "%":
         return "level" if suffix.startswith("LVL") else "percent"
