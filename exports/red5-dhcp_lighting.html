@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red5-DHCP — Lighting (照明一覧)</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --row:#1c2029; --ink:#e6e8ec; --dim:#9aa2b1;
+          --line:#2a2f3a; --accent:#5b9dd9; --ai:#5b9dd9; --ao:#57b894; --bi:#e0a458; --bo:#a982d9; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+         background:var(--bg); color:var(--ink); padding:24px; }
+  h1 { font-size:22px; margin:0 0 2px; }
+  .sub { color:var(--dim); margin:0 0 16px; }
+  .stats { display:flex; gap:22px; flex-wrap:wrap; margin:0 0 14px; }
+  .stat b { font-size:22px; display:block; }
+  .stat span { color:var(--dim); font-size:12px; }
+  .mix { height:10px; border-radius:5px; overflow:hidden; display:flex; margin:6px 0 18px; background:var(--line); }
+  .mix i { display:block; height:100%; }
+  .legend { color:var(--dim); font-size:12px; margin:-12px 0 18px; }
+  .legend em { font-style:normal; color:var(--ink); }
+  .dot { display:inline-block; width:9px; height:9px; border-radius:2px; margin:0 4px 0 12px; vertical-align:middle; }
+  .toolbar { display:flex; gap:10px; align-items:center; margin:0 0 12px; flex-wrap:wrap; }
+  input[type=search] { background:var(--panel); border:1px solid var(--line); color:var(--ink);
+         padding:7px 10px; border-radius:7px; min-width:280px; font-size:13px; }
+  button.f { background:var(--panel); border:1px solid var(--line); color:var(--dim);
+         padding:5px 10px; border-radius:20px; cursor:pointer; font-size:12px; }
+  button.f.on { color:var(--ink); border-color:var(--accent); }
+  table.sum { border-collapse:collapse; width:100%; margin:0 0 22px; font-size:13px; }
+  table.sum th, table.sum td { border:1px solid var(--line); padding:6px 9px; text-align:right; }
+  table.sum th:nth-child(-n+3), table.sum td:nth-child(-n+3) { text-align:left; }
+  table.sum thead th { background:#20242e; }
+  table.sum tr.tot td { font-weight:700; background:#20242e; }
+  details.panel { border:1px solid var(--line); border-radius:9px; margin:0 0 8px; background:var(--panel); }
+  details.panel > summary { padding:11px 14px; font-weight:600; cursor:pointer; list-style:none; }
+  details.ctrl { margin:2px 0 2px 18px; }
+  details.ctrl > summary { padding:7px 12px; cursor:pointer; list-style:none; color:var(--ink); }
+  summary::-webkit-details-marker { display:none; }
+  summary .r { float:right; color:var(--dim); font-weight:400; font-size:12px; }
+  .serves { color:var(--dim); font-size:12px; margin:2px 0 6px 30px; }
+  table.pts { border-collapse:collapse; width:calc(100% - 30px); margin:0 0 10px 30px; font-size:12.5px; }
+  table.pts th, table.pts td { border:1px solid var(--line); padding:5px 8px; text-align:left; vertical-align:top; }
+  table.pts thead th { background:#20242e; position:sticky; top:0; }
+  table.pts td.io { text-align:center; white-space:nowrap; }
+  .io-AI{color:var(--ai)} .io-AO{color:var(--ao)} .io-BI{color:var(--bi)} .io-BO{color:var(--bo)}
+  .hidden { display:none !important; }
+  .foot { color:var(--dim); font-size:12px; margin-top:20px; }
+</style></head>
+<body>
+<h1>Red5-DHCP — Lighting (照明一覧)</h1>
+<p class="sub">Common-area &amp; facade lighting groups supervised on savic-net (LCP-LTG).</p>
+<div class="stats" id="stats"></div>
+<div class="mix" id="mix"></div>
+<div class="legend">
+  <span class="dot" style="background:var(--ai)"></span><em>AI</em> analog in
+  <span class="dot" style="background:var(--ao)"></span><em>AO</em> analog out
+  <span class="dot" style="background:var(--bi)"></span><em>BI</em> binary in
+  <span class="dot" style="background:var(--bo)"></span><em>BO</em> binary out
+</div>
+<h3>Panel summary</h3>
+<table class="sum" id="sum"></table>
+<div class="toolbar">
+  <strong>Panel &rarr; Controller &rarr; I/O</strong>
+  <input type="search" id="q" placeholder="filter tag / device / description / system…">
+  <button class="f" id="expand">Expand all</button>
+  <button class="f" id="collapse">Collapse all</button>
+</div>
+<div id="tree"></div>
+<p class="foot">Generated 2026-07-27 &middot; source: generate_io_list.py &middot; Red5-DHCP BMS model</p>
+<script>
+const DATA = {"title": "Red5-DHCP — Lighting (照明一覧)", "subtitle": "Common-area & facade lighting groups supervised on savic-net (LCP-LTG).", "generated": "2026-07-27", "totals": {"panels": 1, "controllers": 3, "devices": 8, "points": 16, "AI": 0, "AO": 0, "BI": 8, "BO": 8}, "panels": [{"id": "LCP-LTG", "description": "Common-area & facade lighting panel", "location": "Distributed EPS", "nctrl": 3, "nPoints": 16, "io": {"AI": 0, "AO": 0, "BI": 8, "BO": 8}, "controllers": [{"id": "DDC-LTG-01", "devices": "LTG-AVIATION, LTG-NEON, LTG-BALCONY-L", "nPoints": 6, "io": {"AI": 0, "AO": 0, "BI": 3, "BO": 3}, "points": [{"tag": "LTG-AVIATION.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-AVIATION", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-AVIATION.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-AVIATION", "units": "-", "desc": "Group status", "notes": ""}, {"tag": "LTG-NEON.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-NEON", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-NEON.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-NEON", "units": "-", "desc": "Group status", "notes": ""}, {"tag": "LTG-BALCONY-L.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-BALCONY-L", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-BALCONY-L.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-BALCONY-L", "units": "-", "desc": "Group status", "notes": ""}]}, {"id": "DDC-LTG-02", "devices": "LTG-BALCONY-H, LTG-CORRIDOR, LTG-LOBBY", "nPoints": 6, "io": {"AI": 0, "AO": 0, "BI": 3, "BO": 3}, "points": [{"tag": "LTG-BALCONY-H.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-BALCONY-H", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-BALCONY-H.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-BALCONY-H", "units": "-", "desc": "Group status", "notes": ""}, {"tag": "LTG-CORRIDOR.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-CORRIDOR", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-CORRIDOR.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-CORRIDOR", "units": "-", "desc": "Group status", "notes": ""}, {"tag": "LTG-LOBBY.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-LOBBY", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-LOBBY.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-LOBBY", "units": "-", "desc": "Group status", "notes": ""}]}, {"id": "DDC-LTG-03", "devices": "LTG-SOFFIT, LTG-TENANT", "nPoints": 4, "io": {"AI": 0, "AO": 0, "BI": 2, "BO": 2}, "points": [{"tag": "LTG-SOFFIT.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-SOFFIT", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-SOFFIT.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-SOFFIT", "units": "-", "desc": "Group status", "notes": ""}, {"tag": "LTG-TENANT.CMD", "io": "BO", "sys": "Lighting", "dev": "LTG-TENANT", "units": "-", "desc": "On/Off command", "notes": "Time/calendar + astronomical (sunset) schedule"}, {"tag": "LTG-TENANT.ST", "io": "BI", "sys": "Lighting", "dev": "LTG-TENANT", "units": "-", "desc": "Group status", "notes": ""}]}]}]};
+const IOC = {AI:'io-AI',AO:'io-AO',BI:'io-BI',BO:'io-BO'};
+function ioText(io){return `AI ${io.AI} · AO ${io.AO} · BI ${io.BI} · BO ${io.BO}`;}
+function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+const T = DATA.totals;
+document.getElementById('stats').innerHTML =
+  [['Panels',T.panels],['Controllers',T.controllers],['Devices',T.devices],['I/O points',T.points]]
+  .map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+const mixTot = T.AI+T.AO+T.BI+T.BO || 1;
+document.getElementById('mix').innerHTML =
+  [['AI',T.AI],['AO',T.AO],['BI',T.BI],['BO',T.BO]]
+  .map(([k,v])=>`<i style="width:${100*v/mixTot}%;background:var(--${k.toLowerCase()})" title="${k} ${v}"></i>`).join('');
+
+let sh = '<thead><tr><th>Panel</th><th>Description</th><th>Location</th><th>Ctrls</th>'
+       + '<th>AI</th><th>AO</th><th>BI</th><th>BO</th><th>Points</th></tr></thead><tbody>';
+for(const p of DATA.panels){
+  sh += `<tr><td>${esc(p.id)}</td><td>${esc(p.description)}</td><td>${esc(p.location)}</td>`
+      + `<td>${p.nctrl}</td><td>${p.io.AI}</td><td>${p.io.AO}</td><td>${p.io.BI}</td>`
+      + `<td>${p.io.BO}</td><td>${p.nPoints}</td></tr>`;
+}
+sh += `<tr class="tot"><td>GRAND TOTAL</td><td></td><td></td><td>${T.controllers}</td>`
+    + `<td>${T.AI}</td><td>${T.AO}</td><td>${T.BI}</td><td>${T.BO}</td><td>${T.points}</td></tr></tbody>`;
+document.getElementById('sum').innerHTML = sh;
+
+const tree = document.getElementById('tree');
+let th = '';
+for(const p of DATA.panels){
+  th += `<details class="panel" data-panel="${esc(p.id)}"><summary>${esc(p.id)}`
+      + `<span class="r">${ioText(p.io)} · ${p.nPoints} pts · ${p.nctrl} ctrl</span></summary>`
+      + `<div class="serves">${esc(p.description)} — ${esc(p.location)}</div>`;
+  for(const c of p.controllers){
+    th += `<details class="ctrl"><summary>${esc(c.id)}<span class="r">${ioText(c.io)} · ${c.nPoints} pts</span></summary>`
+        + `<div class="serves">Serves: ${esc(c.devices)}</div>`
+        + '<table class="pts"><thead><tr><th>Point tag</th><th>Description</th><th>Device</th><th>I/O</th><th>Units</th><th>System</th></tr></thead><tbody>';
+    for(const pt of c.points){
+      const blob = (pt.tag+' '+pt.dev+' '+pt.desc+' '+pt.sys).toLowerCase();
+      th += `<tr data-s="${esc(blob)}"><td>${esc(pt.tag)}</td><td>${esc(pt.desc)}</td>`
+          + `<td>${esc(pt.dev)}</td><td class="io ${IOC[pt.io]||''}">${pt.io}</td>`
+          + `<td>${esc(pt.units)}</td><td>${esc(pt.sys)}</td></tr>`;
+    }
+    th += '</tbody></table></details>';
+  }
+  th += '</details>';
+}
+tree.innerHTML = th;
+
+const q = document.getElementById('q');
+q.addEventListener('input', ()=>{
+  const s = q.value.trim().toLowerCase();
+  for(const panel of tree.querySelectorAll('details.panel')){
+    let pAny = false;
+    for(const ctrl of panel.querySelectorAll('details.ctrl')){
+      let cAny = false;
+      for(const tr of ctrl.querySelectorAll('tbody tr')){
+        const hit = !s || tr.dataset.s.includes(s);
+        tr.classList.toggle('hidden', !hit);
+        cAny = cAny || hit;
+      }
+      ctrl.classList.toggle('hidden', !cAny);
+      ctrl.open = !!s && cAny;
+      pAny = pAny || cAny;
+    }
+    panel.classList.toggle('hidden', !pAny);
+    panel.open = !!s && pAny;
+  }
+});
+document.getElementById('expand').onclick = ()=>tree.querySelectorAll('details').forEach(d=>d.open=true);
+document.getElementById('collapse').onclick = ()=>tree.querySelectorAll('details').forEach(d=>d.open=false);
+</script>
+</body></html>

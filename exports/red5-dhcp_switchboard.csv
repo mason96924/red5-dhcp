@@ -1,0 +1,8 @@
+﻿Panel,Location,Supply,Circuit,Load / served,kW,Protective device,Feeder cable,Metering / control,Work
+P-PH1-1,PH1F machine room,3φ3W 400V,CP-8,CP-8 冷水ポンプ (DHC-side CHW pump),3.7,ELCB 3P 30AF/20AT (MWS-CV) + MS (MSO-N21) + THR 2.2–5A,CV3.5sq-4C (∅ 22),WH 20/5A 1kWh-pulse → BMS; local/remote COS; ext start-stop DC24V; run/fault status out,New
+P-PH1-2,PH1F machine room,3φ3W 400V,MAIN,Panel incomer / main breaker,,MCCB 3P 600AF/600AT,CVT100sq-E14 (existing conduit reused),WH 200/5A 1kWh-pulse → BMS,Modify
+P-PH1-2,PH1F machine room,3φ3W 400V,F-RC1,Feeder → 手元開閉器盤 (RC-1用) local panel,,MCCB 3P 250AF/200AT,CVT100sq-E14,—,Modify
+LSP-RC1,PH1F machine room (adjacent RC-1 / 36-37F chiller),3φ3W 400V from P-PH1-2,RC-1(1),36/37F chiller RC-1 — compressor #1,43.5,MCCB 3P 250AF/150AT,CVT22sq-E5.5,Chiller-integral control; BMS run/alarm + kW,New
+LSP-RC1,PH1F machine room (adjacent RC-1 / 36-37F chiller),3φ3W 400V from P-PH1-2,RC-1(2),36/37F chiller RC-1 — compressor #2,43.5,MCCB 3P 250AF/150AT,CVT22sq-E5.5,Chiller-integral control; BMS run/alarm + kW,New
+LSP-RC1,PH1F machine room (adjacent RC-1 / 36-37F chiller),3φ3W 400V from P-PH1-2,SP-1,予備電源 (spare feeder 1),,MCCB 3P 50AF/30AT,CV5.5sq-3C,—,New
+LSP-RC1,PH1F machine room (adjacent RC-1 / 36-37F chiller),3φ3W 400V from P-PH1-2,SP-2,予備電源 (spare feeder 2),,MCCB 3P 50AF/30AT,CV5.5sq-3C,—,New

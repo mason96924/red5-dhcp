@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red5-DHCP — Power-panel / MCC schedule (ESCO retrofit)</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --ink:#e6e8ec; --dim:#9aa2b1; --line:#2a2f3a; --accent:#5b9dd9; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); padding:24px; }
+  h1 { font-size:22px; margin:0 0 2px; } .sub { color:var(--dim); margin:0 0 16px; max-width:70ch; }
+  .stats { display:flex; gap:22px; flex-wrap:wrap; margin:0 0 18px; }
+  .stat b { font-size:22px; display:block; } .stat span { color:var(--dim); font-size:12px; }
+  input[type=search] { background:var(--panel); border:1px solid var(--line); color:var(--ink); padding:7px 10px; border-radius:7px; min-width:280px; font-size:13px; margin:0 0 14px; }
+  details.panel { border:1px solid var(--line); border-radius:9px; margin:0 0 10px; background:var(--panel); }
+  details.panel > summary { padding:11px 14px; font-weight:600; cursor:pointer; list-style:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary .r { float:right; color:var(--dim); font-weight:400; font-size:12px; }
+  .meta { color:var(--dim); font-size:12px; margin:2px 0 8px 16px; }
+  table { border-collapse:collapse; width:calc(100% - 16px); margin:0 0 12px 16px; font-size:12.5px; }
+  th, td { border:1px solid var(--line); padding:6px 9px; text-align:left; vertical-align:top; }
+  thead th { background:#20242e; } td.kw { text-align:right; white-space:nowrap; }
+  .new { color:#57b894; } .mod { color:#e0a458; }
+  .hidden { display:none !important; }
+  .foot { color:var(--dim); font-size:12px; margin-top:20px; max-width:80ch; }
+</style></head>
+<body>
+<h1>Red5-DHCP — Power-panel / MCC schedule (ESCO retrofit)</h1>
+<p class="sub">PH1F machine-room 動力制御盤 feeders for the RC-1 (36/37F) chiller and the new CP-8 DHC chilled-water pump. Source: E-01 / E-02 / 13-4 動力盤改造図.</p>
+<div class="stats" id="stats"></div>
+<input type="search" id="q" placeholder="filter circuit / load / device / cable…">
+<div id="tree"></div>
+<p class="foot">Generated 2026-07-27 &middot; source drawings: E-01 動力制御盤改修図, E-02 幹線動力設備平面図, 13-4 動力盤改造図 (2015-04-30, (株)ヤマグチ). Scope: ESCO retrofit power circuits only.</p>
+<script>
+const DATA = {"title": "Red5-DHCP — Power-panel / MCC schedule (ESCO retrofit)", "subtitle": "PH1F machine-room 動力制御盤 feeders for the RC-1 (36/37F) chiller and the new CP-8 DHC chilled-water pump. Source: E-01 / E-02 / 13-4 動力盤改造図.", "generated": "2026-07-27", "panels": [{"id": "P-PH1-1", "name": "動力制御盤 P-PH1-1 (Power/motor-control panel)", "location": "PH1F machine room", "supply": "3φ3W 400V", "note": "Existing panel; CP-8 chilled-water-pump circuit newly added under the ESCO works.", "circuits": [{"circuit": "CP-8", "load": "CP-8 冷水ポンプ (DHC-side CHW pump)", "kw": 3.7, "device": "ELCB 3P 30AF/20AT (MWS-CV) + MS (MSO-N21) + THR 2.2–5A", "cable": "CV3.5sq-4C (∅ 22)", "control": "WH 20/5A 1kWh-pulse → BMS; local/remote COS; ext start-stop DC24V; run/fault status out", "work": "New"}]}, {"id": "P-PH1-2", "name": "動力制御盤 P-PH1-2 (Power/motor-control panel)", "location": "PH1F machine room", "supply": "3φ3W 400V", "note": "Existing panel modified; 600AF main + revenue/sub kWh meter; feeds the new RC-1 local switch panel.", "circuits": [{"circuit": "MAIN", "load": "Panel incomer / main breaker", "kw": null, "device": "MCCB 3P 600AF/600AT", "cable": "CVT100sq-E14 (existing conduit reused)", "control": "WH 200/5A 1kWh-pulse → BMS", "work": "Modify"}, {"circuit": "F-RC1", "load": "Feeder → 手元開閉器盤 (RC-1用) local panel", "kw": null, "device": "MCCB 3P 250AF/200AT", "cable": "CVT100sq-E14", "control": "—", "work": "Modify"}]}, {"id": "LSP-RC1", "name": "手元開閉器盤 (RC-1用) — RC-1 local switch/disconnect panel", "location": "PH1F machine room (adjacent RC-1 / 36-37F chiller)", "supply": "3φ3W 400V from P-PH1-2", "note": "New local panel for the RC-1 (Ebara twin-screw) chiller: one feeder per compressor + two spare feeders.", "circuits": [{"circuit": "RC-1(1)", "load": "36/37F chiller RC-1 — compressor #1", "kw": 43.5, "device": "MCCB 3P 250AF/150AT", "cable": "CVT22sq-E5.5", "control": "Chiller-integral control; BMS run/alarm + kW", "work": "New"}, {"circuit": "RC-1(2)", "load": "36/37F chiller RC-1 — compressor #2", "kw": 43.5, "device": "MCCB 3P 250AF/150AT", "cable": "CVT22sq-E5.5", "control": "Chiller-integral control; BMS run/alarm + kW", "work": "New"}, {"circuit": "SP-1", "load": "予備電源 (spare feeder 1)", "kw": null, "device": "MCCB 3P 50AF/30AT", "cable": "CV5.5sq-3C", "control": "—", "work": "New"}, {"circuit": "SP-2", "load": "予備電源 (spare feeder 2)", "kw": null, "device": "MCCB 3P 50AF/30AT", "cable": "CV5.5sq-3C", "control": "—", "work": "New"}]}], "totals": {"panels": 3, "circuits": 7, "connected_kw": 90.7}};
+function esc(s){return (''+(s??'')).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+const T=DATA.totals;
+document.getElementById('stats').innerHTML=[['Panels',T.panels],['Circuits',T.circuits],['Connected kW',T.connected_kw]]
+ .map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+let h='';
+for(const p of DATA.panels){
+  h+=`<details class="panel" open><summary>${esc(p.id)} — ${esc(p.name)}<span class="r">${p.circuits.length} circuits</span></summary>`
+   +`<div class="meta">${esc(p.location)} · ${esc(p.supply)} — ${esc(p.note)}</div>`
+   +'<table><thead><tr><th>Circuit</th><th>Load / served</th><th>kW</th><th>Protective device</th><th>Feeder cable</th><th>Metering / control</th><th>Work</th></tr></thead><tbody>';
+  for(const c of p.circuits){
+    const blob=(c.circuit+' '+c.load+' '+c.device+' '+c.cable+' '+c.control).toLowerCase();
+    const wc=c.work==='New'?'new':(c.work==='Modify'?'mod':'');
+    h+=`<tr data-s="${esc(blob)}"><td>${esc(c.circuit)}</td><td>${esc(c.load)}</td>`
+     +`<td class="kw">${c.kw??''}</td><td>${esc(c.device)}</td><td>${esc(c.cable)}</td>`
+     +`<td>${esc(c.control)}</td><td class="${wc}">${esc(c.work)}</td></tr>`;
+  }
+  h+='</tbody></table></details>';
+}
+document.getElementById('tree').innerHTML=h;
+document.getElementById('q').addEventListener('input',e=>{
+  const s=e.target.value.trim().toLowerCase();
+  for(const p of document.querySelectorAll('details.panel')){
+    let any=false;
+    for(const tr of p.querySelectorAll('tbody tr')){const hit=!s||tr.dataset.s.includes(s);tr.classList.toggle('hidden',!hit);any=any||hit;}
+    p.classList.toggle('hidden',!any); p.open=true;
+  }
+});
+</script>
+</body></html>

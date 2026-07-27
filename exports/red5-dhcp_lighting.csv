@@ -1,0 +1,17 @@
+﻿Panel,Panel description,Controller,Device ID,Point Tag,I/O,System,Units,Description,Notes / Basis
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-AVIATION,LTG-AVIATION.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-AVIATION,LTG-AVIATION.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-NEON,LTG-NEON.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-NEON,LTG-NEON.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-BALCONY-L,LTG-BALCONY-L.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-BALCONY-L,LTG-BALCONY-L.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-BALCONY-H,LTG-BALCONY-H.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-BALCONY-H,LTG-BALCONY-H.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-CORRIDOR,LTG-CORRIDOR.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-CORRIDOR,LTG-CORRIDOR.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-LOBBY,LTG-LOBBY.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-LOBBY,LTG-LOBBY.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.ST,BI,Lighting,-,Group status,

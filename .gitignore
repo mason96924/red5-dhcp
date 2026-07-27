@@ -17,6 +17,9 @@ _ocr/
 # ...but DO track the generated BMS deliverable
 !Red5-DHCP_BMS_IO_List.xlsx
 
+# ...and the downloadable pivots/schedules under exports/
+!exports/*.xlsx
+
 # OS / editor
 .DS_Store
 Thumbs.db

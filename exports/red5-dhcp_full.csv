@@ -1,0 +1,1161 @@
+﻿Panel,Panel description,Controller,Device ID,Point Tag,I/O,System,Units,Description,Notes / Basis
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CS-T,AI,DHC interface,°C,Supply (CS) temp,DHC冷水受入 ~7°C
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CR-T,AI,DHC interface,°C,Return (CR) temp,DHC冷水返送
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CS-P,AI,DHC interface,MPa,Supply header pressure,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CR-P,AI,DHC interface,MPa,Return header pressure,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.FLW,AI,DHC interface,m³/h,Intake flow,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.GJ,AI,DHC interface,GJ,Thermal-energy meter,GJ/h + integrated; thermal-demand control
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CV,AO,DHC interface,%,Intake control valve,Modulate to building load
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.CVFB,AI,DHC interface,%,Intake valve position fb,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.ISOL,BO,DHC interface,-,Intake isolation valve open/close,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.ISOL-ST,BI,DHC interface,-,Isolation valve status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.SS-P,AI,DHC interface,MPa,Supply (SS 8k) pressure,~0.8 MPa
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.MASS,AI,DHC interface,t/h,Steam mass-flow meter,t/h + integrated kg
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.PRV,AO,DHC interface,%,PRV 8k->2k reducing valve,0.8->0.2 MPa
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.SSH2-P,AI,DHC interface,MPa,Reduced (SSH 2k) pressure,~0.2 MPa
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.ISOL,BO,DHC interface,-,Main isolation valve open/close,Season enable + OA lockout
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.ISOL-ST,BI,DHC interface,-,Isolation valve status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-02,DHC-STEAM,DHC-STEAM.HR-M,AI,DHC interface,L,Condensate (HR) return meter,Hot-return to DHC via HWT-1
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-03,HWT-1,HWT-1.LVL,AI,Heat source,%,Tank level,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-03,HWT-1,HWT-1.HI,BI,Heat source,-,High-level alarm,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-03,HWT-1,HWT-1.LO,BI,Heat source,-,Low-level alarm,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-03,HWT-1,HWT-1.T,AI,Heat source,°C,Condensate temp,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-03,HWT-1,HWT-1.MU,BO,Heat source,-,Make-up water valve,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.RUN,BI,Heat source,-,Run status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.SPD,AO,Heat source,%,VFD speed command,HP-5; HWT-1 -> DHC hot-return
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.RUN,BI,Heat source,-,Run status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.SPD,AO,Heat source,%,VFD speed command,HP-5; HWT-1 -> DHC hot-return
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.RUN,BI,Heat source,-,Run status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.SPD,AO,Heat source,%,VFD speed command,HP-3; serves B1F 厨房 AC-5/6/7
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.RUN,BI,Heat source,-,Run status,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.SPD,AO,Heat source,%,VFD speed command,HP-3; serves B1F 厨房 AC-5/6/7
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-ELEC-MAIN,MTR-ELEC-MAIN,AI,Metering,kWh,Main electricity (kWh),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-GAS-MAIN,MTR-GAS-MAIN,AI,Metering,m³,City gas (m³),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-WATER-MAIN,MTR-WATER-MAIN,AI,Metering,m³,City water (m³),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-CHW,MTR-DHC-CHW,AI,Metering,GJ,DHC chilled-water energy (受入),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-STEAM,MTR-DHC-STEAM,AI,Metering,t/h,DHC steam energy (受入),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-COND,MTR-DHC-COND,AI,Metering,L,DHC condensate return (HR),Integrating meter; thermal-demand & peak limiting
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-1,CT-1-1.RUN,BI,Condenser water,-,Fan run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-1,CT-1-1.TRIP,BI,Condenser water,-,Fan INV fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-1,CT-1-1.SS,BO,Condenser water,-,Fan start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-1,CT-1-1.SPD,AO,Condenser water,%,Fan VFD speed command,Wet-bulb + approach reset
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-1,CT-1-1.SPDFB,AI,Condenser water,%,Fan speed feedback,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-2,CT-1-2.RUN,BI,Condenser water,-,Fan run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-2,CT-1-2.TRIP,BI,Condenser water,-,Fan INV fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-2,CT-1-2.SS,BO,Condenser water,-,Fan start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-2,CT-1-2.SPD,AO,Condenser water,%,Fan VFD speed command,Wet-bulb + approach reset
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1-2,CT-1-2.SPDFB,AI,Condenser water,%,Fan speed feedback,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.LVL,AI,Condenser water,%,Basin water level,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.MU,BO,Condenser water,-,Make-up water valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.BLD,BO,Condenser water,-,Bleed/blowdown valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.DRY,BI,Condenser water,-,Low-water (渇水) alarm,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.CHEM,BI,Condenser water,-,Chemical dosing (薬注) batch fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-01,CT-1,CT-1.EH,BO,Condenser water,-,Basin heater (E/H) enable,Freeze protection
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-1,CT-2-1.RUN,BI,Condenser water,-,Fan run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-1,CT-2-1.TRIP,BI,Condenser water,-,Fan INV fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-1,CT-2-1.SS,BO,Condenser water,-,Fan start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-1,CT-2-1.SPD,AO,Condenser water,%,Fan VFD speed command,Wet-bulb + approach reset
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-1,CT-2-1.SPDFB,AI,Condenser water,%,Fan speed feedback,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-2,CT-2-2.RUN,BI,Condenser water,-,Fan run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-2,CT-2-2.TRIP,BI,Condenser water,-,Fan INV fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-2,CT-2-2.SS,BO,Condenser water,-,Fan start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-2,CT-2-2.SPD,AO,Condenser water,%,Fan VFD speed command,Wet-bulb + approach reset
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2-2,CT-2-2.SPDFB,AI,Condenser water,%,Fan speed feedback,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.LVL,AI,Condenser water,%,Basin water level,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.MU,BO,Condenser water,-,Make-up water valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.BLD,BO,Condenser water,-,Bleed/blowdown valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.DRY,BI,Condenser water,-,Low-water (渇水) alarm,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.CHEM,BI,Condenser water,-,Chemical dosing (薬注) batch fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.EH,BO,Condenser water,-,Basin heater (E/H) enable,Freeze protection
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.FILT-RUN,BI,Condenser water,-,Filtration (ろ過) pump run,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-02,CT-2,CT-2.FILT-SS,BO,Condenser water,-,Filtration pump start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3-1,CT-3-1.RUN,BI,Condenser water,-,Fan run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3-1,CT-3-1.TRIP,BI,Condenser water,-,Fan INV fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3-1,CT-3-1.SS,BO,Condenser water,-,Fan start/stop,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3-1,CT-3-1.SPD,AO,Condenser water,%,Fan VFD speed command,Wet-bulb + approach reset
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3-1,CT-3-1.SPDFB,AI,Condenser water,%,Fan speed feedback,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.LVL,AI,Condenser water,%,Basin water level,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.MU,BO,Condenser water,-,Make-up water valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.BLD,BO,Condenser water,-,Bleed/blowdown valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.DRY,BI,Condenser water,-,Low-water (渇水) alarm,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.CHEM,BI,Condenser water,-,Chemical dosing (薬注) batch fault,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-03,CT-3,CT-3.EH,BO,Condenser water,-,Basin heater (E/H) enable,Freeze protection
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-1,CDP-1-1.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-1,CDP-1-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-1,CDP-1-1.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-1,CDP-1-1.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-2,CDP-1-2.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-2,CDP-1-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-2,CDP-1-2.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-2,CDP-1-2.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-3,CDP-1-3.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-3,CDP-1-3.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-3,CDP-1-3.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-3,CDP-1-3.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-1,CDP-2-1.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-1,CDP-2-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-1,CDP-2-1.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-1,CDP-2-1.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-2,CDP-2-2.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-2,CDP-2-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-2,CDP-2-2.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-2,CDP-2-2.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-3-1,CDP-3-1.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-3-1,CDP-3-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-3-1,CDP-3-1.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-3-1,CDP-3-1.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-06,CDP-3-2,CDP-3-2.RUN,BI,Condenser water,-,Run status,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-06,CDP-3-2,CDP-3-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-06,CDP-3-2,CDP-3-2.SS,BO,Condenser water,-,Start/Stop command,Group start (群起動); interlock w/ CT + load
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-06,CDP-3-2,CDP-3-2.FLW,BI,Condenser water,-,Flow/DP proof,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EX-1,EX-1.EN,BO,Condenser water,-,Free-cooling enable / changeover,Low wet-bulb winter free-cooling
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EX-1,EX-1.ST,AI,Condenser water,°C,CHW-side leaving temp,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EX-1,EX-1.CV,AO,Condenser water,%,CW-side control valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-1,EMHX-1.EN,BO,Condenser water,-,Emergency cooling enable,低層階非常用; from DHC冷水受入ヘッダ
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-1,EMHX-1.ST,AI,Condenser water,°C,Cooling-water leaving temp,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-1,EMHX-1.ISOL,BO,Condenser water,-,DHC-side isolation valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-2,EMHX-2.EN,BO,Condenser water,-,Emergency cooling enable,低層階非常用; from DHC冷水受入ヘッダ
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-2,EMHX-2.ST,AI,Condenser water,°C,Cooling-water leaving temp,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-07,EMHX-2,EMHX-2.ISOL,BO,Condenser water,-,DHC-side isolation valve,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-08,MTR-CDW-KWH,MTR-CDW-KWH,AI,Metering,kWh,Cooling-tower/condenser sub-meter,Integrating meter; thermal-demand & peak limiting
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-1,EX-2-1.P-IN,AI,Heat source,°C,Primary inlet temp (laundry),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-1,EX-2-1.S-OUT,AI,Heat source,°C,Secondary outlet (supply) temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-1,EX-2-1.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-1,EX-2-1.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-2,EX-2-2.P-IN,AI,Heat source,°C,Primary inlet temp (laundry),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-2,EX-2-2.S-OUT,AI,Heat source,°C,Secondary outlet (supply) temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-2,EX-2-2.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-01,EX-2-2,EX-2-2.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.SPD,AO,Heat source,%,VFD speed command,CP-1; sequenced/群起動; VFD; DP-reset
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.SPD,AO,Heat source,%,VFD speed command,CP-1; sequenced/群起動; VFD; DP-reset
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.SPD,AO,Heat source,%,VFD speed command,CP-1; sequenced/群起動; VFD; DP-reset
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.SPD,AO,Heat source,%,VFD speed command,CP-4; open/close + duty rotation
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.SPD,AO,Heat source,%,VFD speed command,CP-4; open/close + duty rotation
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.SPD,AO,Heat source,%,VFD speed command,CP-5
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.SPD,AO,Heat source,%,VFD speed command,CP-5
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.SPD,AO,Heat source,%,VFD speed command,HP-1; sequenced; 4-pipe heating loop
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.SPD,AO,Heat source,%,VFD speed command,HP-1; sequenced; 4-pipe heating loop
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.RUN,BI,Heat source,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.SPD,AO,Heat source,%,VFD speed command,HP-1; sequenced; 4-pipe heating loop
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-06,EXT-1,EXT-1.LVL,AI,Heat source,%,Tank level,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-06,EXT-1,EXT-1.HI,BI,Heat source,-,High-level alarm,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-06,EXT-1,EXT-1.LO,BI,Heat source,-,Low-level alarm,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-07,ST-1,ST-1.T,AI,Common,°C,Outdoor dry-bulb temp,低層 OA sensor
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-07,ST-1,ST-1.RH,AI,Common,%RH,Outdoor humidity,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-07,ST-1,ST-1.WB,AI,Common,°C,Wet-bulb temp (計測/演算),Drives CW setpoint + free-cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.SPD,AO,Air side,%,Supply fan speed (fixed),INFERRED / no INV control per schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-1,AC-1.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.SPD,AO,Air side,%,Supply fan speed (fixed),INFERRED / no INV control per schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-2,AC-2.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.SPD,AO,Air side,%,Supply fan speed (fixed),INFERRED / no INV control per schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-08,AC-3,AC-3.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-4,AC-4.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-5,AC-5.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-09,AC-6,AC-6.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.RAT,AI,Air side,°C,Return air temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-10,AC-26,AC-26.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-N,FCU-L-N.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-NE,FCU-L-NE.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-11,FCU-L-SE,FCU-L-SE.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-S,FCU-L-S.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-12,FCU-L-SW,FCU-L-SW.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,SF-6,SF-6.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,SF-6,SF-6.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,SF-6,SF-6.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-28,EF-28.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-28,EF-28.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-28,EF-28.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-32,EF-32.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-32,EF-32.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-13,EF-32,EF-32.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-33,EF-33.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-33,EF-33.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-33,EF-33.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-97,EF-97.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-97,EF-97.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,EF-97,EF-97.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,RF-7,RF-7.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,RF-7,RF-7.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-14,RF-7,RF-7.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-8,RF-8.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-8,RF-8.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-8,RF-8.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-9,RF-9.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-9,RF-9.RUN,BI,Ventilation,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-15,RF-9,RF-9.TRIP,BI,Ventilation,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-16,POOL-FP,POOL-FP.SS,BO,Common,-,Start/Stop command,Time schedule 8:00-19:00
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-16,POOL-FP,POOL-FP.RUN,BI,Common,-,Run status,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-16,POOL-FP,POOL-FP.TRIP,BI,Common,-,Fault,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-17,MTR-AHU-KWH,MTR-AHU-KWH,AI,Metering,kWh,AHU/OAU fans sub-meter,Integrating meter; thermal-demand & peak limiting
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-1,EX-3-1.P-IN,AI,Heat source,°C,Primary inlet temp (kitchen),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-1,EX-3-1.S-OUT,AI,Heat source,°C,Secondary outlet (supply) temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-1,EX-3-1.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-1,EX-3-1.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-2,EX-3-2.P-IN,AI,Heat source,°C,Primary inlet temp (kitchen),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-2,EX-3-2.S-OUT,AI,Heat source,°C,Secondary outlet (supply) temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-2,EX-3-2.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-01,EX-3-2,EX-3-2.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.SPD,AO,Heat source,%,VFD speed command,CP-2; sequenced/群起動; VFD; DP-reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.SPD,AO,Heat source,%,VFD speed command,CP-2; sequenced/群起動; VFD; DP-reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.SPD,AO,Heat source,%,VFD speed command,CP-2; sequenced/群起動; VFD; DP-reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.SPD,AO,Heat source,%,VFD speed command,CP-3; INV; control-flow l/m
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.SPD,AO,Heat source,%,VFD speed command,CP-3; INV; control-flow l/m
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.SPD,AO,Heat source,%,VFD speed command,CP-6; 順序切替 ON:№1優先
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.SPD,AO,Heat source,%,VFD speed command,CP-6; 順序切替 ON:№1優先
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.SPD,AO,Heat source,%,VFD speed command,HP-2; sequenced; 4-pipe heating loop
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.SPD,AO,Heat source,%,VFD speed command,HP-2; sequenced; 4-pipe heating loop
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.RUN,BI,Heat source,-,Run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.SS,BO,Heat source,-,Start/Stop command,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.SPD,AO,Heat source,%,VFD speed command,HP-2; sequenced; 4-pipe heating loop
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-06,EXT-2,EXT-2.LVL,AI,Heat source,%,Tank level,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-06,EXT-2,EXT-2.HI,BI,Heat source,-,High-level alarm,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-06,EXT-2,EXT-2.LO,BI,Heat source,-,Low-level alarm,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-07,ST-2,ST-2.T,AI,Common,°C,Outdoor dry-bulb temp,高層 OA sensor
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-07,ST-2,ST-2.RH,AI,Common,%RH,Outdoor humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-07,ST-2,ST-2.WB,AI,Common,°C,Wet-bulb temp (計測/演算),Drives CW setpoint + free-cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-14,EVU-14.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.RUN,BI,Air side,-,Supply fan run status,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.TRIP,BI,Air side,-,Supply fan fault,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-09,EVU-15,EVU-15.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-N,FCU-H-N.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-NE,FCU-H-NE.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-10,FCU-H-SE,FCU-H-SE.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-S,FCU-H-S.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.EN,BO,Air side,-,Group enable / schedule,DHC 4-pipe; season changeover
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-11,FCU-H-SW,FCU-H-SW.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.TRIP,BI,Heat source,-,Common fault / trip,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.LR,BI,Heat source,-,Local/Remote status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.SS,BO,Heat source,-,Start/Stop command,36/37F local chiller; BACKUP to DHC (チラーバックアップ); source changeover valves
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.DMD,AO,Heat source,%,Capacity/demand limit,Demand-limit / soft-load
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.CHWST,AI,Heat source,°C,CHW supply (leaving) temp,Design 7°C
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.CHWRT,AI,Heat source,°C,CHW return (entering) temp,Design 12°C
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.CWRT,AI,Heat source,°C,Condenser water leaving temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.KW,AI,Heat source,kW,Electrical input power,"Ebara screw RHS DW202M2: 370 kW cool / 82.2 kW in (COP 4.5); 2×45 kW screw comp, R-407C"
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.FLW,BI,Heat source,-,Evaporator flow proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.P-IN,AI,Heat source,°C,Primary (DHC) inlet temp,36/37F DHC tie-in (チラーバックアップ)
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.P-OUT,AI,Heat source,°C,Primary (DHC) outlet temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.S-OUT,AI,Heat source,°C,Secondary (loop) supply temp,Loop CHW setpoint
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.S-FLW,AI,Heat source,m³/h,Secondary supply flow,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.GJ,AI,Heat source,MJ,DHC thermal-energy meter,m³/h + MJ on the graphic
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-02,HEX-1,HEX-1.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.SPD,AO,Heat source,%,VFD speed command,CP-7; duty/standby; 発停/故障
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.SPD,AO,Heat source,%,VFD speed command,CP-7; duty/standby; 発停/故障
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.SPD,AO,Heat source,%,VFD speed command,CP-8; DHC side of HEX-1; metered
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.SPD,AO,Heat source,%,VFD speed command,CP-8; DHC side of HEX-1; metered
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.SPD,AO,Heat source,%,VFD speed command,CP-8; DHC side of HEX-1; metered
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.SPD,AO,Heat source,%,VFD speed command,HP-4; EX4 secondary -> FCU/AC/EVU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.RUN,BI,Heat source,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.TRIP,BI,Heat source,-,VFD/pump fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.SS,BO,Heat source,-,Start/Stop command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.SPD,AO,Heat source,%,VFD speed command,HP-4; EX4 secondary -> FCU/AC/EVU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.SPDFB,AI,Heat source,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.FLW,BI,Heat source,-,Flow/DP proof,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EX4,EX4.P-IN,AI,Heat source,°C,Primary inlet temp (36/37F loop),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EX4,EX4.S-OUT,AI,Heat source,°C,Secondary outlet (supply) temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EX4,EX4.PV,AO,Heat source,%,Primary control valve,Modulate to hold S-OUT
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EX4,EX4.PVFB,AI,Heat source,%,Primary valve position fb,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EXT-3,EXT-3.LVL,AI,Heat source,%,Tank level,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EXT-3,EXT-3.HI,BI,Heat source,-,High-level alarm,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-06,EXT-3,EXT-3.LO,BI,Heat source,-,Low-level alarm,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-07,CHGV-1,CHGV-1.CMD,BO,Heat source,-,Open/close command,R-1 evaporator branch valve (open = chiller mode)
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-07,CHGV-1,CHGV-1.ST,BI,Heat source,-,Position status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-07,CHGV-2,CHGV-2.CMD,BO,Heat source,-,Open/close command,Through-main valve (open = DHC bypass mode)
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-07,CHGV-2,CHGV-2.ST,BI,Heat source,-,Position status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.RUN,BI,Air side,-,Supply fan run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.RAT,AI,Air side,°C,Return air temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-22,AC-22.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.RUN,BI,Air side,-,Supply fan run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.RAT,AI,Air side,°C,Return air temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-23,AC-23.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.RUN,BI,Air side,-,Supply fan run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.RAT,AI,Air side,°C,Return air temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.RH,AI,Air side,%RH,Return/space humidity,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-08,AC-24,AC-24.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.RUN,BI,Air side,-,Supply fan run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.RAT,AI,Air side,°C,Return air temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-25,AC-25.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.RUN,BI,Air side,-,Supply fan run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.RAT,AI,Air side,°C,Return air temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.RH,AI,Air side,%RH,Return/space humidity,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-09,AC-27,AC-27.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.EN,BO,Air side,-,Group enable / schedule,36/37F: EX4 secondary loop (DHC/R-1 source)
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.MODE,BI,Air side,-,Cooling/Heating changeover status,順序/季節切替
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.CWV,AO,Air side,%,Chilled-water group valve,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.HWV,AO,Air side,%,Hot-water group valve,Deadband vs cooling
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.CWBV-F,BI,Air side,-,Chilled-water BV batch fault,冷水BV一括故障
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.HWBV-F,BI,Air side,-,Hot-water BV batch fault,温水BV一括故障
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-10,FCU-3637,FCU-3637.RT,AI,Air side,°C,Zone reference/return temp,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-82,EF-82.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-82,EF-82.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-82,EF-82.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-83,EF-83.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-83,EF-83.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-83,EF-83.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-83,EF-83.SPD,AO,Ventilation,%,VFD (INV) speed command,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-83,EF-83.SPDFB,AI,Ventilation,%,VFD speed feedback,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-84,EF-84.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-84,EF-84.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-11,EF-84,EF-84.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-85,EF-85.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-85,EF-85.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-85,EF-85.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-86,EF-86.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-86,EF-86.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-86,EF-86.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-89,EF-89.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-89,EF-89.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-12,EF-89,EF-89.TRIP,BI,Ventilation,-,Fault,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-13,EF-98,EF-98.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-13,EF-98,EF-98.RUN,BI,Ventilation,-,Run status,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-13,EF-98,EF-98.TRIP,BI,Ventilation,-,Fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.RUN,BI,Air side,-,Supply fan run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.TRIP,BI,Air side,-,Supply fan fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.RAT,AI,Air side,°C,Return air temp,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-1F,1F–2F air-side panel,DDC-1F-01,AC-7,AC-7.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.RUN,BI,Air side,-,Supply fan run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.TRIP,BI,Air side,-,Supply fan fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-1,EVU-1.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.RUN,BI,Air side,-,Supply fan run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.TRIP,BI,Air side,-,Supply fan fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-2,EVU-2.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.RUN,BI,Air side,-,Supply fan run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.TRIP,BI,Air side,-,Supply fan fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-1F,1F–2F air-side panel,DDC-1F-02,EVU-3,EVU-3.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-41,EF-41.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-41,EF-41.RUN,BI,Ventilation,-,Run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-41,EF-41.TRIP,BI,Ventilation,-,Fault,
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-42,EF-42.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-42,EF-42.RUN,BI,Ventilation,-,Run status,
+LCP-1F,1F–2F air-side panel,DDC-1F-03,EF-42,EF-42.TRIP,BI,Ventilation,-,Fault,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.SPD,AO,Air side,%,Supply fan speed (fixed),INFERRED / no INV control per schedule
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-8,AC-8.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.SPD,AO,Air side,%,Supply fan speed (fixed),INFERRED / no INV control per schedule
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-9,AC-9.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.RH,AI,Air side,%RH,Return/space humidity,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-01,AC-10,AC-10.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.RAT,AI,Air side,°C,Return air temp,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-5,EVU-5.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.RUN,BI,Air side,-,Supply fan run status,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.TRIP,BI,Air side,-,Supply fan fault,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-2F,2F air-side panel,DDC-2F-03,EVU-6,EVU-6.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-2-1,EF-2-1.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-2F,2F air-side panel,DDC-2F-04,EF-2-1,EF-2-1.RUN,BI,Ventilation,-,Run status,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-2-1,EF-2-1.TRIP,BI,Ventilation,-,Fault,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-46,EF-46.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-2F,2F air-side panel,DDC-2F-04,EF-46,EF-46.RUN,BI,Ventilation,-,Run status,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-46,EF-46.TRIP,BI,Ventilation,-,Fault,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-47,EF-47.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-2F,2F air-side panel,DDC-2F-04,EF-47,EF-47.RUN,BI,Ventilation,-,Run status,
+LCP-2F,2F air-side panel,DDC-2F-04,EF-47,EF-47.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.RUN,BI,Air side,-,Supply fan run status,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.RAT,AI,Air side,°C,Return air temp,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.RH,AI,Air side,%RH,Return/space humidity,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-14,AC-14.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.RUN,BI,Air side,-,Supply fan run status,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.RAT,AI,Air side,°C,Return air temp,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-15,AC-15.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.RUN,BI,Air side,-,Supply fan run status,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.RAT,AI,Air side,°C,Return air temp,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-3F,3F air-side panel,DDC-3F-01,AC-16,AC-16.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.RUN,BI,Air side,-,Supply fan run status,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.TRIP,BI,Air side,-,Supply fan fault,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.SPD,AO,Air side,%,Supply fan speed (fixed),No INV control per schedule
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-3F,3F air-side panel,DDC-3F-02,EVU-7,EVU-7.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-56,EF-56.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-03,EF-56,EF-56.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-56,EF-56.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-60,EF-60.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-03,EF-60,EF-60.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-60,EF-60.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-61,EF-61.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-03,EF-61,EF-61.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-03,EF-61,EF-61.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-62,EF-62.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-04,EF-62,EF-62.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-62,EF-62.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-76,EF-76.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-04,EF-76,EF-76.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-76,EF-76.TRIP,BI,Ventilation,-,Fault,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-77,EF-77.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-3F,3F air-side panel,DDC-3F-04,EF-77,EF-77.RUN,BI,Ventilation,-,Run status,
+LCP-3F,3F air-side panel,DDC-3F-04,EF-77,EF-77.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.RAT,AI,Air side,°C,Return air temp,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-17,AC-17.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.RAT,AI,Air side,°C,Return air temp,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-18,AC-18.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.RAT,AI,Air side,°C,Return air temp,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.RH,AI,Air side,%RH,Return/space humidity,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-4F,4F–5F air-side panel,DDC-4F-01,AC-19,AC-19.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.SAT,AI,Air side,°C,Supply air temp,SAT/RAT setpoint schedule
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.RAT,AI,Air side,°C,Return air temp,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-20,AC-20.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.SS,BO,Air side,-,Supply fan start/stop,Time/event schedule; banquet 'occ by event'
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV output schedule 0.4-1.0
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.SAT,AI,Air side,°C,Supply air temp,Kitchen SAT 5-12°C
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.RAT,AI,Air side,°C,Return air temp,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-4F,4F–5F air-side panel,DDC-4F-02,AC-21,AC-21.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.RUN,BI,Air side,-,Supply fan run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.TRIP,BI,Air side,-,Supply fan fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SS,BO,Air side,-,Supply fan start/stop,Time schedule; night setback
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SPDFB,AI,Air side,%,Supply fan speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SAT,AI,Air side,°C,Supply (off-coil) air temp,Seasonal SAT reset
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.OAT,AI,Air side,°C,Outdoor-air temp (unit inlet),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.OARH,AI,Air side,%RH,Outdoor-air humidity,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.CCV,AO,Air side,%,Cooling coil (CHW) valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.HUM,AO,Air side,%,Steam humidifier valve,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.FLT,BI,Air side,-,Filter dirty (DP),
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.FRZ,BI,Air side,-,Freeze protection stat,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-54,EF-54.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-54,EF-54.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-54,EF-54.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-55,EF-55.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-55,EF-55.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-55,EF-55.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-57,EF-57.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-57,EF-57.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-04,EF-57,EF-57.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-58,EF-58.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-58,EF-58.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-58,EF-58.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59,EF-59.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59,EF-59.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59,EF-59.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59-2,EF-59-2.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59-2,EF-59-2.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-05,EF-59-2,EF-59-2.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-67,EF-67.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-67,EF-67.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-67,EF-67.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-69,EF-69.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-69,EF-69.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-69,EF-69.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-70,EF-70.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-70,EF-70.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-70,EF-70.TRIP,BI,Ventilation,-,Fault,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-70,EF-70.SPD,AO,Ventilation,%,VFD (INV) speed command,
+LCP-4F,4F–5F air-side panel,DDC-4F-06,EF-70,EF-70.SPDFB,AI,Ventilation,%,VFD speed feedback,
+LCP-4F,4F–5F air-side panel,DDC-4F-07,EF-71,EF-71.SS,BO,Ventilation,-,Start/Stop command,Interlock w/ parent AHU
+LCP-4F,4F–5F air-side panel,DDC-4F-07,EF-71,EF-71.RUN,BI,Ventilation,-,Run status,
+LCP-4F,4F–5F air-side panel,DDC-4F-07,EF-71,EF-71.TRIP,BI,Ventilation,-,Fault,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-1,PAC-1-1.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-1,PAC-1-1.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-1,PAC-1-1.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-2,PAC-1-2.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-2,PAC-1-2.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-2,PAC-1-2.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-2,PAC-2.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-2,PAC-2.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-2,PAC-2.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-3,PAC-3.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-3,PAC-3.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-3,PAC-3.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-4,PAC-4.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-4,PAC-4.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-4,PAC-4.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-5,PAC-5.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-5,PAC-5.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-5,PAC-5.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-1,PCU-1-1.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-1,PCU-1-1.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-1,PCU-1-1.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-2,PCU-1-2.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-2,PCU-1-2.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-1-2,PCU-1-2.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-5,PCU-5.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-5,PCU-5.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-03,PCU-5,PCU-5.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-6,PCU-6.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-6,PCU-6.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-6,PCU-6.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-7,PCU-7.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-7,PCU-7.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-7,PCU-7.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-8,PCU-8.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-8,PCU-8.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-04,PCU-8,PCU-8.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-10,PCU-10.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-10,PCU-10.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-10,PCU-10.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-11,PCU-11.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-11,PCU-11.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-11,PCU-11.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-12,PCU-12.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-12,PCU-12.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-05,PCU-12,PCU-12.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PCU-13,PCU-13.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PCU-13,PCU-13.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PCU-13,PCU-13.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PMAC-1,PMAC-1.RUN,BI,Packaged units,-,Run status,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PMAC-1,PMAC-1.TRIP,BI,Packaged units,-,Fault / alarm,
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-06,PMAC-1,PMAC-1.SS,BO,Packaged units,-,Start/Stop command,Time/occupancy schedule
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM1,BI,Packaged units,-,Cold-store/refrigeration alarm — B1F 主厨房一括,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM2,BI,Packaged units,-,Cold-store/refrigeration alarm — B1F 厨房冷蔵庫異常一括,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM3,BI,Packaged units,-,Cold-store/refrigeration alarm — MR-1 ル・パティオ厨房,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM4,BI,Packaged units,-,Cold-store/refrigeration alarm — 2F ゴミ処理室,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM5,BI,Packaged units,-,Cold-store/refrigeration alarm — 2F カスケイド厨房,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM6,BI,Packaged units,-,Cold-store/refrigeration alarm — 調理冷蔵庫,冷蔵庫異常; condenser-water rejected
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-07,REFR-1,REFR-1.ALM7,BI,Packaged units,-,Cold-store/refrigeration alarm — 雲海厨房,冷蔵庫異常; condenser-water rejected
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-AVIATION,LTG-AVIATION.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-AVIATION,LTG-AVIATION.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-NEON,LTG-NEON.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-NEON,LTG-NEON.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-BALCONY-L,LTG-BALCONY-L.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-01,LTG-BALCONY-L,LTG-BALCONY-L.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-BALCONY-H,LTG-BALCONY-H.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-BALCONY-H,LTG-BALCONY-H.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-CORRIDOR,LTG-CORRIDOR.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-CORRIDOR,LTG-CORRIDOR.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-LOBBY,LTG-LOBBY.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-02,LTG-LOBBY,LTG-LOBBY.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.ST,BI,Lighting,-,Group status,
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
+LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.ST,BI,Lighting,-,Group status,

@@ -1,0 +1,63 @@
+﻿Panel,Panel description,Controller,Device ID,Point Tag,I/O,System,Units,Description,Notes / Basis
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-01,DHC-CHW,DHC-CHW.GJ,AI,DHC interface,GJ,Thermal-energy meter,GJ/h + integrated; thermal-demand control
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-1,HP-5-1.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-5-2,HP-5-2.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-04,HP-3-1,HP-3-1.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-05,HP-3-2,HP-3-2.KW,AI,Heat source,kW,Power,
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-ELEC-MAIN,MTR-ELEC-MAIN,AI,Metering,kWh,Main electricity (kWh),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-GAS-MAIN,MTR-GAS-MAIN,AI,Metering,m³,City gas (m³),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-06,MTR-WATER-MAIN,MTR-WATER-MAIN,AI,Metering,m³,City water (m³),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-CHW,MTR-DHC-CHW,AI,Metering,GJ,DHC chilled-water energy (受入),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-STEAM,MTR-DHC-STEAM,AI,Metering,t/h,DHC steam energy (受入),Integrating meter; thermal-demand & peak limiting
+LCP-DHC,DHC intake & hot-well panel,DDC-DHC-07,MTR-DHC-COND,MTR-DHC-COND,AI,Metering,L,DHC condensate return (HR),Integrating meter; thermal-demand & peak limiting
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-1,CDP-1-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-2,CDP-1-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-04,CDP-1-3,CDP-1-3.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-1,CDP-2-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-2-2,CDP-2-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-05,CDP-3-1,CDP-3-1.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-06,CDP-3-2,CDP-3-2.TRIP,BI,Condenser water,-,Fault / breaker trip,
+LCP-CT,Cooling-tower & condenser-water panel,DDC-CT-08,MTR-CDW-KWH,MTR-CDW-KWH,AI,Metering,kWh,Cooling-tower/condenser sub-meter,Integrating meter; thermal-demand & peak limiting
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-1,CP-1-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-2,CP-1-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-02,CP-1-3,CP-1-3.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-1,CP-4-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-4-2,CP-4-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-03,CP-5-1,CP-5-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-04,CP-5-2,CP-5-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-1,HP-1-1.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-2,HP-1-2.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-05,HP-1-3,HP-1-3.KW,AI,Heat source,kW,Power,
+LCP-HSL,Low-rise distribution panel (低層系統),DDC-HSL-17,MTR-AHU-KWH,MTR-AHU-KWH,AI,Metering,kWh,AHU/OAU fans sub-meter,Integrating meter; thermal-demand & peak limiting
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-1,CP-2-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-2,CP-2-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-02,CP-2-3,CP-2-3.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-1,CP-3-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-3-2,CP-3-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-03,CP-6-1,CP-6-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-04,CP-6-2,CP-6-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-1,HP-2-1.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-2,HP-2-2.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-05,HP-2-3,HP-2-3.KW,AI,Heat source,kW,Power,
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-11,EVU-11.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-12,EVU-12.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-HSH,High-rise distribution panel (高層系統),DDC-HSH-08,EVU-13,EVU-13.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.TRIP,BI,Heat source,-,Common fault / trip,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.DMD,AO,Heat source,%,Capacity/demand limit,Demand-limit / soft-load
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-01,R-1,R-1.KW,AI,Heat source,kW,Electrical input power,"Ebara screw RHS DW202M2: 370 kW cool / 82.2 kW in (COP 4.5); 2×45 kW screw comp, R-407C"
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-1,CP-7-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-7-2,CP-7-2.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-03,CP-8-1,CP-8-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8-2.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.KW,AI,Heat source,kW,Power,
+LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.KW,AI,Heat source,kW,Power,
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-1,PAC-1-1.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-1-2,PAC-1-2.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-2,PAC-2.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-3,PAC-3.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-4,PAC-4.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-5,PAC-5.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
