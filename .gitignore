@@ -20,3 +20,6 @@ _ocr/
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Office temp lock files
+~$*

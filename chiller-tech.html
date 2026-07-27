@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slides-format" content="viewport" />
+  <title>Chiller Technology Interactive Diagram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #08111a;
+      --color-bg-deep: #050b11;
+      --color-surface: #112232;
+      --color-text: #e7f0f7;
+      --color-text-secondary: #bdd0de;
+      --color-text-muted: #7f9aae;
+      --color-accent-1: #49b3c8;
+      --color-accent-2: #8fd4de;
+      --color-accent-3: #a7c957;
+      --color-glass-bg: rgba(255,255,255,0.05);
+      --color-glass-border: rgba(255,255,255,0.09);
+      --font-display: 'Instrument Serif', serif;
+      --font-body: 'Manrope', sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg:#08111a; --color-text:#e7f0f7; --glow-color-rgb:73,179,200; }
+    *{box-sizing:border-box} html,body{margin:0;background:var(--color-bg);overflow:hidden} body{font-family:'Manrope',sans-serif;color:var(--color-text);height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.97);transition:opacity .55s ease, transform .55s ease;pointer-events:none;overflow:hidden;background:radial-gradient(circle at top right, rgba(73,179,200,.08), transparent 25%),linear-gradient(180deg,#09131d 0%,#071019 100%)}
+    .slide.active{opacity:1;transform:scale(1);pointer-events:all}
+    .slide>.content{position:relative;z-index:2;width:min(1220px,100%);padding:2rem 2.5rem}
+    .nav-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:99;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);padding:10px 18px;border-radius:999px}
+    .nav-btn{width:38px;height:38px;border:none;border-radius:50%;background:rgba(255,255,255,.06);color:#8fd4de;font-size:1.1rem;cursor:pointer}
+    .slide-dots{display:flex;gap:8px}.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer}.dot.active{background:#49b3c8;transform:scale(1.2)}
+    .slide-counter{font-size:.8rem;color:#9fb6c8;min-width:42px;text-align:center}
+    .reveal{opacity:0;transform:translateY(16px)}
+    .gradient-mesh,.particle-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}.blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float 16s ease-in-out infinite}.blob:nth-child(2){animation-duration:22s}.blob:nth-child(3){animation-duration:18s;animation-direction:reverse}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(35px,-25px) scale(1.08)}}
+    .spider-wrap{position:relative;height:680px}
+    .center-node,.main-node,.sub-node{position:absolute;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(17,34,50,.78);backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .center-node{left:50%;top:50%;transform:translate(-50%,-50%);width:170px;height:170px;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;border:2px solid rgba(143,212,222,.35);background:radial-gradient(circle at 30% 30%, rgba(143,212,222,.18), rgba(17,34,50,.92))}
+    .main-node{width:210px;min-height:90px;padding:1rem 1rem .9rem;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease,border-color .22s ease}
+    .main-node:hover,.sub-node:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(73,179,200,.5);box-shadow:0 18px 36px rgba(0,0,0,.28)}
+    .sub-node{padding:.75rem .85rem;min-width:150px;min-height:58px;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease,border-color .22s ease}
+    .connector{position:absolute;inset:0;pointer-events:none}
+    .panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:1.25rem 1.35rem;backdrop-filter:blur(10px)}
+    .grid2{display:grid;grid-template-columns:1.08fr .92fr;gap:1.25rem}
+    .detail-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:1rem 1rem 1rem 1.05rem}
+    .micro{font-size:.8rem;color:#90a9bc;text-transform:uppercase;letter-spacing:.12em}
+    .pill{display:inline-flex;padding:.35rem .7rem;border-radius:999px;background:rgba(73,179,200,.12);color:#9adcec;font-size:.82rem}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+    .tbl{width:100%;border-collapse:collapse;font-size:.92rem}.tbl td,.tbl th{border-bottom:1px solid rgba(255,255,255,.08);padding:.7rem .6rem;vertical-align:top}.tbl th{text-align:left;color:#9fd8e5;font-weight:700}
+    .jump{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .85rem;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;color:#e7f0f7}
+    .hotspots{display:flex;flex-wrap:wrap;gap:.55rem}
+    @media (max-width: 1100px){.grid2{grid-template-columns:1fr}.spider-wrap{transform:scale(.9);transform-origin:center top;height:620px}}
+  </style>
+</head>
+<body>
+<div class="deck">
+  <div class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;right:-120px;top:-90px;background:rgba(73,179,200,.16)"></div>
+      <div class="blob" style="width:340px;height:340px;left:-80px;bottom:-120px;background:rgba(143,212,222,.12)"></div>
+      <div class="blob" style="width:250px;height:250px;left:18%;top:18%;background:rgba(167,201,87,.1)"></div>
+    </div>
+    <canvas class="particle-canvas"></canvas>
+    <div class="content text-center">
+      <div class="reveal text-[110px] leading-none mb-4">❄️</div>
+      <h1 class="reveal font-display text-[clamp(2.7rem,6vw,5.2rem)] tracking-tight bg-linear-to-r from-accent-2 via-accent-1 to-accent-3 bg-clip-text text-transparent">Chiller Technology</h1>
+      <p class="reveal mt-3 text-text-muted tracking-[0.38em] uppercase text-sm">Interactive spider diagram and drill-down comparison</p>
+      <div class="reveal mt-8 flex justify-center gap-3 flex-wrap">
+        <button class="jump" onclick="goToSlide(2)">Open overview</button>
+        <button class="jump" onclick="goToSlide(3)">Distinct differences</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="2">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:300px;height:300px;right:-90px;top:-80px;background:rgba(73,179,200,.1)"></div>
+      <div class="blob" style="width:260px;height:260px;left:-80px;bottom:-90px;background:rgba(143,212,222,.08)"></div>
+    </div>
+    <div class="content">
+      <div class="reveal flex items-end justify-between mb-4">
+        <div>
+          <div class="micro">Overview slide</div>
+          <h2 class="font-display text-[clamp(2rem,4.5vw,3.2rem)] mt-1">Interactive spider diagram</h2>
+        </div>
+        <div class="pill">Click any node to jump to full details</div>
+      </div>
+      <div class="spider-wrap reveal">
+        <svg class="connector" viewBox="0 0 1220 680" preserveAspectRatio="none">
+          <path d="M610 340 C500 270, 420 235, 310 185" stroke="rgba(143,212,222,.35)" stroke-width="3" fill="none"/>
+          <path d="M610 340 C720 270, 800 235, 910 185" stroke="rgba(143,212,222,.35)" stroke-width="3" fill="none"/>
+          <path d="M610 340 C500 410, 425 465, 315 540" stroke="rgba(143,212,222,.35)" stroke-width="3" fill="none"/>
+          <path d="M610 340 C720 410, 800 465, 910 540" stroke="rgba(143,212,222,.35)" stroke-width="3" fill="none"/>
+          <path d="M310 275 C290 320, 265 345, 215 370" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M310 275 C330 320, 360 348, 410 370" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M310 275 C290 355, 285 420, 220 455" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M310 275 C330 360, 355 420, 405 455" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 275 C880 322, 865 345, 805 370" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 275 C930 322, 960 345, 1020 370" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 275 C885 360, 875 420, 815 455" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 275 C935 360, 955 420, 1015 455" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M315 540 C260 585, 240 618, 210 635" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M315 540 C355 585, 385 618, 450 635" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 540 C850 585, 835 618, 775 635" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+          <path d="M910 540 C960 585, 990 618, 1065 635" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+        </svg>
+        <div class="center-node"><div><div class="micro">Center</div><div class="text-xl font-extrabold mt-1">Chiller<br/>Technology</div></div></div>
+        <button class="main-node" style="left:205px;top:125px" onclick="goToSlide(4)"><div class="micro">Branch</div><div class="text-lg font-extrabold mt-1">Old chiller types</div><div class="text-sm text-text-muted mt-1">Reciprocating, centrifugal, screw, absorption</div></button>
+        <button class="main-node" style="left:805px;top:125px" onclick="goToSlide(5)"><div class="micro">Branch</div><div class="text-lg font-extrabold mt-1">New chiller types</div><div class="text-sm text-text-muted mt-1">Scroll, oil-free, VSD/Turbocor, modular</div></button>
+        <button class="main-node" style="left:210px;top:495px" onclick="goToSlide(6)"><div class="micro">Branch</div><div class="text-lg font-extrabold mt-1">Heat rejection</div><div class="text-sm text-text-muted mt-1">Air-cooled versus water-cooled</div></button>
+        <button class="main-node" style="left:800px;top:495px" onclick="goToSlide(7)"><div class="micro">Branch</div><div class="text-lg font-extrabold mt-1">Technology shift</div><div class="text-sm text-text-muted mt-1">Controls, maintenance, efficiency, refrigerants</div></button>
+
+        <button class="sub-node" style="left:110px;top:355px" onclick="goToSlide(4)">Reciprocating</button>
+        <button class="sub-node" style="left:350px;top:355px" onclick="goToSlide(4)">Centrifugal</button>
+        <button class="sub-node" style="left:115px;top:440px" onclick="goToSlide(4)">Screw</button>
+        <button class="sub-node" style="left:340px;top:440px" onclick="goToSlide(4)">Absorption</button>
+
+        <button class="sub-node" style="left:750px;top:355px" onclick="goToSlide(5)">Scroll</button>
+        <button class="sub-node" style="left:955px;top:355px" onclick="goToSlide(5)">Oil-free centrifugal</button>
+        <button class="sub-node" style="left:760px;top:440px" onclick="goToSlide(5)">Turbocor / VSD</button>
+        <button class="sub-node" style="left:980px;top:440px" onclick="goToSlide(5)">Modular</button>
+
+        <button class="sub-node" style="left:120px;top:610px" onclick="goToSlide(6)">Air-cooled</button>
+        <button class="sub-node" style="left:360px;top:610px" onclick="goToSlide(6)">Water-cooled</button>
+        <button class="sub-node" style="left:720px;top:610px" onclick="goToSlide(7)">Variable speed</button>
+        <button class="sub-node" style="left:980px;top:610px" onclick="goToSlide(7)">Smart controls</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="3">
+    <div class="gradient-mesh"><div class="blob" style="width:350px;height:350px;right:-110px;top:-90px;background:rgba(73,179,200,.1)"></div><div class="blob" style="width:260px;height:260px;left:-80px;bottom:-80px;background:rgba(167,201,87,.08)"></div></div>
+    <canvas class="particle-canvas"></canvas>
+    <div class="content">
+      <div class="reveal micro">Page 2</div>
+      <h2 class="reveal font-display text-[clamp(2rem,4vw,3rem)] mb-3">Distinct differences captured from the comparison table</h2>
+      <div class="reveal grid grid-cols-2 gap-5">
+        <div class="panel"><div class="micro mb-2">Compressor control</div><div class="text-xl font-extrabold">Old: fixed-speed / staged</div><div class="text-text-secondary mt-2">Reciprocating and older centrifugal systems typically rely on on-off cycling, unloading steps, or limited staging, while newer machines use VSD logic and tighter digital modulation.</div></div>
+        <div class="panel"><div class="micro mb-2">Efficiency focus</div><div class="text-xl font-extrabold">Old: full-load bias</div><div class="text-text-secondary mt-2">Newer chillers are optimized for part-load operation, which matters more in real building plants because chillers rarely stay at nameplate load all day.</div></div>
+        <div class="panel"><div class="micro mb-2">Maintenance profile</div><div class="text-xl font-extrabold">Old: oil and wear heavier</div><div class="text-text-secondary mt-2">Legacy systems usually bring more vibration, more oil management, and more manual service, while oil-free designs reduce friction losses and maintenance points.</div></div>
+        <div class="panel"><div class="micro mb-2">System intelligence</div><div class="text-xl font-extrabold">Old: basic controls</div><div class="text-text-secondary mt-2">Modern chillers integrate sensors, alarms, trending, BAS/BMS integration, and analytics so operators can optimize sequencing and diagnose faults faster.</div></div>
+      </div>
+      <div class="reveal hotpots mt-5 hotspots">
+        <button class="jump" onclick="goToSlide(4)">Older type details</button>
+        <button class="jump" onclick="goToSlide(5)">Newer type details</button>
+        <button class="jump" onclick="goToSlide(6)">Heat rejection details</button>
+        <button class="jump" onclick="goToSlide(7)">Technology shift details</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="4">
+    <div class="gradient-mesh"><div class="blob" style="width:320px;height:320px;left:-100px;top:-60px;background:rgba(143,212,222,.08)"></div><div class="blob" style="width:260px;height:260px;right:-80px;bottom:-100px;background:rgba(73,179,200,.09)"></div></div>
+    <div class="content grid2">
+      <div class="reveal">
+        <div class="micro">Drill-down</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3rem)]">Old chiller types</h2>
+        <div class="mt-4 panel">
+          <div class="text-lg font-bold">What “old” means here</div>
+          <p class="text-text-secondary mt-2">These are the mature or legacy-leaning technologies that defined earlier mechanical plants: reciprocating, standard centrifugal, standard screw, and absorption as the alternate heat-driven branch.</p>
+          <div class="hotspots mt-4">
+            <button class="jump" onclick="goToSlide(2)">Back to spider</button>
+            <button class="jump" onclick="goToSlide(3)">Distinct differences page</button>
+          </div>
+        </div>
+        <table class="tbl mt-4">
+          <tr><th>Type</th><th>Core technology</th><th>Strengths</th><th>Weaknesses</th></tr>
+          <tr><td>Reciprocating</td><td>Piston compressor, staged or on/off</td><td>Simple concept, lower upfront cost, flexible in smaller systems</td><td>Noisy, high vibration, more maintenance, older efficiency profile</td></tr>
+          <tr><td>Centrifugal</td><td>Dynamic impeller compression</td><td>Large capacity, strong full-load efficiency, central-plant friendly</td><td>Low-load performance can be weaker without modern controls</td></tr>
+          <tr><td>Screw</td><td>Twin helical rotors</td><td>Reliable, fewer moving parts, good part-load behavior</td><td>Higher first cost than reciprocating, mature rather than cutting-edge</td></tr>
+          <tr><td>Absorption</td><td>Heat-driven refrigeration cycle</td><td>Useful with steam or waste heat, lowers electric peak demand</td><td>Lower COP, larger footprint, more complex thermal integration</td></tr>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="mini-grid">
+          <div class="detail-card"><div class="micro">Reciprocating</div><div class="text-lg font-bold mt-2">Best understood as the piston-era baseline</div><div class="text-text-secondary mt-2">Strong for simple plants, but it pays a penalty in acoustics, wear, and lifecycle service.</div></div>
+          <div class="detail-card"><div class="micro">Centrifugal</div><div class="text-lg font-bold mt-2">The classic large-plant machine</div><div class="text-text-secondary mt-2">Still relevant, but older units are less agile than modern VSD or oil-free variants.</div></div>
+          <div class="detail-card"><div class="micro">Screw</div><div class="text-lg font-bold mt-2">The workhorse mature compressor</div><div class="text-text-secondary mt-2">Common in mid-size buildings because it balances size, reliability, and control reasonably well.</div></div>
+          <div class="detail-card"><div class="micro">Absorption</div><div class="text-lg font-bold mt-2">A different path, not just an old one</div><div class="text-text-secondary mt-2">Important when thermal energy is available, but it is not the default choice for standard electric plants.</div></div>
+        </div>
+        <div class="panel mt-4">
+          <div class="micro mb-2">Distinct takeaway</div>
+          <div class="text-text-secondary">Older chiller technology usually means more mechanical simplicity and sometimes lower capital cost, but also more maintenance exposure and weaker optimization under variable building load.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="5">
+    <div class="gradient-mesh"><div class="blob" style="width:320px;height:320px;right:-100px;top:-60px;background:rgba(73,179,200,.12)"></div><div class="blob" style="width:240px;height:240px;left:-70px;bottom:-90px;background:rgba(167,201,87,.08)"></div></div>
+    <div class="content grid2">
+      <div class="reveal">
+        <div class="micro">Drill-down</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3rem)]">New chiller types</h2>
+        <div class="panel mt-4">
+          <div class="text-lg font-bold">What “new” means here</div>
+          <p class="text-text-secondary mt-2">Newer chillers do not just mean newer manufacture dates. They mean newer control philosophy, stronger part-load optimization, better motor speed control, and in premium models, oil-free magnetic bearing architecture.</p>
+          <div class="hotspots mt-4">
+            <button class="jump" onclick="goToSlide(2)">Back to spider</button>
+            <button class="jump" onclick="goToSlide(3)">Distinct differences page</button>
+          </div>
+        </div>
+        <table class="tbl mt-4">
+          <tr><th>Type</th><th>Core technology</th><th>Strengths</th><th>Weaknesses</th></tr>
+          <tr><td>Scroll</td><td>Spiral compression, often modularized</td><td>Compact, quiet, efficient for small-to-medium loads</td><td>Not the best fit for very large plants</td></tr>
+          <tr><td>Oil-free centrifugal</td><td>Magnetic bearings, no oil loop</td><td>Low friction, low maintenance, no oil fouling, high efficiency</td><td>Higher capital cost and more specialized service</td></tr>
+          <tr><td>Turbocor / VSD centrifugal</td><td>Variable-speed high-speed compression</td><td>Excellent part-load performance, fast modulation, smart sequencing</td><td>Higher electronics complexity and premium pricing</td></tr>
+          <tr><td>Modular chiller</td><td>Multiple smaller units acting as one plant</td><td>Scalable, redundant, easy phased expansion</td><td>More modules can mean more components to coordinate</td></tr>
+        </table>
+      </div>
+      <div class="reveal">
+        <div class="mini-grid">
+          <div class="detail-card"><div class="micro">Scroll</div><div class="text-lg font-bold mt-2">The compact mainstream option</div><div class="text-text-secondary mt-2">Often favored for rooftops, packaged plants, and modular arrays where simplicity and footprint matter.</div></div>
+          <div class="detail-card"><div class="micro">Oil-free centrifugal</div><div class="text-lg font-bold mt-2">Premium low-friction architecture</div><div class="text-text-secondary mt-2">Removes oil-management penalties and usually improves service intervals and heat-exchanger cleanliness.</div></div>
+          <div class="detail-card"><div class="micro">Turbocor / VSD</div><div class="text-lg font-bold mt-2">Modern response to variable-load reality</div><div class="text-text-secondary mt-2">The strongest improvement is often real operating efficiency, not only headline full-load numbers.</div></div>
+          <div class="detail-card"><div class="micro">Modular</div><div class="text-lg font-bold mt-2">System architecture as an advantage</div><div class="text-text-secondary mt-2">Useful where redundancy, retrofit space, or staged expansion matters more than one big machine.</div></div>
+        </div>
+        <div class="panel mt-4"><div class="micro mb-2">Distinct takeaway</div><div class="text-text-secondary">Newer chiller technology is defined by control quality, part-load efficiency, reduced oil dependence, and deeper BMS/BAS visibility rather than by compressor shape alone.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="6">
+    <div class="gradient-mesh"><div class="blob" style="width:300px;height:300px;left:-90px;top:-70px;background:rgba(73,179,200,.08)"></div><div class="blob" style="width:270px;height:270px;right:-90px;bottom:-70px;background:rgba(143,212,222,.08)"></div></div>
+    <div class="content">
+      <div class="reveal micro">Drill-down</div>
+      <h2 class="reveal font-display text-[clamp(2rem,4vw,3rem)] mb-4">Heat rejection: air-cooled versus water-cooled</h2>
+      <div class="reveal grid grid-cols-2 gap-5">
+        <div class="panel">
+          <div class="micro mb-2">Air-cooled</div>
+          <div class="text-xl font-extrabold">Simpler plant, lower auxiliary complexity</div>
+          <ul class="mt-3 text-text-secondary space-y-2">
+            <li>Rejects heat directly to ambient air using condenser fans.</li>
+            <li>Best where water treatment, towers, and condenser loops are undesirable.</li>
+            <li>Usually easier to install and maintain, but less efficient in hot ambient conditions.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="micro mb-2">Water-cooled</div>
+          <div class="text-xl font-extrabold">Higher-efficiency central plant path</div>
+          <ul class="mt-3 text-text-secondary space-y-2">
+            <li>Rejects heat through condenser water and a cooling tower.</li>
+            <li>Better suited to large loads, high operating hours, and efficiency-driven plants.</li>
+            <li>More components, more treatment, and more integration work, but stronger performance at scale.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="reveal panel mt-5">
+        <div class="micro mb-2">Distinct difference</div>
+        <div class="text-text-secondary">This is not an old-versus-new distinction by itself. It is a system architecture choice. Older or newer compressor technologies can exist in either air-cooled or water-cooled arrangements, but water-cooled plants usually dominate where capacity and operating efficiency are priorities.</div>
+        <div class="hotspots mt-4">
+          <button class="jump" onclick="goToSlide(2)">Back to spider</button>
+          <button class="jump" onclick="goToSlide(3)">Distinct differences page</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="7">
+    <div class="gradient-mesh"><div class="blob" style="width:340px;height:340px;right:-110px;top:-80px;background:rgba(73,179,200,.12)"></div><div class="blob" style="width:250px;height:250px;left:-70px;bottom:-70px;background:rgba(167,201,87,.08)"></div></div>
+    <canvas class="particle-canvas"></canvas>
+    <div class="content">
+      <div class="reveal micro">Drill-down</div>
+      <h2 class="reveal font-display text-[clamp(2rem,4vw,3rem)] mb-4">Technology shift from old to new</h2>
+      <div class="reveal grid grid-cols-4 gap-4">
+        <div class="detail-card"><div class="micro">Control logic</div><div class="text-lg font-bold mt-2">Fixed speed → variable speed</div><div class="text-text-secondary mt-2">Smoother loading, less cycling stress, and better plant matching.</div></div>
+        <div class="detail-card"><div class="micro">Maintenance</div><div class="text-lg font-bold mt-2">Oil-heavy → oil-free options</div><div class="text-text-secondary mt-2">Less fouling and fewer lubrication-related service issues in premium designs.</div></div>
+        <div class="detail-card"><div class="micro">Optimization</div><div class="text-lg font-bold mt-2">Full-load → part-load focus</div><div class="text-text-secondary mt-2">Modern plants are judged by real operating profile, not only design-point performance.</div></div>
+        <div class="detail-card"><div class="micro">Controls ecosystem</div><div class="text-lg font-bold mt-2">Standalone → connected intelligence</div><div class="text-text-secondary mt-2">Trending, alarms, remote visibility, and BAS coordination become standard expectations.</div></div>
+      </div>
+      <div class="reveal panel mt-5">
+        <div class="micro mb-2">What this means in practice</div>
+        <div class="text-text-secondary">When you evaluate a replacement or retrofit, the real gain usually comes from better sequencing, better part-load response, softer starting, lower maintenance exposure, and better operational data rather than from changing the compressor family alone.</div>
+      </div>
+      <div class="reveal hotspots mt-4">
+        <button class="jump" onclick="goToSlide(2)">Back to spider</button>
+        <button class="jump" onclick="goToSlide(3)">Distinct differences page</button>
+        <button class="jump" onclick="goToSlide(8)">Closing slide</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" data-slide="8">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;right:-130px;top:-100px;background:rgba(73,179,200,.16)"></div>
+      <div class="blob" style="width:300px;height:300px;left:-60px;bottom:-110px;background:rgba(143,212,222,.12)"></div>
+      <div class="blob" style="width:220px;height:220px;left:20%;top:22%;background:rgba(167,201,87,.08)"></div>
+    </div>
+    <canvas class="particle-canvas"></canvas>
+    <div class="content text-center">
+      <div class="reveal text-[90px] mb-3">🧊</div>
+      <h2 class="reveal font-display text-[clamp(2.2rem,5vw,4.2rem)] tracking-tight">Use the spider diagram as the navigation map</h2>
+      <p class="reveal text-text-secondary mt-4 max-w-3xl mx-auto">The overview page gives the category structure, and each node jumps to the full detail captured from the comparison tables so the diagram works like an interactive presentation rather than a static image.</p>
+      <div class="reveal mt-8 flex justify-center gap-3 flex-wrap">
+        <button class="jump" onclick="goToSlide(2)">Return to overview</button>
+        <button class="jump" onclick="goToSlide(1)">Back to title</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 8</span>
+</div>
+
+<script>
+let current=1;const total=document.querySelectorAll('.slide').length;const dotsContainer=document.getElementById('dots');const counter=document.getElementById('counter');
+for(let i=1;i<=total;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>goToSlide(i);dotsContainer.appendChild(d)}
+function goToSlide(n){document.querySelector('.slide.active')?.classList.remove('active');const next=document.querySelector(`.slide[data-slide="${n}"]`);if(next){next.classList.add('active');animateSlide(next)}current=n;updateNav()}
+function changeSlide(dir){let next=current+dir;if(next<1)next=total;if(next>total)next=1;goToSlide(next)}
+function updateNav(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i+1===current));counter.textContent=`${current} / ${total}`}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();changeSlide(1)} if(e.key==='ArrowLeft'){e.preventDefault();changeSlide(-1)}})
+let touchStartX=0;document.addEventListener('touchstart',e=>touchStartX=e.touches[0].clientX);document.addEventListener('touchend',e=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50)changeSlide(diff>0?1:-1)})
+function animateSlide(slide){slide.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(16px)';el.offsetHeight;const delay=i*.06;el.style.transition=`opacity .35s ease ${delay}s, transform .35s ease ${delay}s`;el.style.opacity='1';el.style.transform='translateY(0)'})}
+window.initParticles=function(canvas,options={}){if(!canvas)return;const ctx=canvas.getContext('2d');const resize=()=>{canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight};resize();addEventListener('resize',resize);const count=options.count||40;let mx=-1e3,my=-1e3;const particles=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,size:Math.random()*2+.7,alpha:Math.random()*.3+.08}));canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});canvas.addEventListener('mouseleave',()=>{mx=-1e3;my=-1e3});(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{const dx=p.x-mx,dy=p.y-my,dist=Math.sqrt(dx*dx+dy*dy)||1;if(dist<120){const force=(120-dist)/120;p.vx+=(dx/dist)*force*.08;p.vy+=(dy/dist)*force*.08}p.vx*=.985;p.vy*=.985;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`rgba(73,179,200,${p.alpha})`;ctx.fill()});requestAnimationFrame(loop)})()}
+document.querySelectorAll('.particle-canvas').forEach(c=>window.initParticles(c,{count:42}));animateSlide(document.querySelector('.slide.active'));
+</script>
+</body>
+</html>

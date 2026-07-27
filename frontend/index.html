@@ -77,6 +77,31 @@
   .search{background:var(--panel);border:1px solid var(--line);color:var(--txt);
     border-radius:8px;padding:7px 11px;font-size:13px;min-width:220px}
   .foot{color:var(--dim);font-size:11px;margin-top:30px;text-align:center;padding-bottom:30px}
+  /* R-1 control panel */
+  .r1wrap{background:linear-gradient(180deg,#141c27,#12171f);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px}
+  .r1head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .r1head .name{font-weight:650;font-size:14px}
+  .r1head .reason{color:var(--dim);font-size:12px}
+  .pill.r1on{background:rgba(74,163,255,.18);color:var(--accent)}
+  .pill.dhc{background:rgba(63,185,80,.15);color:var(--ok)}
+  .r1grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+  .r1card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+  .r1card .t{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin-bottom:8px}
+  .kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:2px 0}
+  .kv span{color:var(--dim)} .kv b{font-family:ui-monospace,Menlo,monospace;font-weight:600}
+  .kv b.good{color:var(--ok)} .kv b.acc{color:var(--accent)} .kv b.warn{color:var(--warn)}
+  .comp{margin:7px 0}
+  .comp .lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+  .comp .lbl .lead{color:var(--accent);font-size:10px;font-weight:600}
+  .bar{height:8px;background:var(--panel2);border-radius:5px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,#2f7fd6,#4aa3ff);border-radius:5px}
+  .bar>i.offb{background:var(--off)}
+  .fdd{display:flex;flex-direction:column;gap:5px}
+  .fdd .row{display:flex;align-items:center;gap:8px;font-size:12px}
+  .fdd .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .fdd .dot.ok{background:var(--ok)} .fdd .dot.warn{background:var(--warn)} .fdd .dot.info{background:var(--off)}
+  .fdd .dt{color:var(--dim);font-size:11px}
 </style>
 </head>
 <body>
@@ -90,6 +115,9 @@
 </header>
 
 <main>
+  <h2>R-1 Chiller · Control &amp; Optimisation</h2>
+  <div class="r1wrap" id="r1panel"></div>
+
   <h2>Systems</h2>
   <div class="sysrow" id="systems"></div>
 
@@ -144,6 +172,65 @@ function drvHTML(d){
    <div class="m"><span class="pill ${al?'alarm':'ok'}">${al} alarm${al===1?'':'s'}</span><span>Status</span></div>`;
 }
 
+function r1HTML(r){
+  if(!r) return "";
+  const d=r.dispatch, cw=r.cw, chw=r.chw, st=r.staging, p=r.performance;
+  const on=d.run_r1;
+  const modeCls=on?'r1on':'dhc';
+  const comps=st.compressors.map(c=>`
+    <div class="comp">
+      <div class="lbl"><span>${c.id}${c.lead?' <span class="lead">LEAD</span>':''}</span><span>${c.on?c.slide+'%':'off'}</span></div>
+      <div class="bar"><i class="${c.on?'':'offb'}" style="width:${c.on?c.slide:100}%;${c.on?'':'opacity:.35'}"></i></div>
+    </div>`).join("");
+  const fdd=r.fdd.map(f=>`
+    <div class="row"><span class="dot ${f.active?f.severity:'ok'}"></span>
+      <span>${esc(f.name)}</span>
+      <span class="dt">${f.active?esc(f.detail):'normal'}</span></div>`).join("");
+  return `
+  <div class="r1head">
+    <span class="name">${esc(r.machine)}</span>
+    <span class="pill ${modeCls}">${esc(d.mode)}</span>
+    <span class="reason">${esc(d.reason)}</span>
+  </div>
+  <div class="r1grid">
+    <div class="r1card">
+      <div class="t">Economic dispatch</div>
+      <div class="kv"><span>Electricity (ToU)</span><b>¥${d.elec_rate}/kWh</b></div>
+      <div class="kv"><span>R-1 cost</span><b class="acc">¥${d.r1_cost}/kWhc</b></div>
+      <div class="kv"><span>DHC cost${d.dhc_demand_adder?' (peak)':''}</span><b class="${d.dhc_demand_adder?'warn':'good'}">¥${d.dhc_cost}/kWhc</b></div>
+      <div class="kv"><span>Est. saving</span><b class="${d.est_saving_yph>0?'good':''}">¥${d.est_saving_yph}/h</b></div>
+    </div>
+    <div class="r1card">
+      <div class="t">Reset setpoints</div>
+      <div class="kv"><span>Condenser water</span><b class="acc">${cw.setpoint}°C</b></div>
+      <div class="kv"><span></span><b class="dt" style="color:var(--dim);font-weight:400">${esc(cw.note)}</b></div>
+      <div class="kv"><span>CHW supply</span><b class="acc">${chw.setpoint}°C</b></div>
+      <div class="kv"><span>Most-open valve</span><b>${chw.most_open_valve}%</b></div>
+    </div>
+    <div class="r1card">
+      <div class="t">Compressor staging (${st.running}/2)</div>
+      ${comps}
+    </div>
+    <div class="r1card">
+      <div class="t">Performance</div>
+      <div class="kv"><span>Live COP</span><b class="good">${p.cop}</b></div>
+      <div class="kv"><span>Input / cooling</span><b>${p.kw_in} / ${p.kw_cool} kW</b></div>
+      <div class="kv"><span>kW per RT</span><b>${p.kw_per_rt||'—'}</b></div>
+      <div class="kv"><span>Approach evap/cond</span><b>${p.evap_approach} / ${p.cond_approach}°C</b></div>
+    </div>
+    <div class="r1card">
+      <div class="t">Diagnostics (FDD)</div>
+      <div class="fdd">${fdd}</div>
+    </div>
+    <div class="r1card">
+      <div class="t">Backup readiness</div>
+      <div class="kv"><span>State</span><b class="${on?'acc':'good'}">${esc(r.readiness.state)}</b></div>
+      <div class="kv"><span>Next exercise</span><b>${esc(r.readiness.next_exercise)}</b></div>
+      <div class="kv"><span>PLR (36/37F loop)</span><b>${Math.round(d.plr*100)}%</b></div>
+    </div>
+  </div>`;
+}
+
 function systemsHTML(sys){
   return sys.map(s=>`
     <div class="syscard">
@@ -175,6 +262,7 @@ function render(){
   if(!SNAP) return;
   $("drv").innerHTML=drvHTML(SNAP.driver);
   $("tally").textContent=`${SNAP.point_count} points · ${SNAP.device_count} devices · ${SNAP.controller_count} controllers · ${SNAP.panel_count} panels`;
+  $("r1panel").innerHTML=r1HTML(SNAP.r1);
   $("systems").innerHTML=systemsHTML(SNAP.systems);
   $("filters").innerHTML=filtersHTML(SNAP.systems);
   const devs=SNAP.devices.filter(d=>FILTER==="ALL"||d.system===FILTER);

@@ -16,6 +16,7 @@ import math
 from datetime import datetime
 
 from points import DEVICES, POINTS, SYSTEMS, PANEL_ORDER, CONTROLLER_META
+import control
 
 
 # ---------------------------------------------------------------------------
@@ -36,6 +37,8 @@ def driver(now: datetime) -> dict:
         "hour": hour, "load": load, "oat": oat, "oa_rh": oa_rh,
         "wetbulb": wetbulb, "heating": heating, "occupied": occupied,
         "minute": now.hour * 60 + now.minute,
+        "dow": now.weekday(), "weekday": now.weekday() < 5,
+        "doy": now.timetuple().tm_yday,
     }
 
 
@@ -113,8 +116,9 @@ def running_state(ctx: dict) -> tuple[dict, set]:
     run["EMHX-1"] = False
     run["EMHX-2"] = False
 
-    # --- 36/37F local plant: R-1 is BACKUP, staged only at high load ---
-    r1 = load > 0.62
+    # --- 36/37F local plant: R-1 dispatched by the control engine ---
+    # (economic changeover / DHC peak-shave -- see control.dispatch)
+    r1 = control.dispatch(ctx)["run_r1"]
     run["R-1"] = r1
     run["CDP-3-1"] = r1
     run["CDP-3-2"] = r1 and load > 0.85
@@ -498,6 +502,7 @@ def build_snapshot(now: datetime) -> dict:
         },
         "systems": systems,
         "devices": devices,
+        "r1": control.compute(ctx),
         "alarms": total_alarms,
         "point_count": len(POINTS),
         "device_count": len(DEVICES),

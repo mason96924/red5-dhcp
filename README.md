@@ -38,7 +38,9 @@ kitchen-refrigeration alarms and common-area/façade lighting (照明一覧).
 | `generate_io_list.py` | Reproducible generator for the BMS I/O list + panel / controller schedule (single source of truth for the point model) |
 | `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 1,160 points, 190 devices, 12 panels, 84 DDC controllers |
 | `backend/` | FastAPI supervisory service (loads the point model, simulates live telemetry) |
-| `frontend/index.html` | Read-only monitoring dashboard (systems, equipment tiles, per-device point tables) |
+| `backend/control.py` | R-1 chiller control / optimisation engine (economic dispatch, CW/CHW reset, staging, live COP, FDD) |
+| `frontend/index.html` | Read-only monitoring dashboard (R-1 optimiser panel, systems, equipment tiles, per-device point tables) |
+| `docs/R-1_control_narrative.md` | R-1 sequence of operations + optimisation & maintenance narrative |
 
 ## Regenerate the I/O list
 
@@ -65,8 +67,19 @@ staged as backup at high load and its DHC↔R-1 changeover valves following suit
 ```
 
 Endpoints: `GET /` (dashboard), `/api/health`, `/api/snapshot` (full live
-state), `/api/panels`, `/api/points` (catalog, filter by `?system=`/`?panel=`),
-`/api/device/{id}`.
+state, incl. the `r1` control block), `/api/panels`, `/api/points` (catalog,
+filter by `?system=`/`?panel=`), `/api/device/{id}`.
+
+### R-1 chiller optimiser
+
+`backend/control.py` turns the building driver into a supervisory result for the
+Ebara screw chiller: **economic dispatch** (run DHC vs stage R-1 for
+peak-shaving), **condenser-water wet-bulb reset**, **CHW trim-and-respond reset**,
+**twin-compressor staging** with runtime balancing, **live COP / kW-per-RT /
+approach temps**, **FDD advisories** and **backup-readiness** (weekly exercise).
+It appears at the top of the dashboard and in `snapshot.r1`. Tariffs and setpoint
+envelopes are editable at the top of the module. Full logic:
+[`docs/R-1_control_narrative.md`](docs/R-1_control_narrative.md).
 
 ## Source documents (not tracked in git)
 
