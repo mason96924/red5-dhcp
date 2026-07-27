@@ -23,8 +23,9 @@ Heat source is DISTRICT HEATING & COOLING (DHC) -- the local plant is backup:
   高層 (1002)           CP-2 (x3) primary CHW + HP-2 (x3) hot-water pumps; CP-3 (INV)
                          + CP-6 pumps; EX-3 (x2) HX; EXT-2; ST-2 OA station;
                          21~35F FCU groups (N/NE/SE/S/SW, 4-pipe).
-  36,37F (1003/p12)     R-1 single water-cooled chiller (Ebara ~370 kW, COP 4.51),
-                         DHC-backup; CDP-3 (x2) + CT-3 condenser; CP-7 (x2) CHW;
+  36,37F (1003/p12)     R-1 single water-cooled SCREW chiller (Ebara RHS DW202M2,
+                         370 kW / COP 4.5, 2x45 kW screw comp, R-407C), DHC-backup;
+                         CDP-3 (x2) + CT-3 condenser; CP-7 (x2) CHW;
                          HEX-1 + CP-8 DHC HX; EX4 + HP-4 (x2) + EXT-3 secondary;
                          2 source-changeover valves (DHC <-> R-1).
   Air side              AC-1..27 AHUs, EVU-1..15 OAUs, EF/SF/RF vent fans.
@@ -250,9 +251,11 @@ LTG_GROUPS = [
 # Point templates
 # --------------------------------------------------------------------------
 def chiller_points(dev, area, panel="LCP-3637"):
-    """R-1: single local water-cooled chiller (Ebara ~370 kW, COP 4.51),
-    dedicated to the 36/37F loop and run in changeover/backup with DHC."""
-    T = "Water-cooled chiller (local backup)"
+    """R-1: single local water-cooled SCREW chiller -- Ebara RHS DW202M2
+    (エバラスクリュー冷凍機, 荏原冷熱システム, 2014/12): 370 kW cooling / 82.2 kW
+    input (COP 4.5), twin 45 kW screw compressors, dual R-407C circuits.
+    Dedicated to the 36/37F loop, run in changeover/backup with DHC."""
+    T = "Water-cooled screw chiller (local backup)"
     PANEL_HINT[dev] = panel
     add(f"{dev}.RUN", "Heat source", dev, T, area, "Run status", BI, "status", trend="Y")
     add(f"{dev}.TRIP", "Heat source", dev, T, area, "Common fault / trip", BI, "status", alarm="Y")
@@ -263,7 +266,7 @@ def chiller_points(dev, area, panel="LCP-3637"):
     add(f"{dev}.CHWST", "Heat source", dev, T, area, "CHW supply (leaving) temp", AI, "temp", alarm="Y", trend="Y", notes="Design 7°C")
     add(f"{dev}.CHWRT", "Heat source", dev, T, area, "CHW return (entering) temp", AI, "temp", trend="Y", notes="Design 12°C")
     add(f"{dev}.CWRT", "Heat source", dev, T, area, "Condenser water leaving temp", AI, "temp", trend="Y")
-    add(f"{dev}.KW", "Heat source", dev, T, area, "Electrical input power", AI, "kw", trend="Y", notes="For COP; nameplate 370 kW / COP 4.51")
+    add(f"{dev}.KW", "Heat source", dev, T, area, "Electrical input power", AI, "kw", trend="Y", notes="Ebara screw RHS DW202M2: 370 kW cool / 82.2 kW in (COP 4.5); 2×45 kW screw comp, R-407C")
     add(f"{dev}.FLW", "Heat source", dev, T, area, "Evaporator flow proof", BI, "status", alarm="Y")
 
 def cdpump_points(dev, area):
@@ -747,7 +750,7 @@ def build_workbook():
       ("Building", "SRC, B3–37F, ~98,331 m²; Azbil savic-net FX / FX2 BMS"),
       ("Energy source", "District Heating & Cooling (PRIMARY): DHC chilled-water intake (冷水受入 CS/CR, GJ metered) + DHC steam (蒸気受入 SS 0.8→0.2 MPa, condensate HR to hot-well). Local plant is backup/peaking."),
       ("Distribution", "Low-rise (低層): CP-1 ×3 CHW + HP-1 ×3 HW pumps, EX-2 laundry HX. High-rise (高層): CP-2 ×3 CHW + HP-2 ×3 HW, CP-3(INV)/CP-6, EX-3 HX. Expansion EXT-1/2; OA stations ST-1/ST-2."),
-      ("36/37F local plant", "R-1 single water-cooled chiller (Ebara ~370 kW, COP 4.51) in changeover with DHC via HEX-1 + CP-8; CDP-3 + CT-3 condenser; CP-7 CHW; HP-4 + EX4 + EXT-3 secondary; 2 source-changeover valves"),
+      ("36/37F local plant", "R-1 single water-cooled SCREW chiller (Ebara RHS DW202M2, 370 kW / 82.2 kW in / COP 4.5, twin 45 kW screw comp, R-407C) in changeover with DHC via HEX-1 + CP-8; CDP-3 + CT-3 condenser; CP-7 CHW; HP-4 + EX4 + EXT-3 secondary; 2 source-changeover valves"),
       ("Condenser water", "CT-1 (2 INV cells) + CT-2 (2 cells + filtration) + CDP-1 ×3 / CDP-2 ×2 pumps rejecting heat from packaged units (PCU/PAC/PMAC) & kitchen refrigeration; EX-1 winter free-cooling; 2 emergency cooling HX to DHC"),
       ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 21-35F × N/NE/SE/S/SW, 4-pipe) + 36/37F FCU, EF/SF/RF fans"),
       ("Also on savic-net", "Packaged units PCU/PAC/PMAC (status/alarm), kitchen refrigeration alarms, common-area/facade lighting (照明一覧)"),
@@ -888,7 +891,7 @@ def build_workbook():
       ("EX-1", "Winter free-cooling heat exchanger (冬期用熱交換器)"),
       ("CS / CR", "DHC chilled supply / return header"),
       ("SS / HR", "DHC steam supply / hot (condensate) return; 8k=0.8 MPa, 2k=0.2 MPa"),
-      ("R-1", "Local 36/37F water-cooled chiller (Ebara ~370 kW, COP 4.51), DHC-backup"),
+      ("R-1", "Local 36/37F water-cooled SCREW chiller — Ebara RHS DW202M2 (370 kW, COP 4.5, twin screw, R-407C), DHC-backup"),
       ("CDP", "Condenser-water pump (cooling-tower loop)"),
       ("CP / HP", "Chilled-water pump / hot-water (heating-loop) pump"),
       ("CT", "Cooling tower (INV fan cell + basin common points)"),

@@ -16,10 +16,11 @@ condensate returned to a hot well). Local plant is **backup/peaking**:
   laundry HX, `CP-4/CP-5` kitchen pumps, `EXT-1`, `ST-1` OA station.
 - **High-rise (高層)** — `CP-2 ×3` primary CHW + `HP-2 ×3` hot-water pumps,
   `CP-3` (INV) / `CP-6`, `EX-3` HX, `EXT-2`, `ST-2` OA station.
-- **36/37F (熱源設備 36,37F系統)** — `R-1`, a **single** water-cooled chiller
-  (Ebara ~370 kW, COP 4.51) run in **changeover with DHC** via `HEX-1` + `CP-8`;
-  `CDP-3` + `CT-3` condenser, `CP-7` CHW pumps, `HP-4` + `EX4` + `EXT-3`
-  secondary, and two DHC↔R-1 source-changeover valves.
+- **36/37F (熱源設備 36,37F系統)** — `R-1`, a **single water-cooled screw chiller**
+  (Ebara **RHS DW202M2**, エバラスクリュー冷凍機: 370 kW cooling / 82.2 kW input →
+  **COP 4.5**, twin 45 kW screw compressors, dual R-407C circuits, 2014-12) run in
+  **changeover with DHC** via `HEX-1` + `CP-8`; `CDP-3` + `CT-3` condenser, `CP-7`
+  CHW pumps, `HP-4` + `EX4` + `EXT-3` secondary, and two DHC↔R-1 changeover valves.
 - **Condenser water (冷却塔)** — `CT-1` (2 INV cells) + `CT-2` (2 cells +
   filtration) with `CDP-1 ×3` / `CDP-2 ×2` pumps rejecting heat from **packaged
   units** (PCU/PAC/PMAC) and **kitchen refrigeration**; `EX-1` winter free-cooling
@@ -93,8 +94,9 @@ Key basis documents:
   P/T metering) and DHC steam (蒸気受入 `SS` 0.8 MPa → PRV 8k→2k → 0.2 MPa; condensate
   `HR` metered back to the **hot well `HWT-1`**, returned via `HP-5`; `HP-3` feeds the
   B1F kitchen AHUs `AC-5/6/7`).
-- **`R-1` is a single 36/37F backup chiller** (Ebara ~370 kW, COP 4.51) — *not* the
-  fabricated "RC-1 ×3" plant. It runs in **changeover with DHC** (`HEX-1` + `CP-8`)
+- **`R-1` is a single 36/37F backup screw chiller** — Ebara **RHS DW202M2**
+  (nameplate-confirmed: 370 kW / COP 4.5, twin screw, R-407C) — *not* the fabricated
+  "RC-1 ×3" plant. It runs in **changeover with DHC** (`HEX-1` + `CP-8`)
   via two valves (`CHGV-1` R-1 branch / `CHGV-2` DHC bypass); `CDP-3`+`CT-3` condenser,
   `CP-7` CHW, `HP-4`+`EX4`+`EXT-3` secondary distribution to the 36/37F loads.
 - **Condenser water rejects packaged-unit + refrigeration heat** (not main chillers):
