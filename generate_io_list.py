@@ -456,191 +456,198 @@ for r in rows:
     r["Controller"] = dev_controller.get(r["Device ID"], "")
 
 # --------------------------------------------------------------------------
-# Write workbook
+# Build the workbook.  The device/point model above (rows, controllers,
+# PANELS, PANEL descriptions) is importable without side effects; only the
+# actual .xlsx write happens under the __main__ guard at the bottom.
 # --------------------------------------------------------------------------
-wb = Workbook()
-HDR_FILL = PatternFill("solid", fgColor="1F3864")
-HDR_FONT = Font(bold=True, color="FFFFFF", size=10)
-TITLE_FONT = Font(bold=True, size=14, color="1F3864")
-SUB_FONT = Font(italic=True, size=10, color="555555")
-thin = Side(style="thin", color="D9D9D9")
-BORDER = Border(left=thin, right=thin, top=thin, bottom=thin)
-SYS_FILL = {
-    "Heat source": "FCE4D6", "DHC interface": "FFF2CC", "Air side": "E2EFDA",
-    "Ventilation": "DEEBF7", "Metering": "EDEDED", "Common": "F2F2F2",
-}
+def build_workbook():
+  wb = Workbook()
+  HDR_FILL = PatternFill("solid", fgColor="1F3864")
+  HDR_FONT = Font(bold=True, color="FFFFFF", size=10)
+  TITLE_FONT = Font(bold=True, size=14, color="1F3864")
+  SUB_FONT = Font(italic=True, size=10, color="555555")
+  thin = Side(style="thin", color="D9D9D9")
+  BORDER = Border(left=thin, right=thin, top=thin, bottom=thin)
+  SYS_FILL = {
+      "Heat source": "FCE4D6", "DHC interface": "FFF2CC", "Air side": "E2EFDA",
+      "Ventilation": "DEEBF7", "Metering": "EDEDED", "Common": "F2F2F2",
+  }
 
-def style_header(ws, ncols, row=1):
-    for c in range(1, ncols + 1):
-        cell = ws.cell(row=row, column=c)
-        cell.fill = HDR_FILL; cell.font = HDR_FONT
-        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
-        cell.border = BORDER
+  def style_header(ws, ncols, row=1):
+      for c in range(1, ncols + 1):
+          cell = ws.cell(row=row, column=c)
+          cell.fill = HDR_FILL; cell.font = HDR_FONT
+          cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+          cell.border = BORDER
 
-def set_widths(ws, widths):
-    for i, w in enumerate(widths, 1):
-        ws.column_dimensions[get_column_letter(i)].width = w
+  def set_widths(ws, widths):
+      for i, w in enumerate(widths, 1):
+          ws.column_dimensions[get_column_letter(i)].width = w
 
-# ---- Cover ----
-ws = wb.active
-ws.title = "Cover"
-ws["A1"] = "Red5-DHCP — BMS I/O List & Panel / Controller Schedule"
-ws["A1"].font = TITLE_FONT
-ws["A2"] = "ANA InterContinental Tokyo — District Heating & Cooling (DHC) connected hotel BMS"
-ws["A2"].font = SUB_FONT
-cover = [
-    ("", ""),
-    ("Building", "SRC, B3–37F, ~98,331 m²; Azbil (savic-net) BMS"),
-    ("Energy source", "District Heating & Cooling: DHC chilled-water intake (冷水受入, low+high) via HEX-1 + DHC steam (蒸気受入, low @B2F / high @rooftop). Local chillers are BACKUP (順序切替)."),
-    ("Local plant", "RC-1 chillers ×3 (370 kW, COP 4.51, DHC backup), CP-8 primary CHW pumps ×3, CP-7 secondary distribution, HEX-1 plate HX (395 kW), CT-1/CT-2 (2 INV fans each), condenser pumps"),
-    ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 20-35F N/S/SE/SW, 4-pipe on DHC water), EF/SF/RF fans"),
-    ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
-    ("", ""),
-    ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),
-    ("Basis", "As-built M-01 equipment schedule, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
-    ("Note", "Items marked 'INFERRED' (secondary/HW pumps, FCU quantity) must be confirmed against as-builts / Azbil 納入仕様書."),
-]
-r = 4
-for k, v in cover:
-    ws.cell(row=r, column=1, value=k).font = Font(bold=True, size=10)
-    ws.cell(row=r, column=2, value=v).alignment = Alignment(wrap_text=True, vertical="top")
-    r += 1
-set_widths(ws, [22, 110])
-for rr in range(5, r):
-    ws.row_dimensions[rr].height = 30
+  # ---- Cover ----
+  ws = wb.active
+  ws.title = "Cover"
+  ws["A1"] = "Red5-DHCP — BMS I/O List & Panel / Controller Schedule"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = "ANA InterContinental Tokyo — District Heating & Cooling (DHC) connected hotel BMS"
+  ws["A2"].font = SUB_FONT
+  cover = [
+      ("", ""),
+      ("Building", "SRC, B3–37F, ~98,331 m²; Azbil (savic-net) BMS"),
+      ("Energy source", "District Heating & Cooling: DHC chilled-water intake (冷水受入, low+high) via HEX-1 + DHC steam (蒸気受入, low @B2F / high @rooftop). Local chillers are BACKUP (順序切替)."),
+      ("Local plant", "RC-1 chillers ×3 (370 kW, COP 4.51, DHC backup), CP-8 primary CHW pumps ×3, CP-7 secondary distribution, HEX-1 plate HX (395 kW), CT-1/CT-2 (2 INV fans each), condenser pumps"),
+      ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 20-35F N/S/SE/SW, 4-pipe on DHC water), EF/SF/RF fans"),
+      ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
+      ("", ""),
+      ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),
+      ("Basis", "As-built M-01 equipment schedule, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
+      ("Note", "Items marked 'INFERRED' (secondary/HW pumps, FCU quantity) must be confirmed against as-builts / Azbil 納入仕様書."),
+  ]
+  r = 4
+  for k, v in cover:
+      ws.cell(row=r, column=1, value=k).font = Font(bold=True, size=10)
+      ws.cell(row=r, column=2, value=v).alignment = Alignment(wrap_text=True, vertical="top")
+      r += 1
+  set_widths(ws, [22, 110])
+  for rr in range(5, r):
+      ws.row_dimensions[rr].height = 30
 
-# ---- Panels ----
-ws = wb.create_sheet("Panels")
-pcols = ["Panel ID", "Description", "Location", "Areas / Systems served",
-         "Controllers", "I/O points"]
-ws.append(pcols)
-pt_by_panel = defaultdict(int)
-for rr in rows:
-    pt_by_panel[rr["Panel"]] += 1
-ctrl_by_panel = defaultdict(int)
-for cid, panel, devs in controllers:
-    ctrl_by_panel[panel] += 1
-for pid, desc, loc, served in PANELS:
-    ws.append([pid, desc, loc, served, ctrl_by_panel.get(pid, 0), pt_by_panel.get(pid, 0)])
-style_header(ws, len(pcols))
-set_widths(ws, [14, 34, 26, 60, 12, 11])
-ws.freeze_panes = "A2"
-ws.auto_filter.ref = f"A1:{get_column_letter(len(pcols))}{ws.max_row}"
-for rr in range(2, ws.max_row + 1):
-    for c in range(1, len(pcols) + 1):
-        ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
-        ws.cell(row=rr, column=c).border = BORDER
+  # ---- Panels ----
+  ws = wb.create_sheet("Panels")
+  pcols = ["Panel ID", "Description", "Location", "Areas / Systems served",
+           "Controllers", "I/O points"]
+  ws.append(pcols)
+  pt_by_panel = defaultdict(int)
+  for rr in rows:
+      pt_by_panel[rr["Panel"]] += 1
+  ctrl_by_panel = defaultdict(int)
+  for cid, panel, devs in controllers:
+      ctrl_by_panel[panel] += 1
+  for pid, desc, loc, served in PANELS:
+      ws.append([pid, desc, loc, served, ctrl_by_panel.get(pid, 0), pt_by_panel.get(pid, 0)])
+  style_header(ws, len(pcols))
+  set_widths(ws, [14, 34, 26, 60, 12, 11])
+  ws.freeze_panes = "A2"
+  ws.auto_filter.ref = f"A1:{get_column_letter(len(pcols))}{ws.max_row}"
+  for rr in range(2, ws.max_row + 1):
+      for c in range(1, len(pcols) + 1):
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+          ws.cell(row=rr, column=c).border = BORDER
 
-# ---- Controllers ----
-ws = wb.create_sheet("Controllers")
-ccols = ["Controller ID", "Panel", "Type", "Devices served", "Point count"]
-ws.append(ccols)
-pts_by_ctrl = defaultdict(int)
-for rr in rows:
-    pts_by_ctrl[rr["Controller"]] += 1
-for cid, panel, devs in controllers:
-    ws.append([cid, panel, "DDC field controller (Azbil Infilex/savic-net class)",
-               devs, pts_by_ctrl.get(cid, 0)])
-style_header(ws, len(ccols))
-set_widths(ws, [16, 12, 42, 60, 12])
-ws.freeze_panes = "A2"
-ws.auto_filter.ref = f"A1:{get_column_letter(len(ccols))}{ws.max_row}"
-for rr in range(2, ws.max_row + 1):
-    for c in range(1, len(ccols) + 1):
-        ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
-        ws.cell(row=rr, column=c).border = BORDER
+  # ---- Controllers ----
+  ws = wb.create_sheet("Controllers")
+  ccols = ["Controller ID", "Panel", "Type", "Devices served", "Point count"]
+  ws.append(ccols)
+  pts_by_ctrl = defaultdict(int)
+  for rr in rows:
+      pts_by_ctrl[rr["Controller"]] += 1
+  for cid, panel, devs in controllers:
+      ws.append([cid, panel, "DDC field controller (Azbil Infilex/savic-net class)",
+                 devs, pts_by_ctrl.get(cid, 0)])
+  style_header(ws, len(ccols))
+  set_widths(ws, [16, 12, 42, 60, 12])
+  ws.freeze_panes = "A2"
+  ws.auto_filter.ref = f"A1:{get_column_letter(len(ccols))}{ws.max_row}"
+  for rr in range(2, ws.max_row + 1):
+      for c in range(1, len(ccols) + 1):
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+          ws.cell(row=rr, column=c).border = BORDER
 
-# ---- IO_List ----
-ws = wb.create_sheet("IO_List")
-cols = ["Point Tag", "System", "Device ID", "Device Type", "Area / Served",
-        "Panel", "Controller", "Point Description", "I/O Type",
-        "Signal / Range", "Units", "SP/Sched", "Alarm", "Trend", "Notes / Basis"]
-ws.append(cols)
-for rr in rows:
-    ws.append([rr[c] for c in cols])
-style_header(ws, len(cols))
-set_widths(ws, [16, 13, 12, 24, 34, 10, 13, 34, 8, 15, 8, 8, 7, 7, 46])
-ws.freeze_panes = "C2"
-ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
-# system color banding + borders
-for rr in range(2, ws.max_row + 1):
-    sysname = ws.cell(row=rr, column=2).value
-    fill = SYS_FILL.get(sysname)
-    for c in range(1, len(cols) + 1):
-        cell = ws.cell(row=rr, column=c)
-        cell.border = BORDER
-        cell.alignment = Alignment(wrap_text=True, vertical="top", size=9) if False else Alignment(wrap_text=True, vertical="top")
-        cell.font = Font(size=9)
-        if fill:
-            cell.fill = PatternFill("solid", fgColor=fill)
+  # ---- IO_List ----
+  ws = wb.create_sheet("IO_List")
+  cols = ["Point Tag", "System", "Device ID", "Device Type", "Area / Served",
+          "Panel", "Controller", "Point Description", "I/O Type",
+          "Signal / Range", "Units", "SP/Sched", "Alarm", "Trend", "Notes / Basis"]
+  ws.append(cols)
+  for rr in rows:
+      ws.append([rr[c] for c in cols])
+  style_header(ws, len(cols))
+  set_widths(ws, [16, 13, 12, 24, 34, 10, 13, 34, 8, 15, 8, 8, 7, 7, 46])
+  ws.freeze_panes = "C2"
+  ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
+  # system color banding + borders
+  for rr in range(2, ws.max_row + 1):
+      sysname = ws.cell(row=rr, column=2).value
+      fill = SYS_FILL.get(sysname)
+      for c in range(1, len(cols) + 1):
+          cell = ws.cell(row=rr, column=c)
+          cell.border = BORDER
+          cell.alignment = Alignment(wrap_text=True, vertical="top", size=9) if False else Alignment(wrap_text=True, vertical="top")
+          cell.font = Font(size=9)
+          if fill:
+              cell.fill = PatternFill("solid", fgColor=fill)
 
-# ---- IO_Summary ----
-ws = wb.create_sheet("IO_Summary")
-systems = ["Heat source", "DHC interface", "Air side", "Ventilation", "Metering", "Common"]
-counts = {s: {"AI": 0, "AO": 0, "BI": 0, "BO": 0} for s in systems}
-for rr in rows:
-    counts.setdefault(rr["System"], {"AI": 0, "AO": 0, "BI": 0, "BO": 0})
-    counts[rr["System"]][rr["I/O Type"]] += 1
-scols = ["System", "AI", "AO", "BI", "BO", "Total"]
-ws.append(scols)
-tot = {"AI": 0, "AO": 0, "BI": 0, "BO": 0}
-for s in systems:
-    c = counts[s]
-    row_total = sum(c.values())
-    ws.append([s, c["AI"], c["AO"], c["BI"], c["BO"], row_total])
-    for k in tot:
-        tot[k] += c[k]
-ws.append(["GRAND TOTAL", tot["AI"], tot["AO"], tot["BI"], tot["BO"], sum(tot.values())])
-style_header(ws, len(scols))
-set_widths(ws, [18, 8, 8, 8, 8, 10])
-last = ws.max_row
-for c in range(1, len(scols) + 1):
-    ws.cell(row=last, column=c).font = Font(bold=True)
-    ws.cell(row=last, column=c).fill = PatternFill("solid", fgColor="D6DCE4")
-for rr in range(2, ws.max_row + 1):
-    for c in range(1, len(scols) + 1):
-        ws.cell(row=rr, column=c).border = BORDER
-# device + point tallies
-ws.cell(row=last + 2, column=1, value="Devices").font = Font(bold=True)
-ws.cell(row=last + 2, column=2, value=len({r['Device ID'] for r in rows}))
-ws.cell(row=last + 3, column=1, value="Panels").font = Font(bold=True)
-ws.cell(row=last + 3, column=2, value=len(PANELS))
-ws.cell(row=last + 4, column=1, value="Controllers").font = Font(bold=True)
-ws.cell(row=last + 4, column=2, value=len(controllers))
-ws.cell(row=last + 5, column=1, value="Total I/O points").font = Font(bold=True)
-ws.cell(row=last + 5, column=2, value=len(rows))
+  # ---- IO_Summary ----
+  ws = wb.create_sheet("IO_Summary")
+  systems = ["Heat source", "DHC interface", "Air side", "Ventilation", "Metering", "Common"]
+  counts = {s: {"AI": 0, "AO": 0, "BI": 0, "BO": 0} for s in systems}
+  for rr in rows:
+      counts.setdefault(rr["System"], {"AI": 0, "AO": 0, "BI": 0, "BO": 0})
+      counts[rr["System"]][rr["I/O Type"]] += 1
+  scols = ["System", "AI", "AO", "BI", "BO", "Total"]
+  ws.append(scols)
+  tot = {"AI": 0, "AO": 0, "BI": 0, "BO": 0}
+  for s in systems:
+      c = counts[s]
+      row_total = sum(c.values())
+      ws.append([s, c["AI"], c["AO"], c["BI"], c["BO"], row_total])
+      for k in tot:
+          tot[k] += c[k]
+  ws.append(["GRAND TOTAL", tot["AI"], tot["AO"], tot["BI"], tot["BO"], sum(tot.values())])
+  style_header(ws, len(scols))
+  set_widths(ws, [18, 8, 8, 8, 8, 10])
+  last = ws.max_row
+  for c in range(1, len(scols) + 1):
+      ws.cell(row=last, column=c).font = Font(bold=True)
+      ws.cell(row=last, column=c).fill = PatternFill("solid", fgColor="D6DCE4")
+  for rr in range(2, ws.max_row + 1):
+      for c in range(1, len(scols) + 1):
+          ws.cell(row=rr, column=c).border = BORDER
+  # device + point tallies
+  ws.cell(row=last + 2, column=1, value="Devices").font = Font(bold=True)
+  ws.cell(row=last + 2, column=2, value=len({r['Device ID'] for r in rows}))
+  ws.cell(row=last + 3, column=1, value="Panels").font = Font(bold=True)
+  ws.cell(row=last + 3, column=2, value=len(PANELS))
+  ws.cell(row=last + 4, column=1, value="Controllers").font = Font(bold=True)
+  ws.cell(row=last + 4, column=2, value=len(controllers))
+  ws.cell(row=last + 5, column=1, value="Total I/O points").font = Font(bold=True)
+  ws.cell(row=last + 5, column=2, value=len(rows))
 
-# ---- Legend ----
-ws = wb.create_sheet("Legend")
-legend = [
-    ("Abbreviation", "Meaning"),
-    ("AI", "Analog Input (sensor: temperature, humidity, pressure, flow, power, position fb)"),
-    ("AO", "Analog Output (modulating command: valve %, damper %, VFD speed %)"),
-    ("BI", "Binary Input (status / fault / proof dry contact)"),
-    ("BO", "Binary Output (start/stop / open-close relay)"),
-    ("SP/Sched", "Point carries a setpoint or time/seasonal/event schedule"),
-    ("CHW / CW", "Chilled water / Condenser water"),
-    ("SAT / RAT", "Supply-air temp / Return-air temp"),
-    ("CCV / HCV", "Cooling-coil valve / Heating-coil (steam) valve"),
-    ("INV", "Inverter / VFD fan speed control"),
-    ("Zero-energy band", "Deadband between heating & cooling to prevent simultaneous operation"),
-    ("DHC", "District Heating & Cooling (external steam / chilled supply)"),
-    ("HEX", "Plate heat exchanger (DHC / secondary-loop hydraulic separator)"),
-    ("OAU (EVU)", "Outdoor-air / make-up-air unit"),
-    ("INFERRED", "Not explicitly confirmed in supplied docs — verify vs as-builts / Azbil 納入仕様書"),
-]
-for row in legend:
-    ws.append(row)
-style_header(ws, 2)
-set_widths(ws, [22, 95])
-for rr in range(2, ws.max_row + 1):
-    ws.cell(row=rr, column=1).font = Font(bold=True, size=10)
-    ws.cell(row=rr, column=2).alignment = Alignment(wrap_text=True, vertical="top")
-    for c in (1, 2):
-        ws.cell(row=rr, column=c).border = BORDER
+  # ---- Legend ----
+  ws = wb.create_sheet("Legend")
+  legend = [
+      ("Abbreviation", "Meaning"),
+      ("AI", "Analog Input (sensor: temperature, humidity, pressure, flow, power, position fb)"),
+      ("AO", "Analog Output (modulating command: valve %, damper %, VFD speed %)"),
+      ("BI", "Binary Input (status / fault / proof dry contact)"),
+      ("BO", "Binary Output (start/stop / open-close relay)"),
+      ("SP/Sched", "Point carries a setpoint or time/seasonal/event schedule"),
+      ("CHW / CW", "Chilled water / Condenser water"),
+      ("SAT / RAT", "Supply-air temp / Return-air temp"),
+      ("CCV / HCV", "Cooling-coil valve / Heating-coil (steam) valve"),
+      ("INV", "Inverter / VFD fan speed control"),
+      ("Zero-energy band", "Deadband between heating & cooling to prevent simultaneous operation"),
+      ("DHC", "District Heating & Cooling (external steam / chilled supply)"),
+      ("HEX", "Plate heat exchanger (DHC / secondary-loop hydraulic separator)"),
+      ("OAU (EVU)", "Outdoor-air / make-up-air unit"),
+      ("INFERRED", "Not explicitly confirmed in supplied docs — verify vs as-builts / Azbil 納入仕様書"),
+  ]
+  for row in legend:
+      ws.append(row)
+  style_header(ws, 2)
+  set_widths(ws, [22, 95])
+  for rr in range(2, ws.max_row + 1):
+      ws.cell(row=rr, column=1).font = Font(bold=True, size=10)
+      ws.cell(row=rr, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+      for c in (1, 2):
+          ws.cell(row=rr, column=c).border = BORDER
 
-wb.save(OUT)
-print("wrote", OUT)
-print("total I/O points:", len(rows))
-print("devices:", len({r['Device ID'] for r in rows}),
-      "| panels:", len(PANELS), "| controllers:", len(controllers))
+  wb.save(OUT)
+  print("wrote", OUT)
+  print("total I/O points:", len(rows))
+  print("devices:", len({r['Device ID'] for r in rows}),
+        "| panels:", len(PANELS), "| controllers:", len(controllers))
+
+
+if __name__ == "__main__":
+    build_workbook()

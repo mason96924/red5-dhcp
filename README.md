@@ -15,8 +15,10 @@ kitchen ventilation fleet (EF/SF/RF).
 
 | File | Purpose |
 |------|---------|
-| `generate_io_list.py` | Reproducible generator for the BMS I/O list + panel / controller schedule |
+| `generate_io_list.py` | Reproducible generator for the BMS I/O list + panel / controller schedule (single source of truth for the point model) |
 | `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 862 points, 119 devices, 7 panels, 52 DDC controllers |
+| `backend/` | FastAPI supervisory service (loads the point model, simulates live telemetry) |
+| `frontend/index.html` | Read-only monitoring dashboard (systems, equipment tiles, per-device point tables) |
 
 ## Regenerate the I/O list
 
@@ -25,6 +27,26 @@ python3 -m venv .venv
 .venv/bin/pip install openpyxl
 .venv/bin/python generate_io_list.py
 ```
+
+## BMS supervisory service (scaffold)
+
+A self-contained monitor for this building. The
+device / point model is imported **directly from `generate_io_list.py`** (the
+import is side-effect free — the `.xlsx` is only written under its `__main__`
+guard), so the dashboard and the Excel deliverable never drift apart. Until
+real field I/O is wired in, `backend/sim.py` synthesizes coherent live values
+from a single building driver (time-of-day load + outdoor conditions); the DHC
+network is modelled as the **primary** source with the RC-1 chillers staged as
+backup at high load.
+
+```bash
+.venv/bin/pip install -r requirements.txt
+./run.sh                     # http://127.0.0.1:8020   (PORT=9000 ./run.sh to override)
+```
+
+Endpoints: `GET /` (dashboard), `/api/health`, `/api/snapshot` (full live
+state), `/api/panels`, `/api/points` (catalog, filter by `?system=`/`?panel=`),
+`/api/device/{id}`.
 
 ## Source documents (not tracked in git)
 
