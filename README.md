@@ -41,6 +41,11 @@ kitchen-refrigeration alarms and common-area/façade lighting (照明一覧).
 | `backend/control.py` | R-1 chiller control / optimisation engine (economic dispatch, CW/CHW reset, staging, live COP, FDD) |
 | `frontend/index.html` | Read-only monitoring dashboard (R-1 optimiser panel, systems, equipment tiles, per-device point tables) |
 | `docs/R-1_control_narrative.md` | R-1 sequence of operations + optimisation & maintenance narrative |
+| `build_control_logic.py` | Per-controller Sequence of Operations generator (md / csv / xlsx / html / canvas) |
+| `build_gcl.py` | Per-controller **GCL+** control-program generator (Delta Controls, vendor8) |
+| `docs/gcl_programs.md` | All 84 controller programs as GCL+ listings |
+| `exports/red5-dhcp_gcl-programs.gcl` | Combined GCL+ source (all programs, one file) |
+| `exports/red5-dhcp_gcl-programs.html` | Interactive GCL+ viewer — search / copy / print |
 
 ## Regenerate the I/O list
 
@@ -80,6 +85,33 @@ approach temps**, **FDD advisories** and **backup-readiness** (weekly exercise).
 It appears at the top of the dashboard and in `snapshot.r1`. Tariffs and setpoint
 envelopes are editable at the top of the module. Full logic:
 [`docs/R-1_control_narrative.md`](docs/R-1_control_narrative.md).
+
+## GCL+ control programs (Delta Controls, vendor8)
+
+The site BMS is Azbil savic-net today, but the control logic is emitted as
+**Delta Controls GCL+** programs so it can be authored/loaded in enteliWEB. One
+Program (PG) object per DDC controller is generated from the same control-logic
+model that drives `docs/control_logic.md`, so the SOO, the point schedule and the
+GCL+ never drift apart.
+
+```bash
+.venv/bin/python build_gcl.py     # -> docs/gcl_programs.md + exports/*.gcl / *.html
+```
+
+Conventions used:
+
+- **Objects are referenced by their point-tag name in quotes** (e.g. `"R-1.SS"`,
+  `"DHC-CHW.CV"`), which maps 1:1 to the I/O list — bind directly on site.
+- Setpoints / internal state live in AV/BV objects (also referenced by name).
+- Reset schedules are shown as GCL math; a native LOOP (PID) object may be used
+  instead where noted (`PID(...)`).
+- `backend/control.py` (the R-1 optimiser sim) and the R-1 GCL+ program implement
+  the **same** economic-dispatch + CW/CHW-reset + staging sequence.
+
+> Syntax to confirm against your `enteliWEB → pg_reference.html` (vendor8):
+> the comment token (` ' ` used here), and whether loops are `PID()` calls or
+> bound LOOP objects. The logic and object bindings are site-ready; only those
+> two lexical details may need adjustment.
 
 ## Source documents (not tracked in git)
 

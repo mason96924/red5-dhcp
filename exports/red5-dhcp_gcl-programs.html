@@ -1,0 +1,1703 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red5-DHCP — GCL+ programs</title>
+<style>
+ :root{--ink:#1b2430;--dim:#5b6675;--line:#d5dbe4;--band:#1F3864;--code:#0d1117;--codeink:#d6dee8;}
+ *{box-sizing:border-box} body{margin:0;font:13px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#f4f6f9;padding:24px}
+ .wrap{max-width:1040px;margin:0 auto} h1{font-size:21px;margin:0 0 2px} .sub{color:var(--dim);margin:0 0 14px}
+ .bar{position:sticky;top:0;background:#f4f6f9;padding:8px 0 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;z-index:5}
+ input[type=search]{border:1px solid var(--line);border-radius:7px;padding:7px 10px;min-width:300px;font-size:13px}
+ button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 11px;cursor:pointer;font-size:12px}
+ details.pg{background:#fff;border:1px solid var(--line);border-radius:9px;margin:0 0 8px;position:relative}
+ details.pg>summary{padding:10px 14px;font-weight:600;cursor:pointer;list-style:none}
+ summary::-webkit-details-marker{display:none} summary .r{float:right;color:var(--dim);font-weight:400;font-size:12px}
+ .eq{color:var(--dim);font-size:12px;padding:0 14px 6px}
+ button.cp{position:absolute;right:12px;top:40px}
+ pre{background:var(--code);color:var(--codeink);margin:0;padding:14px 16px;border-radius:0 0 9px 9px;overflow:auto;
+      font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+ .hidden{display:none!important} .foot{color:var(--dim);font-size:12px;margin-top:18px}
+ @media print{body{background:#fff;padding:0} .bar,button.cp{display:none} details.pg{break-inside:avoid} pre{background:#fff;color:#000;border:1px solid #ccc}}
+</style></head><body><div class="wrap">
+<h1>Red5-DHCP — GCL+ control programs (Delta Controls, vendor8)</h1>
+<p class="sub">84 controllers · generated 2026-07-27. Objects referenced by point-tag name (I/O list). Verify comment token &amp; LOOP/PID against your enteliWEB pg_reference.html.</p>
+<div class="bar">
+ <input type="search" id="q" placeholder="find controller / equipment / strategy…">
+ <button id="expand">Expand all</button><button id="collapse">Collapse all</button>
+ <button onclick="window.print()">Print / Save PDF</button><span class="sub" id="count"></span>
+</div>
+<details class="pg" data-s="ddc-dhc-01 lcp-dhc dhc-chw intake valve modulates to chw setpoint / thermal demand"><summary>DDC-DHC-01<span class="r">LCP-DHC · Intake valve modulates to CHW setpoint / thermal demand</span></summary><div class="eq">DHC-CHW</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-01   Panel: LCP-DHC
+&#x27; Equipment: DHC-CHW
+&#x27; Strategy : Intake valve modulates to CHW setpoint / thermal demand
+&#x27; I/O      : 10 pts (AI 7  AO 1  BI 1  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- DHC chilled-water intake: modulate valve to hold CHW supply SP ---
+&quot;DHC-CHW.CV&quot; = PID(&quot;CHW SP&quot;, &quot;DHC-CHW.CS-T&quot;, &quot;CHW Loop&quot;)
+&#x27;  (or native LOOP object; direct-acting, output 0..100%)
+&#x27; Cap valve during district coincident-peak window
+If (&quot;DHC Peak&quot; = On) And (&quot;Loop PLR&quot; &gt; 0.5) Then
+  &quot;DHC-CHW.CV&quot; = Min(&quot;DHC-CHW.CV&quot;, &quot;Peak Valve Limit&quot;)
+EndIf
+
+&#x27; Alarms &amp; fail-safe
+If &quot;DHC-CHW.CS-T&quot; &gt; &quot;CHW Hi Limit&quot; Then &quot;DHC CHW Alarm&quot; = On
+If &quot;BMS Comms&quot; = Off Then &quot;DHC-CHW.CV&quot; = 100   &#x27; fail-open to cooling
+
+End</pre></details><details class="pg" data-s="ddc-dhc-02 lcp-dhc dhc-steam prv to 0.2 mpa header + condensate metering"><summary>DDC-DHC-02<span class="r">LCP-DHC · PRV to 0.2 MPa header + condensate metering</span></summary><div class="eq">DHC-STEAM</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-02   Panel: LCP-DHC
+&#x27; Equipment: DHC-STEAM
+&#x27; Strategy : PRV to 0.2 MPa header + condensate metering
+&#x27; I/O      : 7 pts (AI 4  AO 1  BI 1  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- DHC steam intake: PRV to 0.2 MPa house header, heating season only ---
+If &quot;Heating Season&quot; = On Then
+  &quot;DHC-STEAM.PRV&quot; = PID(&quot;Steam Header SP&quot;, &quot;House Steam P&quot;, &quot;Steam PRV&quot;)
+Else
+  &quot;DHC-STEAM.PRV&quot; = 0   &#x27; isolate + drain
+EndIf
+&#x27; Meter mass flow + condensate hot-return for demand/energy
+
+End</pre></details><details class="pg" data-s="ddc-dhc-03 lcp-dhc hwt-1 level control + makeup"><summary>DDC-DHC-03<span class="r">LCP-DHC · Level control + makeup</span></summary><div class="eq">HWT-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-03   Panel: LCP-DHC
+&#x27; Equipment: HWT-1
+&#x27; Strategy : Level control + makeup
+&#x27; I/O      : 5 pts (AI 2  AO 0  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-dhc-04 lcp-dhc hp-5-1, hp-5-2, hp-3-1 level-controlled condensate/kitchen pumps"><summary>DDC-DHC-04<span class="r">LCP-DHC · Level-controlled condensate/kitchen pumps</span></summary><div class="eq">HP-5-1, HP-5-2, HP-3-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-04   Panel: LCP-DHC
+&#x27; Equipment: HP-5-1, HP-5-2, HP-3-1
+&#x27; Strategy : Level-controlled condensate/kitchen pumps
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Hot-well pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;HP-5-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;HP-5-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;HP-3-1.SS&quot; = Off
+&quot;HP-5-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Hot-well pumps Loop&quot;)
+&quot;HP-5-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Hot-well pumps Loop&quot;)
+&quot;HP-3-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Hot-well pumps Loop&quot;)
+If &quot;HP-5-1.TRIP&quot; = Active Then &quot;HP-5-1 Alarm&quot; = On
+If &quot;HP-5-2.TRIP&quot; = Active Then &quot;HP-5-2 Alarm&quot; = On
+If &quot;HP-3-1.TRIP&quot; = Active Then &quot;HP-3-1 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-dhc-05 lcp-dhc hp-3-2 level-controlled condensate/kitchen pumps"><summary>DDC-DHC-05<span class="r">LCP-DHC · Level-controlled condensate/kitchen pumps</span></summary><div class="eq">HP-3-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-05   Panel: LCP-DHC
+&#x27; Equipment: HP-3-2
+&#x27; Strategy : Level-controlled condensate/kitchen pumps
+&#x27; I/O      : 7 pts (AI 2  AO 1  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Hot-well pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;HP-3-2.SS&quot; = &quot;Loop Enable&quot;
+&quot;HP-3-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Hot-well pumps Loop&quot;)
+If &quot;HP-3-2.TRIP&quot; = Active Then &quot;HP-3-2 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-dhc-06 lcp-dhc mtr-elec-main, mtr-gas-main, mtr-water-main energy integration (monitor only)"><summary>DDC-DHC-06<span class="r">LCP-DHC · Energy integration (monitor only)</span></summary><div class="eq">MTR-ELEC-MAIN, MTR-GAS-MAIN, MTR-WATER-MAIN</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-06   Panel: LCP-DHC
+&#x27; Equipment: MTR-ELEC-MAIN, MTR-GAS-MAIN, MTR-WATER-MAIN
+&#x27; Strategy : Energy integration (monitor only)
+&#x27; I/O      : 3 pts (AI 3  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; Energy meter -- monitor / integrate only (no output).
+
+End</pre></details><details class="pg" data-s="ddc-dhc-07 lcp-dhc mtr-dhc-chw, mtr-dhc-steam, mtr-dhc-cond energy integration (monitor only)"><summary>DDC-DHC-07<span class="r">LCP-DHC · Energy integration (monitor only)</span></summary><div class="eq">MTR-DHC-CHW, MTR-DHC-STEAM, MTR-DHC-COND</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHC-07   Panel: LCP-DHC
+&#x27; Equipment: MTR-DHC-CHW, MTR-DHC-STEAM, MTR-DHC-COND
+&#x27; Strategy : Energy integration (monitor only)
+&#x27; I/O      : 3 pts (AI 3  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; Energy meter -- monitor / integrate only (no output).
+
+End</pre></details><details class="pg" data-s="ddc-ct-01 lcp-ct ct-1-1, ct-1-2, ct-1 inv fan cells hold wet-bulb-reset condenser setpoint"><summary>DDC-CT-01<span class="r">LCP-CT · INV fan cells hold wet-bulb-reset condenser setpoint</span></summary><div class="eq">CT-1-1, CT-1-2, CT-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-01   Panel: LCP-CT
+&#x27; Equipment: CT-1-1, CT-1-2, CT-1
+&#x27; Strategy : INV fan cells hold wet-bulb-reset condenser setpoint
+&#x27; I/O      : 16 pts (AI 3  AO 2  BI 6  BO 5)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Cooling tower: INV fan cells hold condenser-water SP (wetbulb reset) ---
+&quot;CW SP&quot; = Max(19, &quot;Wetbulb&quot; + &quot;CT Approach&quot;)
+&quot;CT-1-1.SPD&quot; = PID(&quot;CW SP&quot;, &quot;CW Return Temp&quot;, &quot;Tower Loop&quot;)
+&quot;CT-1-2.SPD&quot; = PID(&quot;CW SP&quot;, &quot;CW Return Temp&quot;, &quot;Tower Loop&quot;)
+
+&#x27; Stage additional cells as load rises (lead runs first)
+If &quot;CW Return Temp&quot; &gt; (&quot;CW SP&quot; + 1.5) Then &quot;CT-1-2.SS&quot; = On
+If &quot;CW Return Temp&quot; &lt; (&quot;CW SP&quot; + 0.3) Then &quot;CT-1-2.SS&quot; = Off
+&quot;CT-1-1.SS&quot; = &quot;Tower Enable&quot;
+
+&#x27; Freeze protection + fault
+If &quot;OA Temp&quot; &lt; 2 Then &quot;CT Basin Heater&quot; = On
+If &quot;CT-1-1.TRIP&quot; = Active Then &quot;CT Alarm&quot; = On
+If &quot;CT-1-2.TRIP&quot; = Active Then &quot;CT Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-ct-02 lcp-ct ct-2-1, ct-2-2, ct-2 inv fan cells hold wet-bulb-reset condenser setpoint"><summary>DDC-CT-02<span class="r">LCP-CT · INV fan cells hold wet-bulb-reset condenser setpoint</span></summary><div class="eq">CT-2-1, CT-2-2, CT-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-02   Panel: LCP-CT
+&#x27; Equipment: CT-2-1, CT-2-2, CT-2
+&#x27; Strategy : INV fan cells hold wet-bulb-reset condenser setpoint
+&#x27; I/O      : 18 pts (AI 3  AO 2  BI 7  BO 6)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Cooling tower: INV fan cells hold condenser-water SP (wetbulb reset) ---
+&quot;CW SP&quot; = Max(19, &quot;Wetbulb&quot; + &quot;CT Approach&quot;)
+&quot;CT-2-1.SPD&quot; = PID(&quot;CW SP&quot;, &quot;CW Return Temp&quot;, &quot;Tower Loop&quot;)
+&quot;CT-2-2.SPD&quot; = PID(&quot;CW SP&quot;, &quot;CW Return Temp&quot;, &quot;Tower Loop&quot;)
+
+&#x27; Stage additional cells as load rises (lead runs first)
+If &quot;CW Return Temp&quot; &gt; (&quot;CW SP&quot; + 1.5) Then &quot;CT-2-2.SS&quot; = On
+If &quot;CW Return Temp&quot; &lt; (&quot;CW SP&quot; + 0.3) Then &quot;CT-2-2.SS&quot; = Off
+&quot;CT-2-1.SS&quot; = &quot;Tower Enable&quot;
+
+&#x27; Freeze protection + fault
+If &quot;OA Temp&quot; &lt; 2 Then &quot;CT Basin Heater&quot; = On
+If &quot;CT-2-1.TRIP&quot; = Active Then &quot;CT Alarm&quot; = On
+If &quot;CT-2-2.TRIP&quot; = Active Then &quot;CT Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-ct-03 lcp-ct ct-3-1, ct-3 inv fan cells hold wet-bulb-reset condenser setpoint"><summary>DDC-CT-03<span class="r">LCP-CT · INV fan cells hold wet-bulb-reset condenser setpoint</span></summary><div class="eq">CT-3-1, CT-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-03   Panel: LCP-CT
+&#x27; Equipment: CT-3-1, CT-3
+&#x27; Strategy : INV fan cells hold wet-bulb-reset condenser setpoint
+&#x27; I/O      : 11 pts (AI 2  AO 1  BI 4  BO 4)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Cooling tower: INV fan cells hold condenser-water SP (wetbulb reset) ---
+&quot;CW SP&quot; = Max(19, &quot;Wetbulb&quot; + &quot;CT Approach&quot;)
+&quot;CT-3-1.SPD&quot; = PID(&quot;CW SP&quot;, &quot;CW Return Temp&quot;, &quot;Tower Loop&quot;)
+
+&#x27; Stage additional cells as load rises (lead runs first)
+If &quot;CW Return Temp&quot; &gt; (&quot;CW SP&quot; + 1.5) Then &quot;CT-3-1.SS&quot; = On
+If &quot;CW Return Temp&quot; &lt; (&quot;CW SP&quot; + 0.3) Then &quot;CT-3-1.SS&quot; = Off
+&quot;CT-3-1.SS&quot; = &quot;Tower Enable&quot;
+
+&#x27; Freeze protection + fault
+If &quot;OA Temp&quot; &lt; 2 Then &quot;CT Basin Heater&quot; = On
+If &quot;CT-3-1.TRIP&quot; = Active Then &quot;CT Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-ct-04 lcp-ct cdp-1-1, cdp-1-2, cdp-1-3 duty/standby with chiller; flow-proof"><summary>DDC-CT-04<span class="r">LCP-CT · Duty/standby with chiller; flow-proof</span></summary><div class="eq">CDP-1-1, CDP-1-2, CDP-1-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-04   Panel: LCP-CT
+&#x27; Equipment: CDP-1-1, CDP-1-2, CDP-1-3
+&#x27; Strategy : Duty/standby with chiller; flow-proof
+&#x27; I/O      : 12 pts (AI 0  AO 0  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Condenser pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CDP-1-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CDP-1-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CDP-1-3.SS&quot; = Off
+If &quot;CDP-1-1.TRIP&quot; = Active Then &quot;CDP-1-1 Alarm&quot; = On
+If &quot;CDP-1-2.TRIP&quot; = Active Then &quot;CDP-1-2 Alarm&quot; = On
+If &quot;CDP-1-3.TRIP&quot; = Active Then &quot;CDP-1-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-ct-05 lcp-ct cdp-2-1, cdp-2-2, cdp-3-1 duty/standby with chiller; flow-proof"><summary>DDC-CT-05<span class="r">LCP-CT · Duty/standby with chiller; flow-proof</span></summary><div class="eq">CDP-2-1, CDP-2-2, CDP-3-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-05   Panel: LCP-CT
+&#x27; Equipment: CDP-2-1, CDP-2-2, CDP-3-1
+&#x27; Strategy : Duty/standby with chiller; flow-proof
+&#x27; I/O      : 12 pts (AI 0  AO 0  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Condenser pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CDP-2-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CDP-2-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CDP-3-1.SS&quot; = Off
+If &quot;CDP-2-1.TRIP&quot; = Active Then &quot;CDP-2-1 Alarm&quot; = On
+If &quot;CDP-2-2.TRIP&quot; = Active Then &quot;CDP-2-2 Alarm&quot; = On
+If &quot;CDP-3-1.TRIP&quot; = Active Then &quot;CDP-3-1 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-ct-06 lcp-ct cdp-3-2 duty/standby with chiller; flow-proof"><summary>DDC-CT-06<span class="r">LCP-CT · Duty/standby with chiller; flow-proof</span></summary><div class="eq">CDP-3-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-06   Panel: LCP-CT
+&#x27; Equipment: CDP-3-2
+&#x27; Strategy : Duty/standby with chiller; flow-proof
+&#x27; I/O      : 4 pts (AI 0  AO 0  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Condenser pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CDP-3-2.SS&quot; = &quot;Loop Enable&quot;
+If &quot;CDP-3-2.TRIP&quot; = Active Then &quot;CDP-3-2 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-ct-07 lcp-ct ex-1, emhx-1, emhx-2 tower free-cooling when wet-bulb low; emergency dhc hx standby"><summary>DDC-CT-07<span class="r">LCP-CT · Tower free-cooling when wet-bulb low; Emergency DHC HX standby</span></summary><div class="eq">EX-1, EMHX-1, EMHX-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-07   Panel: LCP-CT
+&#x27; Equipment: EX-1, EMHX-1, EMHX-2
+&#x27; Strategy : Tower free-cooling when wet-bulb low; Emergency DHC HX standby
+&#x27; I/O      : 9 pts (AI 3  AO 1  BI 0  BO 5)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; === [Winter free-cooling heat exchanger] EX-1 ===
+&#x27; --- Winter/shoulder free-cooling via tower + HX ---
+If (&quot;Wetbulb&quot; + &quot;CT Approach&quot;) &lt; (&quot;CHW SP&quot; - 1) Then
+  &quot;Freecool Enable&quot; = On
+Else
+  &quot;Freecool Enable&quot; = Off   &#x27; hand back to mechanical cooling (hysteresis)
+EndIf
+
+
+&#x27; === [Emergency cooling heat exchanger] EMHX-1, EMHX-2 ===
+&#x27; --- Heat exchanger (emergency DHC loop): primary valve holds secondary outlet SP ---
+
+End</pre></details><details class="pg" data-s="ddc-ct-08 lcp-ct mtr-cdw-kwh energy integration (monitor only)"><summary>DDC-CT-08<span class="r">LCP-CT · Energy integration (monitor only)</span></summary><div class="eq">MTR-CDW-KWH</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-CT-08   Panel: LCP-CT
+&#x27; Equipment: MTR-CDW-KWH
+&#x27; Strategy : Energy integration (monitor only)
+&#x27; I/O      : 1 pts (AI 1  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; Energy meter -- monitor / integrate only (no output).
+
+End</pre></details><details class="pg" data-s="ddc-hsl-01 lcp-hsl ex-2-1, ex-2-2 primary valve modulates to secondary outlet setpoint"><summary>DDC-HSL-01<span class="r">LCP-HSL · Primary valve modulates to secondary outlet setpoint</span></summary><div class="eq">EX-2-1, EX-2-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-01   Panel: LCP-HSL
+&#x27; Equipment: EX-2-1, EX-2-2
+&#x27; Strategy : Primary valve modulates to secondary outlet setpoint
+&#x27; I/O      : 8 pts (AI 6  AO 2  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Heat exchanger (tempered loop): primary valve holds secondary outlet SP ---
+&quot;EX-2-1.PV&quot; = PID(&quot;EX-2-1 Sec SP&quot;, &quot;EX-2-1.S-OUT&quot;, &quot;EX-2-1 Loop&quot;)
+If &quot;EX-2-1.S-OUT&quot; &gt; &quot;EX-2-1 Hi Limit&quot; Then &quot;EX-2-1 Alarm&quot; = On
+&quot;EX-2-2.PV&quot; = PID(&quot;EX-2-2 Sec SP&quot;, &quot;EX-2-2.S-OUT&quot;, &quot;EX-2-2 Loop&quot;)
+If &quot;EX-2-2.S-OUT&quot; &gt; &quot;EX-2-2 Hi Limit&quot; Then &quot;EX-2-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsl-02 lcp-hsl cp-1-1, cp-1-2, cp-1-3 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSL-02<span class="r">LCP-HSL · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-1-1, CP-1-2, CP-1-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-02   Panel: LCP-HSL
+&#x27; Equipment: CP-1-1, CP-1-2, CP-1-3
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-1-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-1-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-1-3.SS&quot; = Off
+&quot;CP-1-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-1-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-1-3.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-1-1.TRIP&quot; = Active Then &quot;CP-1-1 Alarm&quot; = On
+If &quot;CP-1-2.TRIP&quot; = Active Then &quot;CP-1-2 Alarm&quot; = On
+If &quot;CP-1-3.TRIP&quot; = Active Then &quot;CP-1-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsl-03 lcp-hsl cp-4-1, cp-4-2, cp-5-1 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSL-03<span class="r">LCP-HSL · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-4-1, CP-4-2, CP-5-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-03   Panel: LCP-HSL
+&#x27; Equipment: CP-4-1, CP-4-2, CP-5-1
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-4-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-4-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-5-1.SS&quot; = Off
+&quot;CP-4-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-4-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-5-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-4-1.TRIP&quot; = Active Then &quot;CP-4-1 Alarm&quot; = On
+If &quot;CP-4-2.TRIP&quot; = Active Then &quot;CP-4-2 Alarm&quot; = On
+If &quot;CP-5-1.TRIP&quot; = Active Then &quot;CP-5-1 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsl-04 lcp-hsl cp-5-2 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSL-04<span class="r">LCP-HSL · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-5-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-04   Panel: LCP-HSL
+&#x27; Equipment: CP-5-2
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 7 pts (AI 2  AO 1  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-5-2.SS&quot; = &quot;Loop Enable&quot;
+&quot;CP-5-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-5-2.TRIP&quot; = Active Then &quot;CP-5-2 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsl-05 lcp-hsl hp-1-1, hp-1-2, hp-1-3 heating-season lead/lag to header δp"><summary>DDC-HSL-05<span class="r">LCP-HSL · Heating-season lead/lag to header Δp</span></summary><div class="eq">HP-1-1, HP-1-2, HP-1-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-05   Panel: LCP-HSL
+&#x27; Equipment: HP-1-1, HP-1-2, HP-1-3
+&#x27; Strategy : Heating-season lead/lag to header Δp
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- HW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;HP-1-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;HP-1-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;HP-1-3.SS&quot; = Off
+&quot;HP-1-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+&quot;HP-1-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+&quot;HP-1-3.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+If &quot;HP-1-1.TRIP&quot; = Active Then &quot;HP-1-1 Alarm&quot; = On
+If &quot;HP-1-2.TRIP&quot; = Active Then &quot;HP-1-2 Alarm&quot; = On
+If &quot;HP-1-3.TRIP&quot; = Active Then &quot;HP-1-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsl-06 lcp-hsl ext-1 loop pressurisation"><summary>DDC-HSL-06<span class="r">LCP-HSL · Loop pressurisation</span></summary><div class="eq">EXT-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-06   Panel: LCP-HSL
+&#x27; Equipment: EXT-1
+&#x27; Strategy : Loop pressurisation
+&#x27; I/O      : 3 pts (AI 1  AO 0  BI 2  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-hsl-07 lcp-hsl st-1 oa tempering to setpoint"><summary>DDC-HSL-07<span class="r">LCP-HSL · OA tempering to setpoint</span></summary><div class="eq">ST-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-07   Panel: LCP-HSL
+&#x27; Equipment: ST-1
+&#x27; Strategy : OA tempering to setpoint
+&#x27; I/O      : 3 pts (AI 3  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+
+End</pre></details><details class="pg" data-s="ddc-hsl-08 lcp-hsl ac-1, ac-2, ac-3 schedule + sat coil control + economizer"><summary>DDC-HSL-08<span class="r">LCP-HSL · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-1, AC-2, AC-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-08   Panel: LCP-HSL
+&#x27; Equipment: AC-1, AC-2, AC-3
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 29 pts (AI 6  AO 10  BI 10  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-1: schedule start, SAT control, economizer ---
+&quot;AC-1.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-1.SPD&quot; = &quot;AC-1 Fan Speed&quot;   &#x27; constant volume
+&quot;AC-1.CCV&quot; = PID(&quot;AC-1 SAT SP&quot;, &quot;AC-1.SAT&quot;, &quot;AC-1 Cool&quot;)
+&quot;AC-1.HCV&quot; = PID_Heat(&quot;AC-1 SAT SP&quot;, &quot;AC-1.SAT&quot;, &quot;AC-1 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-1.OAD&quot; = 100
+  &quot;AC-1.CCV&quot; = 0
+EndIf
+If &quot;AC-1.TRIP&quot; = Active Then &quot;AC-1 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-1.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-2: schedule start, SAT control, economizer ---
+&quot;AC-2.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-2.SPD&quot; = &quot;AC-2 Fan Speed&quot;   &#x27; constant volume
+&quot;AC-2.CCV&quot; = PID(&quot;AC-2 SAT SP&quot;, &quot;AC-2.SAT&quot;, &quot;AC-2 Cool&quot;)
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-2.OAD&quot; = 100
+  &quot;AC-2.CCV&quot; = 0
+EndIf
+If &quot;AC-2.TRIP&quot; = Active Then &quot;AC-2 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-2.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-3: schedule start, SAT control, economizer ---
+&quot;AC-3.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-3.SPD&quot; = &quot;AC-3 Fan Speed&quot;   &#x27; constant volume
+&quot;AC-3.CCV&quot; = PID(&quot;AC-3 SAT SP&quot;, &quot;AC-3.SAT&quot;, &quot;AC-3 Cool&quot;)
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-3.OAD&quot; = 100
+  &quot;AC-3.CCV&quot; = 0
+EndIf
+If &quot;AC-3.TRIP&quot; = Active Then &quot;AC-3 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-3.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-hsl-09 lcp-hsl ac-4, ac-5, ac-6 schedule + sat coil control + economizer"><summary>DDC-HSL-09<span class="r">LCP-HSL · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-4, AC-5, AC-6</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-09   Panel: LCP-HSL
+&#x27; Equipment: AC-4, AC-5, AC-6
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 34 pts (AI 9  AO 11  BI 11  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-4: schedule start, SAT control, economizer ---
+&quot;AC-4.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-4.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-4 Fan&quot;)
+&quot;AC-4.CCV&quot; = PID(&quot;AC-4 SAT SP&quot;, &quot;AC-4.SAT&quot;, &quot;AC-4 Cool&quot;)
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-4.OAD&quot; = 100
+  &quot;AC-4.CCV&quot; = 0
+EndIf
+If &quot;AC-4.TRIP&quot; = Active Then &quot;AC-4 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-4.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-5: schedule start, SAT control, economizer ---
+&quot;AC-5.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-5.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-5 Fan&quot;)
+&quot;AC-5.CCV&quot; = PID(&quot;AC-5 SAT SP&quot;, &quot;AC-5.SAT&quot;, &quot;AC-5 Cool&quot;)
+&quot;AC-5.HCV&quot; = PID_Heat(&quot;AC-5 SAT SP&quot;, &quot;AC-5.SAT&quot;, &quot;AC-5 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-5.OAD&quot; = 100
+  &quot;AC-5.CCV&quot; = 0
+EndIf
+If &quot;AC-5.TRIP&quot; = Active Then &quot;AC-5 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-5.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-6: schedule start, SAT control, economizer ---
+&quot;AC-6.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-6.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-6 Fan&quot;)
+&quot;AC-6.CCV&quot; = PID(&quot;AC-6 SAT SP&quot;, &quot;AC-6.SAT&quot;, &quot;AC-6 Cool&quot;)
+&quot;AC-6.HCV&quot; = PID_Heat(&quot;AC-6 SAT SP&quot;, &quot;AC-6.SAT&quot;, &quot;AC-6 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-6.OAD&quot; = 100
+  &quot;AC-6.CCV&quot; = 0
+EndIf
+If &quot;AC-6.TRIP&quot; = Active Then &quot;AC-6 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-6.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-hsl-10 lcp-hsl ac-26 schedule + sat coil control + economizer"><summary>DDC-HSL-10<span class="r">LCP-HSL · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-26</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-10   Panel: LCP-HSL
+&#x27; Equipment: AC-26
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 12 pts (AI 3  AO 4  BI 4  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-26: schedule start, SAT control, economizer ---
+&quot;AC-26.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-26.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-26 Fan&quot;)
+&quot;AC-26.CCV&quot; = PID(&quot;AC-26 SAT SP&quot;, &quot;AC-26.SAT&quot;, &quot;AC-26 Cool&quot;)
+&quot;AC-26.HCV&quot; = PID_Heat(&quot;AC-26 SAT SP&quot;, &quot;AC-26.SAT&quot;, &quot;AC-26 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-26.OAD&quot; = 100
+  &quot;AC-26.CCV&quot; = 0
+EndIf
+If &quot;AC-26.TRIP&quot; = Active Then &quot;AC-26 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-26.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-hsl-11 lcp-hsl fcu-l-n, fcu-l-ne, fcu-l-se zone thermostat + schedule batch"><summary>DDC-HSL-11<span class="r">LCP-HSL · Zone thermostat + schedule batch</span></summary><div class="eq">FCU-L-N, FCU-L-NE, FCU-L-SE</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-11   Panel: LCP-HSL
+&#x27; Equipment: FCU-L-N, FCU-L-NE, FCU-L-SE
+&#x27; Strategy : Zone thermostat + schedule batch
+&#x27; I/O      : 21 pts (AI 3  AO 6  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-hsl-12 lcp-hsl fcu-l-s, fcu-l-sw zone thermostat + schedule batch"><summary>DDC-HSL-12<span class="r">LCP-HSL · Zone thermostat + schedule batch</span></summary><div class="eq">FCU-L-S, FCU-L-SW</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-12   Panel: LCP-HSL
+&#x27; Equipment: FCU-L-S, FCU-L-SW
+&#x27; Strategy : Zone thermostat + schedule batch
+&#x27; I/O      : 14 pts (AI 2  AO 4  BI 6  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-hsl-13 lcp-hsl sf-6, ef-28, ef-32 scheduled ventilation / exhaust"><summary>DDC-HSL-13<span class="r">LCP-HSL · Scheduled ventilation / exhaust</span></summary><div class="eq">SF-6, EF-28, EF-32</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-13   Panel: LCP-HSL
+&#x27; Equipment: SF-6, EF-28, EF-32
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;SF-6.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;SF-6.TRIP&quot; = Active Then &quot;SF-6 Alarm&quot; = On
+&quot;EF-28.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-28.TRIP&quot; = Active Then &quot;EF-28 Alarm&quot; = On
+&quot;EF-32.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-32.TRIP&quot; = Active Then &quot;EF-32 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsl-14 lcp-hsl ef-33, ef-97, rf-7 scheduled ventilation / exhaust; start/stop + status/alarm"><summary>DDC-HSL-14<span class="r">LCP-HSL · Scheduled ventilation / exhaust; Start/stop + status/alarm</span></summary><div class="eq">EF-33, EF-97, RF-7</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-14   Panel: LCP-HSL
+&#x27; Equipment: EF-33, EF-97, RF-7
+&#x27; Strategy : Scheduled ventilation / exhaust; Start/stop + status/alarm
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; === [Ventilation / exhaust fan] EF-33, EF-97 ===
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-33.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-33.TRIP&quot; = Active Then &quot;EF-33 Alarm&quot; = On
+&quot;EF-97.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-97.TRIP&quot; = Active Then &quot;EF-97 Alarm&quot; = On
+
+&#x27; === [Field device] RF-7 ===
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;RF-7.SS&quot; = &quot;RF-7 Enable&quot;
+If &quot;RF-7.TRIP&quot; = Active Then &quot;RF-7 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsl-15 lcp-hsl rf-8, rf-9 start/stop + status/alarm"><summary>DDC-HSL-15<span class="r">LCP-HSL · Start/stop + status/alarm</span></summary><div class="eq">RF-8, RF-9</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-15   Panel: LCP-HSL
+&#x27; Equipment: RF-8, RF-9
+&#x27; Strategy : Start/stop + status/alarm
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 4  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;RF-8.SS&quot; = &quot;RF-8 Enable&quot;
+If &quot;RF-8.TRIP&quot; = Active Then &quot;RF-8 Alarm&quot; = On
+&quot;RF-9.SS&quot; = &quot;RF-9 Enable&quot;
+If &quot;RF-9.TRIP&quot; = Active Then &quot;RF-9 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsl-16 lcp-hsl pool-fp start/stop + status/alarm"><summary>DDC-HSL-16<span class="r">LCP-HSL · Start/stop + status/alarm</span></summary><div class="eq">POOL-FP</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-16   Panel: LCP-HSL
+&#x27; Equipment: POOL-FP
+&#x27; Strategy : Start/stop + status/alarm
+&#x27; I/O      : 3 pts (AI 0  AO 0  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;POOL-FP.SS&quot; = &quot;POOL-FP Enable&quot;
+If &quot;POOL-FP.TRIP&quot; = Active Then &quot;POOL-FP Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsl-17 lcp-hsl mtr-ahu-kwh energy integration (monitor only)"><summary>DDC-HSL-17<span class="r">LCP-HSL · Energy integration (monitor only)</span></summary><div class="eq">MTR-AHU-KWH</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSL-17   Panel: LCP-HSL
+&#x27; Equipment: MTR-AHU-KWH
+&#x27; Strategy : Energy integration (monitor only)
+&#x27; I/O      : 1 pts (AI 1  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; Energy meter -- monitor / integrate only (no output).
+
+End</pre></details><details class="pg" data-s="ddc-hsh-01 lcp-hsh ex-3-1, ex-3-2 primary valve modulates to secondary outlet setpoint"><summary>DDC-HSH-01<span class="r">LCP-HSH · Primary valve modulates to secondary outlet setpoint</span></summary><div class="eq">EX-3-1, EX-3-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-01   Panel: LCP-HSH
+&#x27; Equipment: EX-3-1, EX-3-2
+&#x27; Strategy : Primary valve modulates to secondary outlet setpoint
+&#x27; I/O      : 8 pts (AI 6  AO 2  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Heat exchanger (tempered loop): primary valve holds secondary outlet SP ---
+&quot;EX-3-1.PV&quot; = PID(&quot;EX-3-1 Sec SP&quot;, &quot;EX-3-1.S-OUT&quot;, &quot;EX-3-1 Loop&quot;)
+If &quot;EX-3-1.S-OUT&quot; &gt; &quot;EX-3-1 Hi Limit&quot; Then &quot;EX-3-1 Alarm&quot; = On
+&quot;EX-3-2.PV&quot; = PID(&quot;EX-3-2 Sec SP&quot;, &quot;EX-3-2.S-OUT&quot;, &quot;EX-3-2 Loop&quot;)
+If &quot;EX-3-2.S-OUT&quot; &gt; &quot;EX-3-2 Hi Limit&quot; Then &quot;EX-3-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsh-02 lcp-hsh cp-2-1, cp-2-2, cp-2-3 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSH-02<span class="r">LCP-HSH · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-2-1, CP-2-2, CP-2-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-02   Panel: LCP-HSH
+&#x27; Equipment: CP-2-1, CP-2-2, CP-2-3
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-2-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-2-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-2-3.SS&quot; = Off
+&quot;CP-2-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-2-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-2-3.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-2-1.TRIP&quot; = Active Then &quot;CP-2-1 Alarm&quot; = On
+If &quot;CP-2-2.TRIP&quot; = Active Then &quot;CP-2-2 Alarm&quot; = On
+If &quot;CP-2-3.TRIP&quot; = Active Then &quot;CP-2-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsh-03 lcp-hsh cp-3-1, cp-3-2, cp-6-1 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSH-03<span class="r">LCP-HSH · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-3-1, CP-3-2, CP-6-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-03   Panel: LCP-HSH
+&#x27; Equipment: CP-3-1, CP-3-2, CP-6-1
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-3-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-3-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-6-1.SS&quot; = Off
+&quot;CP-3-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-3-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-6-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-3-1.TRIP&quot; = Active Then &quot;CP-3-1 Alarm&quot; = On
+If &quot;CP-3-2.TRIP&quot; = Active Then &quot;CP-3-2 Alarm&quot; = On
+If &quot;CP-6-1.TRIP&quot; = Active Then &quot;CP-6-1 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsh-04 lcp-hsh cp-6-2 lead/lag vfd to header δp (variable flow)"><summary>DDC-HSH-04<span class="r">LCP-HSH · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-6-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-04   Panel: LCP-HSH
+&#x27; Equipment: CP-6-2
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 7 pts (AI 2  AO 1  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-6-2.SS&quot; = &quot;Loop Enable&quot;
+&quot;CP-6-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-6-2.TRIP&quot; = Active Then &quot;CP-6-2 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsh-05 lcp-hsh hp-2-1, hp-2-2, hp-2-3 heating-season lead/lag to header δp"><summary>DDC-HSH-05<span class="r">LCP-HSH · Heating-season lead/lag to header Δp</span></summary><div class="eq">HP-2-1, HP-2-2, HP-2-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-05   Panel: LCP-HSH
+&#x27; Equipment: HP-2-1, HP-2-2, HP-2-3
+&#x27; Strategy : Heating-season lead/lag to header Δp
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- HW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;HP-2-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;HP-2-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;HP-2-3.SS&quot; = Off
+&quot;HP-2-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+&quot;HP-2-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+&quot;HP-2-3.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;HW pumps Loop&quot;)
+If &quot;HP-2-1.TRIP&quot; = Active Then &quot;HP-2-1 Alarm&quot; = On
+If &quot;HP-2-2.TRIP&quot; = Active Then &quot;HP-2-2 Alarm&quot; = On
+If &quot;HP-2-3.TRIP&quot; = Active Then &quot;HP-2-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-hsh-06 lcp-hsh ext-2 loop pressurisation"><summary>DDC-HSH-06<span class="r">LCP-HSH · Loop pressurisation</span></summary><div class="eq">EXT-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-06   Panel: LCP-HSH
+&#x27; Equipment: EXT-2
+&#x27; Strategy : Loop pressurisation
+&#x27; I/O      : 3 pts (AI 1  AO 0  BI 2  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-hsh-07 lcp-hsh st-2 oa tempering to setpoint"><summary>DDC-HSH-07<span class="r">LCP-HSH · OA tempering to setpoint</span></summary><div class="eq">ST-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-07   Panel: LCP-HSH
+&#x27; Equipment: ST-2
+&#x27; Strategy : OA tempering to setpoint
+&#x27; I/O      : 3 pts (AI 3  AO 0  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+
+End</pre></details><details class="pg" data-s="ddc-hsh-08 lcp-hsh evu-11, evu-12, evu-13 scheduled ventilation / exhaust"><summary>DDC-HSH-08<span class="r">LCP-HSH · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-11, EVU-12, EVU-13</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-08   Panel: LCP-HSH
+&#x27; Equipment: EVU-11, EVU-12, EVU-13
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 39 pts (AI 12  AO 12  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-11.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-11.TRIP&quot; = Active Then &quot;EVU-11 Alarm&quot; = On
+&quot;EVU-12.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-12.TRIP&quot; = Active Then &quot;EVU-12 Alarm&quot; = On
+&quot;EVU-13.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-13.TRIP&quot; = Active Then &quot;EVU-13 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsh-09 lcp-hsh evu-14, evu-15 scheduled ventilation / exhaust"><summary>DDC-HSH-09<span class="r">LCP-HSH · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-14, EVU-15</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-09   Panel: LCP-HSH
+&#x27; Equipment: EVU-14, EVU-15
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 24 pts (AI 6  AO 8  BI 8  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-14.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-14.TRIP&quot; = Active Then &quot;EVU-14 Alarm&quot; = On
+&quot;EVU-15.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-15.TRIP&quot; = Active Then &quot;EVU-15 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-hsh-10 lcp-hsh fcu-h-n, fcu-h-ne, fcu-h-se zone thermostat + schedule batch"><summary>DDC-HSH-10<span class="r">LCP-HSH · Zone thermostat + schedule batch</span></summary><div class="eq">FCU-H-N, FCU-H-NE, FCU-H-SE</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-10   Panel: LCP-HSH
+&#x27; Equipment: FCU-H-N, FCU-H-NE, FCU-H-SE
+&#x27; Strategy : Zone thermostat + schedule batch
+&#x27; I/O      : 21 pts (AI 3  AO 6  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-hsh-11 lcp-hsh fcu-h-s, fcu-h-sw zone thermostat + schedule batch"><summary>DDC-HSH-11<span class="r">LCP-HSH · Zone thermostat + schedule batch</span></summary><div class="eq">FCU-H-S, FCU-H-SW</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-HSH-11   Panel: LCP-HSH
+&#x27; Equipment: FCU-H-S, FCU-H-SW
+&#x27; Strategy : Zone thermostat + schedule batch
+&#x27; I/O      : 14 pts (AI 2  AO 4  BI 6  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-3637-01 lcp-3637 r-1 economic dispatch + chw/cw reset + twin-screw staging"><summary>DDC-3637-01<span class="r">LCP-3637 · Economic dispatch + CHW/CW reset + twin-screw staging</span></summary><div class="eq">R-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-01   Panel: LCP-3637
+&#x27; Equipment: R-1
+&#x27; Strategy : Economic dispatch + CHW/CW reset + twin-screw staging
+&#x27; I/O      : 10 pts (AI 4  AO 1  BI 4  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- R-1 economic dispatch (DHC is default source) ---
+&#x27;  AVs: &quot;DHC Cost&quot; &quot;R1 Cost&quot; &quot;Loop PLR&quot; &quot;Most Open Valve&quot; &quot;Wetbulb&quot;
+If (&quot;DHC Available&quot; = Off) Or (&quot;DHC Cost&quot; &gt; &quot;R1 Cost&quot; * 1.05) Then
+  If &quot;Loop PLR&quot; &gt; 0.15 Then &quot;R-1 Enable&quot; = On
+Else
+  &quot;R-1 Enable&quot; = Off
+EndIf
+
+&#x27; --- CHW reset (trim &amp; respond 7..10 C) and condenser reset (wetbulb+3.5, floor 19) ---
+&quot;R-1 CHW SP&quot; = Max(7, Min(10, 10 - (&quot;Most Open Valve&quot; - 90) / 10))
+&quot;CW SP&quot;     = Max(19, &quot;Wetbulb&quot; + 3.5)
+
+&#x27; --- Flow-proof interlock before enabling the machine ---
+If (&quot;CP-7.RUN&quot; = Off) Or (&quot;CDP-3.RUN&quot; = Off) Then &quot;R-1 Enable&quot; = Off
+
+If &quot;R-1 Enable&quot; = On Then
+  &quot;R-1.SS&quot; = On
+  &quot;R-1.DMD&quot; = &quot;Capacity Limit&quot;
+Else
+  &quot;R-1.SS&quot; = Off
+EndIf
+
+If &quot;R-1.TRIP&quot; = Active Then &quot;R-1 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3637-02 lcp-3637 hex-1 primary valve modulates to secondary outlet setpoint"><summary>DDC-3637-02<span class="r">LCP-3637 · Primary valve modulates to secondary outlet setpoint</span></summary><div class="eq">HEX-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-02   Panel: LCP-3637
+&#x27; Equipment: HEX-1
+&#x27; Strategy : Primary valve modulates to secondary outlet setpoint
+&#x27; I/O      : 7 pts (AI 6  AO 1  BI 0  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Heat exchanger (tempered loop): primary valve holds secondary outlet SP ---
+&quot;HEX-1.PV&quot; = PID(&quot;HEX-1 Sec SP&quot;, &quot;HEX-1.S-OUT&quot;, &quot;HEX-1 Loop&quot;)
+If &quot;HEX-1.S-OUT&quot; &gt; &quot;HEX-1 Hi Limit&quot; Then &quot;HEX-1 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3637-03 lcp-3637 cp-7-1, cp-7-2, cp-8-1 lead/lag vfd to header δp (variable flow)"><summary>DDC-3637-03<span class="r">LCP-3637 · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-7-1, CP-7-2, CP-8-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-03   Panel: LCP-3637
+&#x27; Equipment: CP-7-1, CP-7-2, CP-8-1
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 21 pts (AI 6  AO 3  BI 9  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-7-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-7-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-8-1.SS&quot; = Off
+&quot;CP-7-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-7-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-8-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-7-1.TRIP&quot; = Active Then &quot;CP-7-1 Alarm&quot; = On
+If &quot;CP-7-2.TRIP&quot; = Active Then &quot;CP-7-2 Alarm&quot; = On
+If &quot;CP-8-1.TRIP&quot; = Active Then &quot;CP-8-1 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-3637-04 lcp-3637 cp-8-2, cp-8-3 lead/lag vfd to header δp (variable flow)"><summary>DDC-3637-04<span class="r">LCP-3637 · Lead/lag VFD to header Δp (variable flow)</span></summary><div class="eq">CP-8-2, CP-8-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-04   Panel: LCP-3637
+&#x27; Equipment: CP-8-2, CP-8-3
+&#x27; Strategy : Lead/lag VFD to header Δp (variable flow)
+&#x27; I/O      : 14 pts (AI 4  AO 2  BI 6  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- CHW pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;CP-8-2.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;CP-8-3.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;CP-8-3.SS&quot; = Off
+&quot;CP-8-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+&quot;CP-8-3.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;CHW pumps Loop&quot;)
+If &quot;CP-8-2.TRIP&quot; = Active Then &quot;CP-8-2 Alarm&quot; = On
+If &quot;CP-8-3.TRIP&quot; = Active Then &quot;CP-8-3 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-3637-05 lcp-3637 hp-4-1, hp-4-2 buffer-loop lead/lag to δp"><summary>DDC-3637-05<span class="r">LCP-3637 · Buffer-loop lead/lag to Δp</span></summary><div class="eq">HP-4-1, HP-4-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-05   Panel: LCP-3637
+&#x27; Equipment: HP-4-1, HP-4-2
+&#x27; Strategy : Buffer-loop lead/lag to Δp
+&#x27; I/O      : 14 pts (AI 4  AO 2  BI 6  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Secondary pumps: stage on demand, lead/lag/standby, VFD to header Dp ---
+&quot;HP-4-1.SS&quot; = &quot;Loop Enable&quot;
+&#x27; Rotate lead on equal run-hours; stage lag on low Dp / high demand
+If &quot;Loop Dp&quot; &lt; (&quot;Dp SP&quot; - &quot;Dp Db&quot;) Then &quot;HP-4-2.SS&quot; = On
+If &quot;Loop Dp&quot; &gt; (&quot;Dp SP&quot; + &quot;Dp Db&quot;) Then &quot;HP-4-2.SS&quot; = Off
+&quot;HP-4-1.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Secondary pumps Loop&quot;)
+&quot;HP-4-2.SPD&quot; = PID(&quot;Dp SP&quot;, &quot;Loop Dp&quot;, &quot;Secondary pumps Loop&quot;)
+If &quot;HP-4-1.TRIP&quot; = Active Then &quot;HP-4-1 Alarm&quot; = On
+If &quot;HP-4-2.TRIP&quot; = Active Then &quot;HP-4-2 Alarm&quot; = On
+&#x27; Guarantee duty OR standby availability at all times
+
+End</pre></details><details class="pg" data-s="ddc-3637-06 lcp-3637 ex4, ext-3 primary valve modulates to secondary outlet setpoint; loop pressurisation"><summary>DDC-3637-06<span class="r">LCP-3637 · Primary valve modulates to secondary outlet setpoint; Loop pressurisation</span></summary><div class="eq">EX4, EXT-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-06   Panel: LCP-3637
+&#x27; Equipment: EX4, EXT-3
+&#x27; Strategy : Primary valve modulates to secondary outlet setpoint; Loop pressurisation
+&#x27; I/O      : 7 pts (AI 4  AO 1  BI 2  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; === [Plate heat exchanger (heating/tempered loop)] EX4 ===
+&#x27; --- Heat exchanger (tempered loop): primary valve holds secondary outlet SP ---
+&quot;EX4.PV&quot; = PID(&quot;EX4 Sec SP&quot;, &quot;EX4.S-OUT&quot;, &quot;EX4 Loop&quot;)
+If &quot;EX4.S-OUT&quot; &gt; &quot;EX4 Hi Limit&quot; Then &quot;EX4 Alarm&quot; = On
+
+&#x27; === [Expansion / pressurisation set] EXT-3 ===
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-3637-07 lcp-3637 chgv-1, chgv-2 bumpless source transfer + flow proof"><summary>DDC-3637-07<span class="r">LCP-3637 · Bumpless source transfer + flow proof</span></summary><div class="eq">CHGV-1, CHGV-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-07   Panel: LCP-3637
+&#x27; Equipment: CHGV-1, CHGV-2
+&#x27; Strategy : Bumpless source transfer + flow proof
+&#x27; I/O      : 4 pts (AI 0  AO 0  BI 2  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-3637-08 lcp-3637 ac-22, ac-23, ac-24 schedule + sat coil control + economizer"><summary>DDC-3637-08<span class="r">LCP-3637 · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-22, AC-23, AC-24</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-08   Panel: LCP-3637
+&#x27; Equipment: AC-22, AC-23, AC-24
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 38 pts (AI 10  AO 13  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-22: schedule start, SAT control, economizer ---
+&quot;AC-22.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-22.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-22 Fan&quot;)
+&quot;AC-22.CCV&quot; = PID(&quot;AC-22 SAT SP&quot;, &quot;AC-22.SAT&quot;, &quot;AC-22 Cool&quot;)
+&quot;AC-22.HCV&quot; = PID_Heat(&quot;AC-22 SAT SP&quot;, &quot;AC-22.SAT&quot;, &quot;AC-22 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-22.OAD&quot; = 100
+  &quot;AC-22.CCV&quot; = 0
+EndIf
+If &quot;AC-22.TRIP&quot; = Active Then &quot;AC-22 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-22.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-23: schedule start, SAT control, economizer ---
+&quot;AC-23.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-23.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-23 Fan&quot;)
+&quot;AC-23.CCV&quot; = PID(&quot;AC-23 SAT SP&quot;, &quot;AC-23.SAT&quot;, &quot;AC-23 Cool&quot;)
+&quot;AC-23.HCV&quot; = PID_Heat(&quot;AC-23 SAT SP&quot;, &quot;AC-23.SAT&quot;, &quot;AC-23 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-23.OAD&quot; = 100
+  &quot;AC-23.CCV&quot; = 0
+EndIf
+If &quot;AC-23.TRIP&quot; = Active Then &quot;AC-23 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-23.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-24: schedule start, SAT control, economizer ---
+&quot;AC-24.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-24.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-24 Fan&quot;)
+&quot;AC-24.CCV&quot; = PID(&quot;AC-24 SAT SP&quot;, &quot;AC-24.SAT&quot;, &quot;AC-24 Cool&quot;)
+&quot;AC-24.HCV&quot; = PID_Heat(&quot;AC-24 SAT SP&quot;, &quot;AC-24.SAT&quot;, &quot;AC-24 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-24.OAD&quot; = 100
+  &quot;AC-24.CCV&quot; = 0
+EndIf
+If &quot;AC-24.TRIP&quot; = Active Then &quot;AC-24 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-24.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-3637-09 lcp-3637 ac-25, ac-27 schedule + sat coil control + economizer"><summary>DDC-3637-09<span class="r">LCP-3637 · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-25, AC-27</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-09   Panel: LCP-3637
+&#x27; Equipment: AC-25, AC-27
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 26 pts (AI 7  AO 9  BI 8  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-25: schedule start, SAT control, economizer ---
+&quot;AC-25.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-25.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-25 Fan&quot;)
+&quot;AC-25.CCV&quot; = PID(&quot;AC-25 SAT SP&quot;, &quot;AC-25.SAT&quot;, &quot;AC-25 Cool&quot;)
+&quot;AC-25.HCV&quot; = PID_Heat(&quot;AC-25 SAT SP&quot;, &quot;AC-25.SAT&quot;, &quot;AC-25 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-25.OAD&quot; = 100
+  &quot;AC-25.CCV&quot; = 0
+EndIf
+If &quot;AC-25.TRIP&quot; = Active Then &quot;AC-25 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-25.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-27: schedule start, SAT control, economizer ---
+&quot;AC-27.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-27.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-27 Fan&quot;)
+&quot;AC-27.CCV&quot; = PID(&quot;AC-27 SAT SP&quot;, &quot;AC-27.SAT&quot;, &quot;AC-27 Cool&quot;)
+&quot;AC-27.HCV&quot; = PID_Heat(&quot;AC-27 SAT SP&quot;, &quot;AC-27.SAT&quot;, &quot;AC-27 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-27.OAD&quot; = 100
+  &quot;AC-27.CCV&quot; = 0
+EndIf
+If &quot;AC-27.TRIP&quot; = Active Then &quot;AC-27 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-27.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-3637-10 lcp-3637 fcu-3637 zone thermostat + schedule batch"><summary>DDC-3637-10<span class="r">LCP-3637 · Zone thermostat + schedule batch</span></summary><div class="eq">FCU-3637</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-10   Panel: LCP-3637
+&#x27; Equipment: FCU-3637
+&#x27; Strategy : Zone thermostat + schedule batch
+&#x27; I/O      : 7 pts (AI 1  AO 2  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-3637-11 lcp-3637 ef-82, ef-83, ef-84 scheduled ventilation / exhaust"><summary>DDC-3637-11<span class="r">LCP-3637 · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-82, EF-83, EF-84</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-11   Panel: LCP-3637
+&#x27; Equipment: EF-82, EF-83, EF-84
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 11 pts (AI 1  AO 1  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-82.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-82.TRIP&quot; = Active Then &quot;EF-82 Alarm&quot; = On
+&quot;EF-83.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-83.TRIP&quot; = Active Then &quot;EF-83 Alarm&quot; = On
+&quot;EF-84.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-84.TRIP&quot; = Active Then &quot;EF-84 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3637-12 lcp-3637 ef-85, ef-86, ef-89 scheduled ventilation / exhaust"><summary>DDC-3637-12<span class="r">LCP-3637 · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-85, EF-86, EF-89</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-12   Panel: LCP-3637
+&#x27; Equipment: EF-85, EF-86, EF-89
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-85.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-85.TRIP&quot; = Active Then &quot;EF-85 Alarm&quot; = On
+&quot;EF-86.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-86.TRIP&quot; = Active Then &quot;EF-86 Alarm&quot; = On
+&quot;EF-89.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-89.TRIP&quot; = Active Then &quot;EF-89 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3637-13 lcp-3637 ef-98 scheduled ventilation / exhaust"><summary>DDC-3637-13<span class="r">LCP-3637 · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-98</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3637-13   Panel: LCP-3637
+&#x27; Equipment: EF-98
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 3 pts (AI 0  AO 0  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-98.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-98.TRIP&quot; = Active Then &quot;EF-98 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-1f-01 lcp-1f ac-7 schedule + sat coil control + economizer"><summary>DDC-1F-01<span class="r">LCP-1F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-7</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-1F-01   Panel: LCP-1F
+&#x27; Equipment: AC-7
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 12 pts (AI 3  AO 4  BI 4  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-7: schedule start, SAT control, economizer ---
+&quot;AC-7.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-7.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-7 Fan&quot;)
+&quot;AC-7.CCV&quot; = PID(&quot;AC-7 SAT SP&quot;, &quot;AC-7.SAT&quot;, &quot;AC-7 Cool&quot;)
+&quot;AC-7.HCV&quot; = PID_Heat(&quot;AC-7 SAT SP&quot;, &quot;AC-7.SAT&quot;, &quot;AC-7 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-7.OAD&quot; = 100
+  &quot;AC-7.CCV&quot; = 0
+EndIf
+If &quot;AC-7.TRIP&quot; = Active Then &quot;AC-7 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-7.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-1f-02 lcp-1f evu-1, evu-2, evu-3 scheduled ventilation / exhaust"><summary>DDC-1F-02<span class="r">LCP-1F · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-1, EVU-2, EVU-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-1F-02   Panel: LCP-1F
+&#x27; Equipment: EVU-1, EVU-2, EVU-3
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 36 pts (AI 9  AO 12  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-1.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-1.TRIP&quot; = Active Then &quot;EVU-1 Alarm&quot; = On
+&quot;EVU-2.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-2.TRIP&quot; = Active Then &quot;EVU-2 Alarm&quot; = On
+&quot;EVU-3.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-3.TRIP&quot; = Active Then &quot;EVU-3 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-1f-03 lcp-1f ef-41, ef-42 scheduled ventilation / exhaust"><summary>DDC-1F-03<span class="r">LCP-1F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-41, EF-42</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-1F-03   Panel: LCP-1F
+&#x27; Equipment: EF-41, EF-42
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 4  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-41.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-41.TRIP&quot; = Active Then &quot;EF-41 Alarm&quot; = On
+&quot;EF-42.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-42.TRIP&quot; = Active Then &quot;EF-42 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-2f-01 lcp-2f ac-8, ac-9, ac-10 schedule + sat coil control + economizer"><summary>DDC-2F-01<span class="r">LCP-2F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-8, AC-9, AC-10</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-2F-01   Panel: LCP-2F
+&#x27; Equipment: AC-8, AC-9, AC-10
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 36 pts (AI 8  AO 13  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-8: schedule start, SAT control, economizer ---
+&quot;AC-8.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-8.SPD&quot; = &quot;AC-8 Fan Speed&quot;   &#x27; constant volume
+&quot;AC-8.CCV&quot; = PID(&quot;AC-8 SAT SP&quot;, &quot;AC-8.SAT&quot;, &quot;AC-8 Cool&quot;)
+&quot;AC-8.HCV&quot; = PID_Heat(&quot;AC-8 SAT SP&quot;, &quot;AC-8.SAT&quot;, &quot;AC-8 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-8.OAD&quot; = 100
+  &quot;AC-8.CCV&quot; = 0
+EndIf
+If &quot;AC-8.TRIP&quot; = Active Then &quot;AC-8 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-8.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-9: schedule start, SAT control, economizer ---
+&quot;AC-9.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-9.SPD&quot; = &quot;AC-9 Fan Speed&quot;   &#x27; constant volume
+&quot;AC-9.CCV&quot; = PID(&quot;AC-9 SAT SP&quot;, &quot;AC-9.SAT&quot;, &quot;AC-9 Cool&quot;)
+&quot;AC-9.HCV&quot; = PID_Heat(&quot;AC-9 SAT SP&quot;, &quot;AC-9.SAT&quot;, &quot;AC-9 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-9.OAD&quot; = 100
+  &quot;AC-9.CCV&quot; = 0
+EndIf
+If &quot;AC-9.TRIP&quot; = Active Then &quot;AC-9 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-9.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-10: schedule start, SAT control, economizer ---
+&quot;AC-10.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-10.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-10 Fan&quot;)
+&quot;AC-10.CCV&quot; = PID(&quot;AC-10 SAT SP&quot;, &quot;AC-10.SAT&quot;, &quot;AC-10 Cool&quot;)
+&quot;AC-10.HCV&quot; = PID_Heat(&quot;AC-10 SAT SP&quot;, &quot;AC-10.SAT&quot;, &quot;AC-10 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-10.OAD&quot; = 100
+  &quot;AC-10.CCV&quot; = 0
+EndIf
+If &quot;AC-10.TRIP&quot; = Active Then &quot;AC-10 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-10.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-2f-02 lcp-2f ac-11, ac-12, ac-13 schedule + sat coil control + economizer"><summary>DDC-2F-02<span class="r">LCP-2F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-11, AC-12, AC-13</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-2F-02   Panel: LCP-2F
+&#x27; Equipment: AC-11, AC-12, AC-13
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 36 pts (AI 9  AO 12  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-11: schedule start, SAT control, economizer ---
+&quot;AC-11.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-11.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-11 Fan&quot;)
+&quot;AC-11.CCV&quot; = PID(&quot;AC-11 SAT SP&quot;, &quot;AC-11.SAT&quot;, &quot;AC-11 Cool&quot;)
+&quot;AC-11.HCV&quot; = PID_Heat(&quot;AC-11 SAT SP&quot;, &quot;AC-11.SAT&quot;, &quot;AC-11 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-11.OAD&quot; = 100
+  &quot;AC-11.CCV&quot; = 0
+EndIf
+If &quot;AC-11.TRIP&quot; = Active Then &quot;AC-11 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-11.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-12: schedule start, SAT control, economizer ---
+&quot;AC-12.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-12.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-12 Fan&quot;)
+&quot;AC-12.CCV&quot; = PID(&quot;AC-12 SAT SP&quot;, &quot;AC-12.SAT&quot;, &quot;AC-12 Cool&quot;)
+&quot;AC-12.HCV&quot; = PID_Heat(&quot;AC-12 SAT SP&quot;, &quot;AC-12.SAT&quot;, &quot;AC-12 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-12.OAD&quot; = 100
+  &quot;AC-12.CCV&quot; = 0
+EndIf
+If &quot;AC-12.TRIP&quot; = Active Then &quot;AC-12 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-12.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-13: schedule start, SAT control, economizer ---
+&quot;AC-13.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-13.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-13 Fan&quot;)
+&quot;AC-13.CCV&quot; = PID(&quot;AC-13 SAT SP&quot;, &quot;AC-13.SAT&quot;, &quot;AC-13 Cool&quot;)
+&quot;AC-13.HCV&quot; = PID_Heat(&quot;AC-13 SAT SP&quot;, &quot;AC-13.SAT&quot;, &quot;AC-13 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-13.OAD&quot; = 100
+  &quot;AC-13.CCV&quot; = 0
+EndIf
+If &quot;AC-13.TRIP&quot; = Active Then &quot;AC-13 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-13.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-2f-03 lcp-2f evu-4, evu-5, evu-6 scheduled ventilation / exhaust"><summary>DDC-2F-03<span class="r">LCP-2F · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-4, EVU-5, EVU-6</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-2F-03   Panel: LCP-2F
+&#x27; Equipment: EVU-4, EVU-5, EVU-6
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 36 pts (AI 9  AO 12  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-4.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-4.TRIP&quot; = Active Then &quot;EVU-4 Alarm&quot; = On
+&quot;EVU-5.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-5.TRIP&quot; = Active Then &quot;EVU-5 Alarm&quot; = On
+&quot;EVU-6.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-6.TRIP&quot; = Active Then &quot;EVU-6 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-2f-04 lcp-2f ef-2-1, ef-46, ef-47 scheduled ventilation / exhaust"><summary>DDC-2F-04<span class="r">LCP-2F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-2-1, EF-46, EF-47</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-2F-04   Panel: LCP-2F
+&#x27; Equipment: EF-2-1, EF-46, EF-47
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-2-1.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-2-1.TRIP&quot; = Active Then &quot;EF-2-1 Alarm&quot; = On
+&quot;EF-46.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-46.TRIP&quot; = Active Then &quot;EF-46 Alarm&quot; = On
+&quot;EF-47.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-47.TRIP&quot; = Active Then &quot;EF-47 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3f-01 lcp-3f ac-14, ac-15, ac-16 schedule + sat coil control + economizer"><summary>DDC-3F-01<span class="r">LCP-3F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-14, AC-15, AC-16</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3F-01   Panel: LCP-3F
+&#x27; Equipment: AC-14, AC-15, AC-16
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 38 pts (AI 10  AO 13  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-14: schedule start, SAT control, economizer ---
+&quot;AC-14.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-14.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-14 Fan&quot;)
+&quot;AC-14.CCV&quot; = PID(&quot;AC-14 SAT SP&quot;, &quot;AC-14.SAT&quot;, &quot;AC-14 Cool&quot;)
+&quot;AC-14.HCV&quot; = PID_Heat(&quot;AC-14 SAT SP&quot;, &quot;AC-14.SAT&quot;, &quot;AC-14 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-14.OAD&quot; = 100
+  &quot;AC-14.CCV&quot; = 0
+EndIf
+If &quot;AC-14.TRIP&quot; = Active Then &quot;AC-14 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-14.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-15: schedule start, SAT control, economizer ---
+&quot;AC-15.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-15.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-15 Fan&quot;)
+&quot;AC-15.CCV&quot; = PID(&quot;AC-15 SAT SP&quot;, &quot;AC-15.SAT&quot;, &quot;AC-15 Cool&quot;)
+&quot;AC-15.HCV&quot; = PID_Heat(&quot;AC-15 SAT SP&quot;, &quot;AC-15.SAT&quot;, &quot;AC-15 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-15.OAD&quot; = 100
+  &quot;AC-15.CCV&quot; = 0
+EndIf
+If &quot;AC-15.TRIP&quot; = Active Then &quot;AC-15 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-15.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-16: schedule start, SAT control, economizer ---
+&quot;AC-16.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-16.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-16 Fan&quot;)
+&quot;AC-16.CCV&quot; = PID(&quot;AC-16 SAT SP&quot;, &quot;AC-16.SAT&quot;, &quot;AC-16 Cool&quot;)
+&quot;AC-16.HCV&quot; = PID_Heat(&quot;AC-16 SAT SP&quot;, &quot;AC-16.SAT&quot;, &quot;AC-16 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-16.OAD&quot; = 100
+  &quot;AC-16.CCV&quot; = 0
+EndIf
+If &quot;AC-16.TRIP&quot; = Active Then &quot;AC-16 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-16.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-3f-02 lcp-3f evu-7 scheduled ventilation / exhaust"><summary>DDC-3F-02<span class="r">LCP-3F · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-7</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3F-02   Panel: LCP-3F
+&#x27; Equipment: EVU-7
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 12 pts (AI 3  AO 4  BI 4  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-7.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-7.TRIP&quot; = Active Then &quot;EVU-7 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3f-03 lcp-3f ef-56, ef-60, ef-61 scheduled ventilation / exhaust"><summary>DDC-3F-03<span class="r">LCP-3F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-56, EF-60, EF-61</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3F-03   Panel: LCP-3F
+&#x27; Equipment: EF-56, EF-60, EF-61
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-56.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-56.TRIP&quot; = Active Then &quot;EF-56 Alarm&quot; = On
+&quot;EF-60.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-60.TRIP&quot; = Active Then &quot;EF-60 Alarm&quot; = On
+&quot;EF-61.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-61.TRIP&quot; = Active Then &quot;EF-61 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-3f-04 lcp-3f ef-62, ef-76, ef-77 scheduled ventilation / exhaust"><summary>DDC-3F-04<span class="r">LCP-3F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-62, EF-76, EF-77</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-3F-04   Panel: LCP-3F
+&#x27; Equipment: EF-62, EF-76, EF-77
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-62.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-62.TRIP&quot; = Active Then &quot;EF-62 Alarm&quot; = On
+&quot;EF-76.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-76.TRIP&quot; = Active Then &quot;EF-76 Alarm&quot; = On
+&quot;EF-77.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-77.TRIP&quot; = Active Then &quot;EF-77 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-4f-01 lcp-4f ac-17, ac-18, ac-19 schedule + sat coil control + economizer"><summary>DDC-4F-01<span class="r">LCP-4F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-17, AC-18, AC-19</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-01   Panel: LCP-4F
+&#x27; Equipment: AC-17, AC-18, AC-19
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 38 pts (AI 10  AO 13  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-17: schedule start, SAT control, economizer ---
+&quot;AC-17.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-17.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-17 Fan&quot;)
+&quot;AC-17.CCV&quot; = PID(&quot;AC-17 SAT SP&quot;, &quot;AC-17.SAT&quot;, &quot;AC-17 Cool&quot;)
+&quot;AC-17.HCV&quot; = PID_Heat(&quot;AC-17 SAT SP&quot;, &quot;AC-17.SAT&quot;, &quot;AC-17 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-17.OAD&quot; = 100
+  &quot;AC-17.CCV&quot; = 0
+EndIf
+If &quot;AC-17.TRIP&quot; = Active Then &quot;AC-17 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-17.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-18: schedule start, SAT control, economizer ---
+&quot;AC-18.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-18.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-18 Fan&quot;)
+&quot;AC-18.CCV&quot; = PID(&quot;AC-18 SAT SP&quot;, &quot;AC-18.SAT&quot;, &quot;AC-18 Cool&quot;)
+&quot;AC-18.HCV&quot; = PID_Heat(&quot;AC-18 SAT SP&quot;, &quot;AC-18.SAT&quot;, &quot;AC-18 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-18.OAD&quot; = 100
+  &quot;AC-18.CCV&quot; = 0
+EndIf
+If &quot;AC-18.TRIP&quot; = Active Then &quot;AC-18 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-18.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-19: schedule start, SAT control, economizer ---
+&quot;AC-19.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-19.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-19 Fan&quot;)
+&quot;AC-19.CCV&quot; = PID(&quot;AC-19 SAT SP&quot;, &quot;AC-19.SAT&quot;, &quot;AC-19 Cool&quot;)
+&quot;AC-19.HCV&quot; = PID_Heat(&quot;AC-19 SAT SP&quot;, &quot;AC-19.SAT&quot;, &quot;AC-19 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-19.OAD&quot; = 100
+  &quot;AC-19.CCV&quot; = 0
+EndIf
+If &quot;AC-19.TRIP&quot; = Active Then &quot;AC-19 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-19.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-4f-02 lcp-4f ac-20, ac-21 schedule + sat coil control + economizer"><summary>DDC-4F-02<span class="r">LCP-4F · Schedule + SAT coil control + economizer</span></summary><div class="eq">AC-20, AC-21</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-02   Panel: LCP-4F
+&#x27; Equipment: AC-20, AC-21
+&#x27; Strategy : Schedule + SAT coil control + economizer
+&#x27; I/O      : 24 pts (AI 6  AO 8  BI 8  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- AHU AC-20: schedule start, SAT control, economizer ---
+&quot;AC-20.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-20.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-20 Fan&quot;)
+&quot;AC-20.CCV&quot; = PID(&quot;AC-20 SAT SP&quot;, &quot;AC-20.SAT&quot;, &quot;AC-20 Cool&quot;)
+&quot;AC-20.HCV&quot; = PID_Heat(&quot;AC-20 SAT SP&quot;, &quot;AC-20.SAT&quot;, &quot;AC-20 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-20.OAD&quot; = 100
+  &quot;AC-20.CCV&quot; = 0
+EndIf
+If &quot;AC-20.TRIP&quot; = Active Then &quot;AC-20 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-20.SS&quot; = Off   &#x27; freeze protection
+
+&#x27; --- AHU AC-21: schedule start, SAT control, economizer ---
+&quot;AC-21.SS&quot; = &quot;Occupancy Sched&quot;
+&quot;AC-21.SPD&quot; = PID(&quot;Duct Static SP&quot;, &quot;Duct Static&quot;, &quot;AC-21 Fan&quot;)
+&quot;AC-21.CCV&quot; = PID(&quot;AC-21 SAT SP&quot;, &quot;AC-21.SAT&quot;, &quot;AC-21 Cool&quot;)
+&quot;AC-21.HCV&quot; = PID_Heat(&quot;AC-21 SAT SP&quot;, &quot;AC-21.SAT&quot;, &quot;AC-21 Heat&quot;)  &#x27; deadband vs cooling
+&#x27; Apr-May economizer: 100% OA free-cooling, cooling coil closed
+If &quot;Economizer OK&quot; = On Then
+  &quot;AC-21.OAD&quot; = 100
+  &quot;AC-21.CCV&quot; = 0
+EndIf
+If &quot;AC-21.TRIP&quot; = Active Then &quot;AC-21 Fan Alarm&quot; = On
+If &quot;Freezestat&quot; = Active Then &quot;AC-21.SS&quot; = Off   &#x27; freeze protection
+
+
+End</pre></details><details class="pg" data-s="ddc-4f-03 lcp-4f evu-8, evu-9, evu-10 scheduled ventilation / exhaust"><summary>DDC-4F-03<span class="r">LCP-4F · Scheduled ventilation / exhaust</span></summary><div class="eq">EVU-8, EVU-9, EVU-10</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-03   Panel: LCP-4F
+&#x27; Equipment: EVU-8, EVU-9, EVU-10
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 39 pts (AI 12  AO 12  BI 12  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EVU-8.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-8.TRIP&quot; = Active Then &quot;EVU-8 Alarm&quot; = On
+&quot;EVU-9.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-9.TRIP&quot; = Active Then &quot;EVU-9 Alarm&quot; = On
+&quot;EVU-10.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EVU-10.TRIP&quot; = Active Then &quot;EVU-10 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-4f-04 lcp-4f ef-54, ef-55, ef-57 scheduled ventilation / exhaust"><summary>DDC-4F-04<span class="r">LCP-4F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-54, EF-55, EF-57</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-04   Panel: LCP-4F
+&#x27; Equipment: EF-54, EF-55, EF-57
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-54.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-54.TRIP&quot; = Active Then &quot;EF-54 Alarm&quot; = On
+&quot;EF-55.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-55.TRIP&quot; = Active Then &quot;EF-55 Alarm&quot; = On
+&quot;EF-57.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-57.TRIP&quot; = Active Then &quot;EF-57 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-4f-05 lcp-4f ef-58, ef-59, ef-59-2 scheduled ventilation / exhaust"><summary>DDC-4F-05<span class="r">LCP-4F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-58, EF-59, EF-59-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-05   Panel: LCP-4F
+&#x27; Equipment: EF-58, EF-59, EF-59-2
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-58.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-58.TRIP&quot; = Active Then &quot;EF-58 Alarm&quot; = On
+&quot;EF-59.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-59.TRIP&quot; = Active Then &quot;EF-59 Alarm&quot; = On
+&quot;EF-59-2.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-59-2.TRIP&quot; = Active Then &quot;EF-59-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-4f-06 lcp-4f ef-67, ef-69, ef-70 scheduled ventilation / exhaust"><summary>DDC-4F-06<span class="r">LCP-4F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-67, EF-69, EF-70</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-06   Panel: LCP-4F
+&#x27; Equipment: EF-67, EF-69, EF-70
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 11 pts (AI 1  AO 1  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-67.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-67.TRIP&quot; = Active Then &quot;EF-67 Alarm&quot; = On
+&quot;EF-69.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-69.TRIP&quot; = Active Then &quot;EF-69 Alarm&quot; = On
+&quot;EF-70.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-70.TRIP&quot; = Active Then &quot;EF-70 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-4f-07 lcp-4f ef-71 scheduled ventilation / exhaust"><summary>DDC-4F-07<span class="r">LCP-4F · Scheduled ventilation / exhaust</span></summary><div class="eq">EF-71</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-4F-07   Panel: LCP-4F
+&#x27; Equipment: EF-71
+&#x27; Strategy : Scheduled ventilation / exhaust
+&#x27; I/O      : 3 pts (AI 0  AO 0  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Ventilation / exhaust: schedule + AHU/fire interlock ---
+&quot;EF-71.SS&quot; = &quot;Vent Sched&quot; And (&quot;Fire Mode&quot; = Off)
+If &quot;EF-71.TRIP&quot; = Active Then &quot;EF-71 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-01 lcp-pkg pac-1-1, pac-1-2, pac-2 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-01<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PAC-1-1, PAC-1-2, PAC-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-01   Panel: LCP-PKG
+&#x27; Equipment: PAC-1-1, PAC-1-2, PAC-2
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PAC-1-1.SS&quot; = &quot;PAC-1-1 Enable&quot;
+If &quot;PAC-1-1.TRIP&quot; = Active Then &quot;PAC-1-1 Alarm&quot; = On
+&quot;PAC-1-2.SS&quot; = &quot;PAC-1-2 Enable&quot;
+If &quot;PAC-1-2.TRIP&quot; = Active Then &quot;PAC-1-2 Alarm&quot; = On
+&quot;PAC-2.SS&quot; = &quot;PAC-2 Enable&quot;
+If &quot;PAC-2.TRIP&quot; = Active Then &quot;PAC-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-02 lcp-pkg pac-3, pac-4, pac-5 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-02<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PAC-3, PAC-4, PAC-5</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-02   Panel: LCP-PKG
+&#x27; Equipment: PAC-3, PAC-4, PAC-5
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PAC-3.SS&quot; = &quot;PAC-3 Enable&quot;
+If &quot;PAC-3.TRIP&quot; = Active Then &quot;PAC-3 Alarm&quot; = On
+&quot;PAC-4.SS&quot; = &quot;PAC-4 Enable&quot;
+If &quot;PAC-4.TRIP&quot; = Active Then &quot;PAC-4 Alarm&quot; = On
+&quot;PAC-5.SS&quot; = &quot;PAC-5 Enable&quot;
+If &quot;PAC-5.TRIP&quot; = Active Then &quot;PAC-5 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-03 lcp-pkg pcu-1-1, pcu-1-2, pcu-5 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-03<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PCU-1-1, PCU-1-2, PCU-5</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-03   Panel: LCP-PKG
+&#x27; Equipment: PCU-1-1, PCU-1-2, PCU-5
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PCU-1-1.SS&quot; = &quot;PCU-1-1 Enable&quot;
+If &quot;PCU-1-1.TRIP&quot; = Active Then &quot;PCU-1-1 Alarm&quot; = On
+&quot;PCU-1-2.SS&quot; = &quot;PCU-1-2 Enable&quot;
+If &quot;PCU-1-2.TRIP&quot; = Active Then &quot;PCU-1-2 Alarm&quot; = On
+&quot;PCU-5.SS&quot; = &quot;PCU-5 Enable&quot;
+If &quot;PCU-5.TRIP&quot; = Active Then &quot;PCU-5 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-04 lcp-pkg pcu-6, pcu-7, pcu-8 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-04<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PCU-6, PCU-7, PCU-8</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-04   Panel: LCP-PKG
+&#x27; Equipment: PCU-6, PCU-7, PCU-8
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PCU-6.SS&quot; = &quot;PCU-6 Enable&quot;
+If &quot;PCU-6.TRIP&quot; = Active Then &quot;PCU-6 Alarm&quot; = On
+&quot;PCU-7.SS&quot; = &quot;PCU-7 Enable&quot;
+If &quot;PCU-7.TRIP&quot; = Active Then &quot;PCU-7 Alarm&quot; = On
+&quot;PCU-8.SS&quot; = &quot;PCU-8 Enable&quot;
+If &quot;PCU-8.TRIP&quot; = Active Then &quot;PCU-8 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-05 lcp-pkg pcu-10, pcu-11, pcu-12 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-05<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PCU-10, PCU-11, PCU-12</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-05   Panel: LCP-PKG
+&#x27; Equipment: PCU-10, PCU-11, PCU-12
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PCU-10.SS&quot; = &quot;PCU-10 Enable&quot;
+If &quot;PCU-10.TRIP&quot; = Active Then &quot;PCU-10 Alarm&quot; = On
+&quot;PCU-11.SS&quot; = &quot;PCU-11 Enable&quot;
+If &quot;PCU-11.TRIP&quot; = Active Then &quot;PCU-11 Alarm&quot; = On
+&quot;PCU-12.SS&quot; = &quot;PCU-12 Enable&quot;
+If &quot;PCU-12.TRIP&quot; = Active Then &quot;PCU-12 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-06 lcp-pkg pcu-13, pmac-1 enable/monitor; integral dx (some 24/7)"><summary>DDC-PKG-06<span class="r">LCP-PKG · Enable/monitor; integral DX (some 24/7)</span></summary><div class="eq">PCU-13, PMAC-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-06   Panel: LCP-PKG
+&#x27; Equipment: PCU-13, PMAC-1
+&#x27; Strategy : Enable/monitor; integral DX (some 24/7)
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 4  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Packaged DX: BMS enable/monitor; capacity on integral thermostat ---
+&#x27;  Electrical/IT-room units run 24/7 -&gt; keep enabled
+&quot;PCU-13.SS&quot; = &quot;PCU-13 Enable&quot;
+If &quot;PCU-13.TRIP&quot; = Active Then &quot;PCU-13 Alarm&quot; = On
+&quot;PMAC-1.SS&quot; = &quot;PMAC-1 Enable&quot;
+If &quot;PMAC-1.TRIP&quot; = Active Then &quot;PMAC-1 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-pkg-07 lcp-pkg refr-1 start/stop + status/alarm"><summary>DDC-PKG-07<span class="r">LCP-PKG · Start/stop + status/alarm</span></summary><div class="eq">REFR-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-PKG-07   Panel: LCP-PKG
+&#x27; Equipment: REFR-1
+&#x27; Strategy : Start/stop + status/alarm
+&#x27; I/O      : 7 pts (AI 0  AO 0  BI 7  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-ltg-01 lcp-ltg ltg-aviation, ltg-neon, ltg-balcony-l time/astro on-off + status"><summary>DDC-LTG-01<span class="r">LCP-LTG · Time/astro On-Off + status</span></summary><div class="eq">LTG-AVIATION, LTG-NEON, LTG-BALCONY-L</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-LTG-01   Panel: LCP-LTG
+&#x27; Equipment: LTG-AVIATION, LTG-NEON, LTG-BALCONY-L
+&#x27; Strategy : Time/astro On-Off + status
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 3  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Lighting groups: time / astronomical schedule ---
+&quot;LTG-AVIATION.CMD&quot; = &quot;Photocell Dusk&quot; Or &quot;Aviation Always On&quot;   &#x27; life-safety, never dark
+If (&quot;LTG-AVIATION.CMD&quot; = On) And (&quot;LTG-AVIATION.ST&quot; = Off) Then &quot;LTG-AVIATION Fault&quot; = On
+&quot;LTG-NEON.CMD&quot; = &quot;LTG-NEON Sched&quot;
+If (&quot;LTG-NEON.CMD&quot; = On) And (&quot;LTG-NEON.ST&quot; = Off) Then &quot;LTG-NEON Fault&quot; = On
+&quot;LTG-BALCONY-L.CMD&quot; = &quot;LTG-BALCONY-L Sched&quot;
+If (&quot;LTG-BALCONY-L.CMD&quot; = On) And (&quot;LTG-BALCONY-L.ST&quot; = Off) Then &quot;LTG-BALCONY-L Fault&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-ltg-02 lcp-ltg ltg-balcony-h, ltg-corridor, ltg-lobby time/astro on-off + status"><summary>DDC-LTG-02<span class="r">LCP-LTG · Time/astro On-Off + status</span></summary><div class="eq">LTG-BALCONY-H, LTG-CORRIDOR, LTG-LOBBY</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-LTG-02   Panel: LCP-LTG
+&#x27; Equipment: LTG-BALCONY-H, LTG-CORRIDOR, LTG-LOBBY
+&#x27; Strategy : Time/astro On-Off + status
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 3  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Lighting groups: time / astronomical schedule ---
+&quot;LTG-BALCONY-H.CMD&quot; = &quot;LTG-BALCONY-H Sched&quot;
+If (&quot;LTG-BALCONY-H.CMD&quot; = On) And (&quot;LTG-BALCONY-H.ST&quot; = Off) Then &quot;LTG-BALCONY-H Fault&quot; = On
+&quot;LTG-CORRIDOR.CMD&quot; = &quot;LTG-CORRIDOR Sched&quot;
+If (&quot;LTG-CORRIDOR.CMD&quot; = On) And (&quot;LTG-CORRIDOR.ST&quot; = Off) Then &quot;LTG-CORRIDOR Fault&quot; = On
+&quot;LTG-LOBBY.CMD&quot; = &quot;LTG-LOBBY Sched&quot;
+If (&quot;LTG-LOBBY.CMD&quot; = On) And (&quot;LTG-LOBBY.ST&quot; = Off) Then &quot;LTG-LOBBY Fault&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-ltg-03 lcp-ltg ltg-soffit, ltg-tenant time/astro on-off + status"><summary>DDC-LTG-03<span class="r">LCP-LTG · Time/astro On-Off + status</span></summary><div class="eq">LTG-SOFFIT, LTG-TENANT</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-LTG-03   Panel: LCP-LTG
+&#x27; Equipment: LTG-SOFFIT, LTG-TENANT
+&#x27; Strategy : Time/astro On-Off + status
+&#x27; I/O      : 4 pts (AI 0  AO 0  BI 2  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Lighting groups: time / astronomical schedule ---
+&quot;LTG-SOFFIT.CMD&quot; = &quot;LTG-SOFFIT Sched&quot;
+If (&quot;LTG-SOFFIT.CMD&quot; = On) And (&quot;LTG-SOFFIT.ST&quot; = Off) Then &quot;LTG-SOFFIT Fault&quot; = On
+&quot;LTG-TENANT.CMD&quot; = &quot;LTG-TENANT Sched&quot;
+If (&quot;LTG-TENANT.CMD&quot; = On) And (&quot;LTG-TENANT.ST&quot; = Off) Then &quot;LTG-TENANT Fault&quot; = On
+
+End</pre></details>
+<p class="foot">Source: build_gcl.py from the control-logic model. GCL+ syntax to confirm on site.</p>
+</div>
+<script>
+const items=[...document.querySelectorAll('details.pg')];
+const cnt=document.getElementById('count');cnt.textContent=items.length+' programs';
+function cp(b){const t=b.parentElement.querySelector('pre').innerText;navigator.clipboard.writeText(t);b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1200);}
+document.getElementById('q').addEventListener('input',e=>{const s=e.target.value.trim().toLowerCase();let n=0;
+ for(const d of items){const hit=!s||d.dataset.s.includes(s);d.classList.toggle('hidden',!hit);if(hit)n++;d.open=!!s&&hit;}
+ cnt.textContent=n+' / '+items.length+' programs';});
+document.getElementById('expand').onclick=()=>items.forEach(d=>d.open=true);
+document.getElementById('collapse').onclick=()=>items.forEach(d=>d.open=false);
+</script></body></html>
