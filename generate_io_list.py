@@ -18,7 +18,11 @@ Equipment CONFIRMED from the documents:
   * Main energy meters (electricity, gas, city water, DHC steam/chilled)
 
 Inferred items (secondary distribution pumps, hot-water pumps, FCU quantity)
-are flagged "INFERRED" in the Notes/Basis column -- confirm against as-builts.
+are flagged "INFERRED" in the Notes/Basis column -- confirm against the M-01
+mechanical equipment schedule in the as-built set.  (The 144-page Azbil
+納入仕様書 was OCR'd and is the savic-netFX2 SOFTWARE function spec -- it
+confirms the BMS platform + supervisory functions but carries no equipment
+quantities.)
 
 Run:  .venv/bin/python generate_io_list.py
 Out:  Red5-DHCP_BMS_IO_List.xlsx
@@ -37,8 +41,13 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # Panels (distributed DDC local control panels + central)
 # --------------------------------------------------------------------------
 PANELS = [
-    ("BMS-CENTRAL", "Central monitoring server (中央監視)", "B2F Central Monitoring Rm",
-     "Whole-building supervisory, alarms, trends, schedules, energy"),
+    ("BMS-CENTRAL", "Azbil savic-netFX2 central monitoring (中央監視)", "B2F Central Monitoring Rm",
+     "Whole-building supervisory on savic-netFX2 (S/W spec 2015/04/09): point mgmt, "
+     "start-stop/setpoint operation, status & alarm/event processing, time-program + "
+     "calendar + event-program control, seasonal changeover (batch), remote-setpoint "
+     "schedules, runtime/start-count & deviation/hi-lo limit monitoring, trend + periodic "
+     "data collection, daily/monthly reports, energy CSV export, numeric/logic operations, "
+     "power-failure/restoration handling, user/access mgmt, maintenance & spare-parts mgmt"),
     ("LCP-PH", "Heat-source & high-rise field panel", "PH Machine Room",
      "Chillers, primary/condenser pumps, cooling towers, HEX-1, high-rise DHC steam, PH/high-rise AHUs & OAUs"),
     ("LCP-B2", "Low-rise heat-interface & basement panel", "B2F Machine Room",
@@ -497,11 +506,12 @@ def build_workbook():
       ("Energy source", "District Heating & Cooling: DHC chilled-water intake (冷水受入, low+high) via HEX-1 + DHC steam (蒸気受入, low @B2F / high @rooftop). Local chillers are BACKUP (順序切替)."),
       ("Local plant", "RC-1 chillers ×3 (370 kW, COP 4.51, DHC backup), CP-8 primary CHW pumps ×3, CP-7 secondary distribution, HEX-1 plate HX (395 kW), CT-1/CT-2 (2 INV fans each), condenser pumps"),
       ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 20-35F N/S/SE/SW, 4-pipe on DHC water), EF/SF/RF fans"),
-      ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
-      ("", ""),
-      ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),
-      ("Basis", "As-built M-01 equipment schedule, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
-      ("Note", "Items marked 'INFERRED' (secondary/HW pumps, FCU quantity) must be confirmed against as-builts / Azbil 納入仕様書."),
+    ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
+    ("BMS platform", "Azbil savic-netFX2 (savic-net FX2), S/W 機能仕様 dated 2015/04/09 — confirmed from the 144-page Azbil 納入仕様書 (software function spec, not an equipment list)"),
+    ("", ""),
+    ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),
+    ("Basis", "As-built M-01 equipment schedule, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx, Azbil savic-netFX2 S/W 納入仕様書 (platform + supervisory functions)"),
+    ("Note", "Items marked 'INFERRED' (secondary/HW pumps, FCU quantity) must be confirmed against the M-01 mechanical equipment schedule in the as-built set — they are NOT in the Azbil 納入仕様書 (that is the savic-netFX2 software function spec)."),
   ]
   r = 4
   for k, v in cover:

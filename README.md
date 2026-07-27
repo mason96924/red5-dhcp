@@ -56,10 +56,10 @@ because of their size. Extract them into `_source/` with the helper in the
 chat history, or unzip manually (inner filenames are CP932 / Shift-JIS).
 
 Key basis documents:
-- `M-01 機器表系統図(改修)` — equipment schedule / system diagram (chillers, pumps, HEX)
+- `M-01 機器表系統図(改修)` — equipment schedule / system diagram (chillers, pumps, HEX) — **the source for pump/FCU quantities**
 - `共-01 工事概要及び特記仕様書` — ESCO scope (pump / OAU optimization, thermal-demand control)
 - `空調機スケジュール_20251127.xlsx` — AHU/OAU operating, temperature & INV schedules
-- `Azbil 納入仕様書` — full delivery spec / points list (scanned; needs OCR)
+- `Azbil 納入仕様書` (144 pp, OCR'd) — **savic-netFX2 software function specification** (dated 2015/04/09), *not* an equipment list. Confirms the BMS platform and its supervisory feature set.
 
 ## Topology (OCR-verified from Azbil BMS graphics + 計装図)
 
@@ -72,8 +72,22 @@ Key basis documents:
   **zone-groups** — 5–20F and 20–35F, N/S/SE/SW — with batch valve-fault monitoring
   (冷水BV / 温水BV 一括故障). Individual room FCUs run on local thermostats.
 
+## BMS platform (confirmed by OCR of the 144-page 納入仕様書)
+
+The central station is **Azbil savic-netFX2** (S/W 機能仕様, 2015/04/09). The
+delivery spec is a catalog of ~50 function-spec sheets — it defines exactly what
+`BMS-CENTRAL` must provide: point management; start-stop / setpoint operation;
+status, alarm & event processing; time-program + calendar + event-program
+control; seasonal changeover (batch); remote-setpoint schedules; runtime /
+start-count and deviation / high-low-limit monitoring; trend + periodic data
+collection; daily / monthly reports; energy CSV export; numeric & logic
+operations; power-failure / restoration handling; user & access management; and
+maintenance / spare-parts management.
+
 ## Notes
 
 Items still flagged **INFERRED** (hot-water pumps off the steam HEX, exact CP-7
-quantity, per-group FCU counts) should be confirmed against the as-builts /
-Azbil 納入仕様書 (144-page scanned spec; OCR the equipment schedule to finalize).
+quantity, per-group FCU counts) are **not** in the 納入仕様書 — that document is
+the savic-netFX2 *software* function spec, with no equipment quantities. To
+finalize them, OCR/read the **M-01 mechanical equipment schedule** in the
+as-built set (`②竣工保管図書` / the 竣工図 zips).
