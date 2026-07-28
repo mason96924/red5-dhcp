@@ -31,6 +31,8 @@ zone-groups (5–20F & 21–35F × **N/NE/SE/S/SW**, 4-pipe) + 36/37F FCU, and a
 kitchen ventilation fleet (`EF/SF/RF`). Also on the savic-net: packaged units,
 kitchen-refrigeration alarms and common-area/façade lighting (照明一覧).
 
+> **Where's everything?** See [`DELIVERABLES.md`](DELIVERABLES.md) — a one-page index of every canvas, downloadable export, doc, and the script that regenerates it.
+
 ## Contents
 
 | File | Purpose |
