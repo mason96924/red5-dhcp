@@ -41,7 +41,6 @@ BOX = "\u2610"  # ballot box
 AREA_ORDER = [
     "Penthouse (PH)", "Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3",
     "Floor 2", "Floor 1", "Basement B1", "Basement B2", "Basement B3",
-    "Heat source (R-1)", "System / central", "Plant / misc",
 ]
 
 # type -> (long name, signal/range, units)
@@ -94,11 +93,11 @@ def write_csv(path, data):
     total = 0
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
-        w.writerow(["Panel", "Area", "Panel used/cap"] + BASE_COLS[1:] + CHECK_COLS + TAIL_COLS)
+        w.writerow(["Panel", "Area", "Floor", "Equipment served", "Panel used/cap"] + BASE_COLS[1:] + CHECK_COLS + TAIL_COLS)
         for p, pts in data:
             cap = f"{p['usedTot']}/{p['capTot']}"
             for i, (tag, t, desc, sig, units) in enumerate(pts, 1):
-                w.writerow([p["name"], p["area"], cap, tag, t, desc, sig, units,
+                w.writerow([p["name"], p["area"], p.get("floor", ""), p.get("equip", ""), cap, tag, t, desc, sig, units,
                             BOX, BOX, BOX, BOX, "", ""])
                 total += 1
     return total
@@ -133,9 +132,9 @@ def write_xlsx(path, data, meta):
                 f"(schedule: {meta['usedTotal']} used / {meta['capTotal']} capacity)"])
     idx.cell(row=2, column=1).font = Font(italic=True, size=10, color="555555")
     idx.append([])
-    idx.append(["#", "Panel", "Area", "Used", "Cap", "Sheet"])
+    idx.append(["#", "Panel", "Area", "Floor", "Equipment served", "Used", "Cap", "Sheet"])
     hrow = idx.max_row
-    for c in range(1, 7):
+    for c in range(1, 9):
         idx.cell(row=hrow, column=c).fill = HDR
         idx.cell(row=hrow, column=c).font = HF
 
@@ -156,14 +155,15 @@ def write_xlsx(path, data, meta):
     for p, pts in data:
         nm = names[p["no"]]
         rr = idx.max_row + 1
-        idx.append([p["no"], p["name"], p["area"], p["usedTot"], p["capTot"], nm])
-        link = idx.cell(row=rr, column=6)
+        idx.append([p["no"], p["name"], p["area"], p.get("floor", ""), p.get("equip", ""),
+                    p["usedTot"], p["capTot"], nm])
+        link = idx.cell(row=rr, column=8)
         link.hyperlink = f"#'{nm}'!A1"
         link.font = Font(color="1F5FBF", underline="single")
-    for i, wdt in enumerate([5, 20, 18, 7, 7, 24], 1):
+    for i, wdt in enumerate([5, 20, 16, 7, 26, 7, 7, 24], 1):
         idx.column_dimensions[get_column_letter(i)].width = wdt
     for rr in range(hrow, idx.max_row + 1):
-        for c in range(1, 7):
+        for c in range(1, 9):
             idx.cell(row=rr, column=c).border = B
             idx.cell(row=rr, column=c).alignment = top
     idx.freeze_panes = "A5"
@@ -172,8 +172,10 @@ def write_xlsx(path, data, meta):
         ws = wb.create_sheet(names[p["no"]])
         ws.append([f"Commissioning checklist - {p['name']}"])
         ws.cell(row=1, column=1).font = Font(bold=True, size=13, color="1F3864")
-        ws.append([f"Panel #{p['no']} - {p['area']}", "",
+        ws.append([f"Panel #{p['no']} - {p['area']}  ({p.get('floor', '')})", "",
                    f"Used {p['usedTot']} / capacity {p['capTot']}"])
+        if p.get("equip"):
+            ws.append([f"Equipment served: {p['equip']}"])
         if p.get("note"):
             ws.append([f"Note: {p['note']}"])
         ws.append(["Technician: ______________________", "", "Date: __________",
@@ -218,7 +220,8 @@ def write_html(path, data, meta):
     total_pts = sum(len(pts) for _, pts in data)
     blocks = []
     for p, pts in data:
-        search_blob = esc((p["name"] + " " + p["area"] + " " + str(p["no"])).lower())
+        search_blob = esc((p["name"] + " " + p["area"] + " " + p.get("floor", "") + " "
+                           + p.get("equip", "") + " " + str(p["no"])).lower())
         rows = []
         for i, (tag, t, desc, sig, units) in enumerate(pts, 1):
             rows.append(
@@ -229,11 +232,13 @@ def write_html(path, data, meta):
                 "<td><input class=t type=text></td><td><input class=t type=text></td></tr>".format(
                     i=i, tag=esc(tag), t=esc(t), d=esc(desc), sig=esc(sig), u=esc(units)))
         note = f'<div>Note: {esc(p["note"])}</div>' if p.get("note") else ""
+        equip = f'<div>Equipment served: {esc(p["equip"])}</div>' if p.get("equip") else ""
+        floor = esc(p.get("floor", ""))
         blocks.append(
             f'<details class="ctrl" data-s="{search_blob}"><summary>{esc(p["name"])}'
-            f'<span class="r">#{esc(p["no"])} - {esc(p["area"])} - {len(pts)} points</span></summary>'
-            f'<div class="hd"><div>Panel #{esc(p["no"])} - {esc(p["area"])} - '
-            f'used {p["usedTot"]} / capacity {p["capTot"]}</div>{note}'
+            f'<span class="r">#{esc(p["no"])} - {esc(p["area"])} ({floor}) - {len(pts)} points</span></summary>'
+            f'<div class="hd"><div>Panel #{esc(p["no"])} - {esc(p["area"])} ({floor}) - '
+            f'used {p["usedTot"]} / capacity {p["capTot"]}</div>{equip}{note}'
             f'<div class="sign">Technician <input class=t type=text> &nbsp; Date <input class=t type=text>'
             f' &nbsp; Signature <input class=t type=text></div></div>'
             '<table><thead><tr><th class=c>#</th><th>Point Tag</th><th class=c>Type</th><th>Description</th>'

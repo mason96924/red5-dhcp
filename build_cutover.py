@@ -1,8 +1,9 @@
 """build_cutover.py -- downloadable BMS controller-replacement cutover plan.
 
 Re-based on the AUTHORITATIVE physical panel schedule (panels_schedule.json,
-from 판넬별 포인트 정리 26.07.29): the plan now covers all 67 field panels / 4,467
-I/O points, grouped by physical area/floor, with per-phase panel & point counts
+from 판넬별 포인트 정리 26.07.30, now with per-panel floor + equipment served):
+the plan covers all 67 field panels / 4,467 I/O points, grouped by physical
+floor/area, with per-phase panel & point counts
 that sum to the full I/O. Mirrors the dhcp-controller-cutover-plan canvas into
 portable, print-friendly files under exports/: HTML (print-to-PDF), XLSX
 (Phases / Playbook / Risks / Summary) and CSV (phase table).
@@ -27,20 +28,25 @@ TODAY = datetime.date.today().isoformat()
 # --- load physical schedule ------------------------------------------------
 _sched = json.load(open(SCHEDULE, encoding="utf-8"))
 _PANELS = _sched["panels"]
-_BY_AREA = {}
-for _p in _PANELS:
-    _BY_AREA.setdefault(_p["area"], []).append(_p)
+SRC = _sched.get("source", "")
 
 N_PANELS = len(_PANELS)
 N_POINTS = _sched["usedTotal"]
 N_CAP = _sched["capTotal"]
 N_MODULES = sum(_sched["modTotals"])
 
+FLOOR_AREAS = ["Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3", "Floor 2", "Floor 1"]
+BASEMENT_AREAS = ["Basement B1", "Basement B2", "Basement B3"]
 
-def _area_stats(areas):
+
+def _is_central(p):
+    return "시스템" in p["name"]
+
+
+def _pick_stats(pred):
     names, pts, npan = [], 0, 0
-    for a in areas:
-        for p in _BY_AREA.get(a, []):
+    for p in _PANELS:
+        if pred(p):
             names.append(p["name"])
             pts += p["usedTot"]
             npan += 1
@@ -66,19 +72,23 @@ ENABLER = ("Each motor starter has a 手元/遠方 (local/remote) selector + DC2
            "feedback (confirmed on E-01/13-4). During a swap the equipment runs in LOCAL manual — fan "
            "hand-on, OA damper fixed ~100%, pump fixed-speed — independent of the BMS.")
 
-# phase -> (n, window, areas[], state, method, risk)
+# phase -> (n, window, label, predicate, state, method, risk)
 PHASE_DEFS = [
-    ("0", "March (prep)", ["System / central"],
+    ("0", "March (prep)", "System / central head-end (B2F)",
+     _is_central,
      "n/a — runs in parallel",
      f"Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs the "
      f"{N_POINTS:,}-pt I/O list", "Prep"),
-    ("1", "early Apr", ["Penthouse (PH)", "Heat source (R-1)", "Plant / misc"],
+    ("1", "early Apr", "Penthouse (PH1/PH2) — rooftop plant, R-1 chiller, OAUs",
+     lambda p: p["area"] == "Penthouse (PH)",
      "Idle — no mechanical cooling; rooftop towers / R-1 / OAU off",
      "Power down & swap cold; recommission before any warm spell", "Low"),
-    ("2", "April–May", ["Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3", "Floor 2", "Floor 1"],
+    ("2", "April–May", "Guest & public floors — 31F, 21F, 10F, 4F–1F (incl. EVU-6)",
+     lambda p: p["area"] in FLOOR_AREAS,
      "Economizer free-cooling / DHC carries the occupied floors",
      "Guest-floor RS/RCP risers to local; swap overnight, one riser/floor at a time", "Moderate"),
-    ("3", "Apr–May (last)", ["Basement B1", "Basement B2", "Basement B3"],
+    ("3", "Apr–May (last)", "Basements B1–B3 — plant, hydronics, DHC intake, packaged units",
+     lambda p: p["area"] in BASEMENT_AREAS and not _is_central(p),
      "Heating off; only trickle CHW; DHC live as safety net",
      "Pumps / HX / hydronics one at a time on local fixed-speed; duty & standby never both down; "
      "DHC-intake panels done last with district coordination (low-occupancy weekend)", "Critical"),
@@ -88,9 +98,9 @@ PHASE_DEFS = [
 def build_phases():
     """Expand PHASE_DEFS with real panel names + panel/point counts from the schedule."""
     rows = []
-    for n, window, areas, state, method, risk in PHASE_DEFS:
-        names, npan, pts = _area_stats(areas)
-        panels_txt = f"{', '.join(areas)} — {', '.join(names)}"
+    for n, window, label, pred, state, method, risk in PHASE_DEFS:
+        names, npan, pts = _pick_stats(pred)
+        panels_txt = f"{label} — {', '.join(names)}"
         rows.append((n, window, panels_txt, npan, pts, state, method, risk))
     return rows
 
@@ -295,16 +305,16 @@ def write_html(path):
   <div class="call" style="background:#eef2fb"><b>The enabler: local/remote at every starter</b><p>{html.escape(ENABLER)}</p></div>
 </div>
 <h2>Phased sequence — coldest/idle first, primary source last</h2>
-<p class="note">Row shading = comfort/continuity risk during that phase. One system in manual at a time; guest floors overnight. Panel / point counts are from the 26.07.29 physical schedule and sum to {_TOT_PAN} panels / {_TOT_PTS:,} points.</p>
+<p class="note">Row shading = comfort/continuity risk during that phase. One system in manual at a time; guest floors overnight. Panel / point counts are from the {SRC} physical schedule (grouped by the panel's own floor) and sum to {_TOT_PAN} panels / {_TOT_PTS:,} points.</p>
 <table><thead><tr><th class=c>#</th><th>Window</th><th>Areas / panels</th><th class=c>Panels</th><th class=c>Points</th><th>Shoulder-season state</th><th>Swap method</th><th class=c>Risk</th></tr></thead>
 <tbody>{_rows_html()}</tbody></table>
-<p class="note">Phase→area grouping is an engineering-judgement mapping (rooftop/heat-source plant idle first, occupied floors on economizer overnight, basement plant/hydronics + DHC-intake last). The schedule gives per-panel type counts, not vendor tags; guest-floor risers (RS/RCP) hold most of the newly-surfaced points.</p>
+<p class="note">Phase→floor grouping is an engineering-judgement mapping (rooftop/heat-source plant idle first, occupied floors on economizer overnight, basement plant/hydronics + DHC-intake last). The schedule now names the equipment each RCP/CP panel serves (AC-* AHUs, EVU-* OAUs, SF/EF fans, PCU packaged units); guest-floor RS risers hold most of the newly-surfaced points.</p>
 <h2>Manual-operation playbook (during each panel's swap)</h2>
 <table><thead><tr><th>System</th><th>Local-mode setup while BMS is disconnected</th><th>Watch-out</th></tr></thead>
 <tbody>{_play_html()}</tbody></table>
 <h2>Risk controls & rollback</h2>
 <div class="grid2">{_risk_html()}</div>
-<p class="foot">Generated {TODAY} · Red5-DHCP · savic-net FX2 → new DDC migration · source: panels_schedule.json (판넬별 포인트 정리 26.07.29). Print to PDF for distribution.</p>
+<p class="foot">Generated {TODAY} · Red5-DHCP · savic-net FX2 → new DDC migration · source: panels_schedule.json (판넬별 포인트 정리 {SRC}). Print to PDF for distribution.</p>
 </div></body></html>
 """
     with open(path, "w", encoding="utf-8") as f:
