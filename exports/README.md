@@ -17,7 +17,7 @@ Each dataset comes in three forms:
 | `red5-dhcp_lighting`    | Common-area & facade lighting (照明一覧, `LCP-LTG`) | 1 · 3 · 16 |
 | `red5-dhcp_electrical`  | Electrical cross-cut: energy meters, per-device kW, electrical-protection points | 7 · 26 · 62 |
 | `red5-dhcp_switchboard` | ESCO retrofit power-panel / MCC schedule (RC-1 chiller + CP-8 pump feeders) | 3 panels · 7 circuits · 90.7 kW |
-| `red5-dhcp_controller-cutover-plan` | savic-net FX2 → new DDC replacement plan (Apr–May shoulder-season phasing) | 84 controllers · 7 phases; HTML is print-to-PDF |
+| `red5-dhcp_controller-cutover-plan` | savic-net FX2 → new DDC replacement plan (Apr–May shoulder-season phasing), re-based on the 26.07.29 physical schedule | 67 panels · 4467 points · 4 phases (per-phase panel/point counts sum to full I/O); HTML is print-to-PDF |
 | `red5-dhcp_commissioning` | Per-**panel** point-to-point checklists (tick-box: wired/terminated/P2P/func), driven by the 26.07.29 physical schedule | 64 panels · 4467 points; XLSX = index + sheet/panel, HTML = clickable + 1 print page/panel; positional tags (panel+type+index) |
 | `red5-dhcp_control-logic` | Per-controller Sequence of Operations (equipment-class SOO referencing actual tags) | 84 controllers; also `docs/control_logic.md`; XLSX = index + SOO+points per controller |
 | `Red5-DHCP-Panels-IO` | Physical panel schedule (Delta controllers & modules) from the 26.07.29 Excel, reconciled against the functional point list | 67 panels · 904 controllers+modules · 4467 used / 5240 cap; overlap 1160 / new-TBD 3307; XLSX = `Panel schedule` + `Summary` |

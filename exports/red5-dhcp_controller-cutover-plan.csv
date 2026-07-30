@@ -1,17 +1,15 @@
-﻿Phase,Window,Panels (controllers),Shoulder-season state,Swap method,Risk
-0,March (hot),BMS-CENTRAL + network backbone,n/a — runs in parallel,Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs I/O list,Prep
-1,early Apr,LCP-CT (8) + R-1 / condenser loop in LCP-3637,Idle — no mechanical cooling,Power down & swap cold; recommission before any warm spell,Low
-2,April,"LCP-1F (3), 2F (4), 3F (4), 4F (7) + air-side of HSL/HSH/3637",Economizer free-cooling carries load,"AHU→local, fan hand-on, OA damper ~100%; one AHU at a time; guest floors overnight",Moderate
-3,Apr–May,"LCP-HSL (17), LCP-HSH (11) — pumps / HX / hydronics",Heating off; only trickle CHW needed,One pump local fixed-speed / manual bypass; duty & standby never both down,Moderate
-4,May (last),LCP-DHC (7) — DHC chilled-water + steam intake,Primary source; economizer covers building,DHC valves/pumps to local manual + district coordination; low-occupancy weekend,Critical
-A,any time,LCP-PKG (7) — IT / electrical-room packaged DX,Runs 24/7 (not seasonal),DX to local thermostat; fast one-at-a-time; spare/portable cooling staged,Critical
-B,any time,LCP-LTG (3) — common-area & facade lighting,Runs to schedule,Local switch/override; aviation obstruction light on independent circuit — never dark,Moderate
+﻿Phase,Window,Areas / panels,Panels,Points,Shoulder-season state,Swap method,Risk
+0,March (prep),System / central — 시스템 제어반,1,25,n/a — runs in parallel,"Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs the 4,467-pt I/O list",Prep
+1,early Apr,"Penthouse (PH), Heat source (R-1), Plant / misc — RS-PH2-1, RS-PH1-3, CP-PH1-3, RCP-PH1-3, RCP-PH1-2, RCP-PH1-1, CP-PH-1, RS-PH1-1, CP-R-1, P-1, EVU-6",11,734,Idle — no mechanical cooling; rooftop towers / R-1 / OAU off,Power down & swap cold; recommission before any warm spell,Low
+2,April–May,"Floor 31, Floor 21, Floor 10, Floor 4, Floor 3, Floor 2, Floor 1 — RS-31-1, RS-21-1, RS-10-1, RCP-4-1, RCP-4-2, RCP-4-3, RCP-4-4, CP-4-4, RS-4-1, RS-4-2, RCP-3-1, RCP-3-2, RS-3-1, RS-3-2A, RS-3-2B, RCP-2-2, RCP-2-3, RS-2-1, RS-2-2, RS-2-3, RCP-1-1, RCP-1-2, RCP-1-3, RS-1-1, RS-1-2",25,2059,Economizer free-cooling / DHC carries the occupied floors,"Guest-floor RS/RCP risers to local; swap overnight, one riser/floor at a time",Moderate
+3,Apr–May (last),"Basement B1, Basement B2, Basement B3 — RCP-B1-1, RCP-B1-2, RCP-B1-3, RCP-B1-4, RCP-B1-5, CP-B1-2, CP-B1-3, CP-B1-4, RS-B1-1, RS-B1-2, RS-B1-3, RCP-B2-1, RCP-B2-2, RCP-B2-3, RCP-B2-4, CP-B2-3, CP-B2-4, RS-B2-1, RS-B2-2, RS-B2-3, RS-B2-4B, RS-B2-4A, RS-B2-5, RS-B2-6, RS-B2-7, RCP-B3-1, RCP-B3-2, RCP-B3-3, CP-B3-2, RS-B3-1",30,1649,Heating off; only trickle CHW; DHC live as safety net,Pumps / HX / hydronics one at a time on local fixed-speed; duty & standby never both down; DHC-intake panels done last with district coordination (low-occupancy weekend),Critical
+TOTAL,,,67,4467,,,
 
 Manual-operation playbook
 System,Local-mode setup,Watch-out
 AHU / OAU fans,"COS→手元, fan hand-ON, OA damper fixed ~100% (economizer), DHC coil valve left manually crackable",Warm spell → be able to open the cooling valve within minutes
 CHW / HW pumps,One pump hand-ON at fixed speed; DP/bypass set manually,Keep duty OR standby always available; protect domestic-hot-water continuity
 Cooling towers / condenser / R-1,Leave isolated & de-energised,None — off-season; recommission before enabling mechanical cooling
-DHC intake,"Intake isolation + energy valves and pumps to local manual, fixed position",Primary source — coordinate with district operator; do this phase last
+DHC intake,"Intake isolation + energy valves and pumps to local manual, fixed position",Primary source — coordinate with district operator; do these basement panels last
 Packaged units (IT/elec rooms),"DX on local thermostat, continuous run",24/7 critical rooms — stage spare/portable cooling; swap one unit at a time
 Lighting,Local switching / manual override per circuit,"Aviation obstruction light is regulatory life-safety — independent circuit, always lit"
