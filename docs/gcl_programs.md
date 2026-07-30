@@ -1,6 +1,6 @@
 # Red5-DHCP — GCL+ control programs
 
-*Generated 2026-07-27 · 84 controllers. Delta Controls GCL+ (vendor8). Objects referenced by point-tag name; verify syntax against your enteliWEB `pg_reference.html`.*
+*Generated 2026-07-30 · 84 controllers. Delta Controls GCL+ (vendor8). Objects referenced by point-tag name; verify syntax against your enteliWEB `pg_reference.html`.*
 
 
 ## LCP-DHC — DHC intake & hot-well panel
