@@ -808,7 +808,7 @@ def build_workbook():
     ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
     ("BMS platform", "Azbil savic-net FX2, S/W 機能仕様 dated 2015/04/09 — confirmed from the 144-page Azbil 納入仕様書 (software function spec, not an equipment list)"),
     ("", ""),
-    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Legend"),
+    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Points-by-Floor · LCP-to-Physical · Legend"),
     ("Basis", "Azbil 完成図 savic-net graphics (熱源設備 全体/低層/高層/36,37F/冷却塔/ホットウェル/DHC受入, graphs 1000-1100; PMAC-PAC & 照明一覧), air-side summary graphs (空調関連/客室等), M-* CAD equipment schedules, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
     ("Note", "Device tags/counts read directly from the savic-net graphics. Per-unit packaged (PCU/PAC/PMAC) and per-floor lighting lists are modelled as representative supervised groups — expand from 照明一覧1/2 + PMAC/PAC一覧 for the full point count."),
   ]
@@ -999,6 +999,104 @@ def build_workbook():
       "functional AHU/OAU/packaged devices to the physical panel that carries them."))
   ws.cell(row=note_r, column=2).alignment = Alignment(wrap_text=True, vertical="top")
   ws.row_dimensions[note_r].height = 90
+
+  # ---- Points-by-Floor (physical 4,467 accounting across the 67 panels) ----
+  ws = wb.create_sheet("Points-by-Floor")
+  ws["A1"] = "Physical panels accounting for the full 4,467 points (판넬별 포인트 정리 physical schedule)"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = ("The 4,467 installed I/O points live in 67 physical panels (RS/RCP/CP cabinets), grouped "
+              "here by floor. The 1,160 functional points in this workbook are a drawing-derived subset "
+              "bucketed into 12 logical LCP panels — see the LCP-to-Physical sheet for how they relate.")
+  ws["A2"].font = SUB_FONT
+  ws.append([])
+  AREA_ORDER = ["Penthouse (PH)", "Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3",
+                "Floor 2", "Floor 1", "Basement B1", "Basement B2", "Basement B3"]
+  if PHYS_SCHED:
+      by_area = defaultdict(list)
+      for _p in PHYS_SCHED["panels"]:
+          by_area[_p["area"]].append(_p)
+      ws.append(["Floor / area", "Panels", "Used points", "Capacity"])
+      sum_hrow = ws.max_row
+      style_header(ws, 4, row=sum_hrow)
+      gp = gu = gc = 0
+      for a in AREA_ORDER:
+          ps = by_area.get(a, [])
+          u = sum(x["usedTot"] for x in ps)
+          c = sum(x["capTot"] for x in ps)
+          ws.append([a, len(ps), u, c])
+          gp += len(ps); gu += u; gc += c
+      ws.append(["TOTAL", gp, gu, gc])
+      for c in range(1, 5):
+          ws.cell(row=ws.max_row, column=c).font = Font(bold=True)
+          ws.cell(row=ws.max_row, column=c).fill = PatternFill("solid", fgColor="D6DCE4")
+      for rr in range(sum_hrow, ws.max_row + 1):
+          for c in range(1, 5):
+              ws.cell(row=rr, column=c).border = BORDER
+      ws.append([])
+      ws.append(["Per-panel detail (67 physical panels)"])
+      ws.cell(row=ws.max_row, column=1).font = Font(bold=True, size=11)
+      det_hrow = ws.max_row + 1
+      ws.append(["#", "Panel", "Floor", "Equipment served", "Used", "Cap"])
+      style_header(ws, 6, row=det_hrow)
+      i = 0
+      for a in AREA_ORDER:
+          for _p in by_area.get(a, []):
+              i += 1
+              ws.append([i, _p["name"], _p.get("floor", ""), _p.get("equip", ""),
+                         _p["usedTot"], _p["capTot"]])
+      for rr in range(det_hrow, ws.max_row + 1):
+          for c in range(1, 7):
+              ws.cell(row=rr, column=c).border = BORDER
+              ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+      set_widths(ws, [5, 16, 10, 42, 8, 8])
+  else:
+      ws.append(["panels_schedule.json not found — physical accounting unavailable"])
+
+  # ---- LCP-to-Physical (logical grouping → physical panels) ----
+  ws = wb.create_sheet("LCP-to-Physical")
+  ws["A1"] = "Logical (LCP) panels → physical panels"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = ("Each functional LCP grouping mapped to the physical RS/RCP/CP panel(s) that carry its "
+              "equipment, via the equipment-served bridge. Plant / DHC / metering / lighting devices are "
+              "not equipment-tagged in the physical schedule, so those rows show the drawing location + an "
+              "engineering-judgement hint instead of a hard match.")
+  ws["A2"].font = SUB_FONT
+  ws.append([])
+  CURATED = {
+      "BMS-CENTRAL": "= 시스템 제어반 (B2F) — the physical central/system panel",
+      "LCP-DHC": "DHC intake devices in B2F machine-room CP-* panels (not equip-tagged)",
+      "LCP-CT": "Tower/condenser devices on rooftop / PH plant panels (not equip-tagged)",
+      "LCP-HSL": "Low-rise CHW/HW pumps + HX in basement machine-room CP-* panels",
+      "LCP-HSH": "High-rise + 36/37F pumps/HX incl. R-1 → CP-R-1 (PH1) + basement CP-*",
+      "LCP-LTG": "Common-area/facade lighting distributed across RS-* room panels",
+      "LCP-PKG": "Packaged units → CP-B1-2 / CP-B1-4 / RCP-B1-5 (PCU tags)",
+  }
+  pts_by_lcp = defaultdict(int)
+  linked_by_lcp = defaultdict(int)
+  phys_by_lcp = defaultdict(set)
+  for rr in rows:
+      lcp = rr["Panel"]
+      pts_by_lcp[lcp] += 1
+      pp, pf = _phys_lookup(rr["Device ID"])
+      if pp:
+          linked_by_lcp[lcp] += 1
+          phys_by_lcp[lcp].add(f"{pp} ({pf})")
+  lcp_cols = ["LCP panel", "Drawing location", "Points", "Matched physical panels (floor)",
+              "Linked pts", "Coverage", "Note (engineering judgement)"]
+  ws.append(lcp_cols)
+  lcp_hrow = ws.max_row
+  style_header(ws, len(lcp_cols), row=lcp_hrow)
+  for pid, desc, loc, served in PANELS:
+      pl = pts_by_lcp.get(pid, 0)
+      matched = ", ".join(sorted(phys_by_lcp.get(pid, []))) or "—"
+      lk = linked_by_lcp.get(pid, 0)
+      cov = f"{(100 * lk // pl) if pl else 0}%"
+      ws.append([pid, loc, pl, matched, lk, cov, CURATED.get(pid, "")])
+  for rr in range(lcp_hrow, ws.max_row + 1):
+      for c in range(1, len(lcp_cols) + 1):
+          ws.cell(row=rr, column=c).border = BORDER
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+  set_widths(ws, [14, 26, 8, 46, 10, 10, 46])
 
   # ---- Legend ----
   ws = wb.create_sheet("Legend")
