@@ -1,73 +1,113 @@
-"""build_commissioning.py -- per-controller point-to-point commissioning sheets.
+"""build_commissioning.py -- per-panel point-to-point commissioning sheets.
 
-For every DDC controller in the model, emit a field checklist of its points with
-tick-box columns (wired / terminated / P2P verified / functional test) plus
-observed-value and notes fields, in three portable forms under exports/:
+Driven by the AUTHORITATIVE physical panel schedule (panels_schedule.json,
+transcribed from 판넬별 포인트 정리(델타 컨트롤러 및 모듈 포함)_26.07.29.xlsx), so the
+checklist carries a tick-box for every physically wired point in every panel
+(4,467 points across 67 panels), not just the functionally-characterized subset.
 
-  red5-dhcp_commissioning.xlsx   Index + one worksheet per controller
+For each panel we enumerate its used points by type -- DO / DI / BTOT / AI / AO --
+into line items (e.g. RS-PH2-1-DI01 ... DI42) with tick-box columns
+(wired / terminated / P2P verified / functional test) plus observed-value and
+notes fields, in three portable forms under exports/:
+
+  red5-dhcp_commissioning.xlsx   Index + one worksheet per panel
   red5-dhcp_commissioning.html   interactive: clickable checkboxes, search,
-                                 one print page per controller (print-to-PDF)
-  red5-dhcp_commissioning.csv    combined flat sheet (Panel/Controller columns)
+                                 one print page per panel (print-to-PDF)
+  red5-dhcp_commissioning.csv    combined flat sheet (Panel columns)
 
-Carried by the field crew during each controller swap (see the cutover plan).
+Carried by the field crew during each panel/controller swap (see the cutover plan).
+Note: the schedule gives per-panel TYPE COUNTS, not vendor tags -- the enumerated
+tags are positional (panel + type + index). Where a point overlaps the functional
+model, its real tag/description lives in red5-dhcp_full / _control-logic.
 """
 from __future__ import annotations
 
 import csv
 import datetime
 import html
+import json
 import os
-
-import generate_io_list as g
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EXPORT_DIR = os.path.join(HERE, "exports")
+SCHEDULE = os.path.join(HERE, "panels_schedule.json")
 TODAY = datetime.date.today().isoformat()
 
 CHECK_COLS = ["Wired", "Terminated", "P2P verified", "Func. test"]
-BASE_COLS = ["#", "Point Tag", "Device", "Description", "I/O", "Signal / Range", "Units"]
+BASE_COLS = ["#", "Point Tag", "Type", "Description", "Signal / Range", "Units"]
 TAIL_COLS = ["Observed value / state", "Notes"]
 BOX = "\u2610"  # ballot box
 
-PANEL_META = {p[0]: (p[1], p[2]) for p in g.PANELS}  # id -> (desc, location)
+AREA_ORDER = [
+    "Penthouse (PH)", "Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3",
+    "Floor 2", "Floor 1", "Basement B1", "Basement B2", "Basement B3",
+    "Heat source (R-1)", "System / central", "Plant / misc",
+]
+
+# type -> (long name, signal/range, units)
+TYPE_META = {
+    "DO":   ("Digital output", "Relay - 0 / 1", "on-off"),
+    "DI":   ("Digital input", "Dry contact - 0 / 1", "status"),
+    "BTOT": ("Pulse / totalizer", "Pulse accumulate", "kWh - m3"),
+    "AI":   ("Analog input", "4-20 mA / 0-10 V / RTD", "eng. unit"),
+    "AO":   ("Analog output", "0-10 V / 4-20 mA", "%"),
+}
+TYPE_ORDER = ["DO", "DI", "BTOT", "AI", "AO"]
 
 
-def controllers_in_order():
-    """(cid, panel, devices, points[]) grouped, in panel/controller order."""
-    ctrl_pts = {}
-    for r in g.rows:
-        ctrl_pts.setdefault(r["Controller"], []).append(r)
-    panel_order = [p[0] for p in g.PANELS]
-    ordered = sorted(
-        g.controllers,
-        key=lambda c: (panel_order.index(c[1]) if c[1] in panel_order else 99, c[0]),
-    )
+def load_panels():
+    d = json.load(open(SCHEDULE, encoding="utf-8"))
+    panels = d["panels"]
+    order = {a: i for i, a in enumerate(AREA_ORDER)}
+    panels.sort(key=lambda p: (order.get(p["area"], 99), int(p["no"])))
+    return panels, d
+
+
+def panel_points(p):
+    """Enumerate positional point rows for one panel: (tag, type, desc, sig, units)."""
+    u = p["used"]
+    rows = []
+    for t in TYPE_ORDER:
+        n = u.get(t, 0)
+        if not n:
+            continue
+        longname, sig, units = TYPE_META[t]
+        for k in range(1, n + 1):
+            tag = f"{p['name']}-{t}{k:02d}"
+            rows.append((tag, t, f"{longname} #{k}", sig, units))
+    return rows
+
+
+def panels_with_points(panels):
     out = []
-    for cid, panel, devices in ordered:
-        pts = ctrl_pts.get(cid, [])
+    for p in panels:
+        pts = panel_points(p)
         if pts:
-            out.append((cid, panel, devices, pts))
+            out.append((p, pts))
     return out
 
 
 # ---------------------------------------------------------------------------
 # CSV (combined)
 # ---------------------------------------------------------------------------
-def write_csv(path):
+def write_csv(path, data):
+    total = 0
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
-        w.writerow(["Panel", "Controller", "Devices served"] + BASE_COLS[1:] + CHECK_COLS + TAIL_COLS)
-        for cid, panel, devices, pts in controllers_in_order():
-            for i, r in enumerate(pts, 1):
-                w.writerow([panel, cid, devices, r["Point Tag"], r["Device ID"],
-                            r["Point Description"], r["I/O Type"], r["Signal / Range"],
-                            r["Units"], BOX, BOX, BOX, BOX, "", ""])
+        w.writerow(["Panel", "Area", "Panel used/cap"] + BASE_COLS[1:] + CHECK_COLS + TAIL_COLS)
+        for p, pts in data:
+            cap = f"{p['usedTot']}/{p['capTot']}"
+            for i, (tag, t, desc, sig, units) in enumerate(pts, 1):
+                w.writerow([p["name"], p["area"], cap, tag, t, desc, sig, units,
+                            BOX, BOX, BOX, BOX, "", ""])
+                total += 1
+    return total
 
 
 # ---------------------------------------------------------------------------
-# XLSX (index + sheet per controller)
+# XLSX (index + sheet per panel)
 # ---------------------------------------------------------------------------
-def write_xlsx(path):
+def write_xlsx(path, data, meta):
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
     from openpyxl.utils import get_column_letter
@@ -80,46 +120,62 @@ def write_xlsx(path):
     ctr = Alignment(horizontal="center", vertical="center")
     top = Alignment(wrap_text=True, vertical="top")
 
-    ctrls = controllers_in_order()
     cols = BASE_COLS + CHECK_COLS + TAIL_COLS
-    widths = [4, 16, 12, 34, 6, 16, 8] + [11, 11, 12, 10] + [22, 24]
+    widths = [4, 20, 7, 22, 22, 11] + [10, 11, 12, 10] + [22, 24]
+    total_pts = sum(len(pts) for _, pts in data)
 
     wb = Workbook()
     idx = wb.active
     idx.title = "Index"
-    idx.append(["Red5-DHCP — per-controller commissioning checklists"])
+    idx.append(["Red5-DHCP - per-panel commissioning checklists (physical schedule)"])
     idx.cell(row=1, column=1).font = Font(bold=True, size=14, color="1F3864")
-    idx.append([f"Generated {TODAY}  ·  {len(ctrls)} controllers  ·  {len(g.rows)} points"])
+    idx.append([f"Generated {TODAY}  -  {len(data)} panels  -  {total_pts} points  "
+                f"(schedule: {meta['usedTotal']} used / {meta['capTotal']} capacity)"])
     idx.cell(row=2, column=1).font = Font(italic=True, size=10, color="555555")
     idx.append([])
-    idx.append(["Panel", "Controller", "Devices served", "Points", "Sheet"])
+    idx.append(["#", "Panel", "Area", "Used", "Cap", "Sheet"])
     hrow = idx.max_row
-    for c in range(1, 6):
+    for c in range(1, 7):
         idx.cell(row=hrow, column=c).fill = HDR
         idx.cell(row=hrow, column=c).font = HF
 
-    for cid, panel, devices, pts in ctrls:
-        sheet = cid[:31]
+    def sheet_name(p):
+        base = p["name"].replace("/", "-").replace("\\", "-").replace("*", "").replace("?", "")
+        base = base.replace("[", "(").replace("]", ")").replace(":", "-")
+        return (f"{p['no']}-{base}")[:31]
+
+    used_names = set()
+    names = {}
+    for p, pts in data:
+        nm = sheet_name(p)
+        while nm in used_names:
+            nm = (nm[:29] + "~")[:31]
+        used_names.add(nm)
+        names[p["no"]] = nm
+
+    for p, pts in data:
+        nm = names[p["no"]]
         rr = idx.max_row + 1
-        idx.append([panel, cid, devices, len(pts), sheet])
-        link = idx.cell(row=rr, column=5)
-        link.hyperlink = f"#'{sheet}'!A1"
+        idx.append([p["no"], p["name"], p["area"], p["usedTot"], p["capTot"], nm])
+        link = idx.cell(row=rr, column=6)
+        link.hyperlink = f"#'{nm}'!A1"
         link.font = Font(color="1F5FBF", underline="single")
-    for i, wdt in enumerate([14, 14, 60, 8, 14], 1):
+    for i, wdt in enumerate([5, 20, 18, 7, 7, 24], 1):
         idx.column_dimensions[get_column_letter(i)].width = wdt
     for rr in range(hrow, idx.max_row + 1):
-        for c in range(1, 6):
+        for c in range(1, 7):
             idx.cell(row=rr, column=c).border = B
             idx.cell(row=rr, column=c).alignment = top
     idx.freeze_panes = "A5"
 
-    for cid, panel, devices, pts in ctrls:
-        ws = wb.create_sheet(cid[:31])
-        desc, loc = PANEL_META.get(panel, ("", ""))
-        ws.append([f"Commissioning checklist — {cid}"])
+    for p, pts in data:
+        ws = wb.create_sheet(names[p["no"]])
+        ws.append([f"Commissioning checklist - {p['name']}"])
         ws.cell(row=1, column=1).font = Font(bold=True, size=13, color="1F3864")
-        ws.append([f"Panel {panel} ({desc})", "", f"Location: {loc}"])
-        ws.append([f"Devices served: {devices}"])
+        ws.append([f"Panel #{p['no']} - {p['area']}", "",
+                   f"Used {p['usedTot']} / capacity {p['capTot']}"])
+        if p.get("note"):
+            ws.append([f"Note: {p['note']}"])
         ws.append(["Technician: ______________________", "", "Date: __________",
                    "", "Signature: ______________________"])
         ws.append([])
@@ -131,10 +187,8 @@ def write_xlsx(path):
             ws.cell(row=hr, column=c).alignment = ctr
         chk_start = len(BASE_COLS) + 1
         chk_end = len(BASE_COLS) + len(CHECK_COLS)
-        for i, r in enumerate(pts, 1):
-            ws.append([i, r["Point Tag"], r["Device ID"], r["Point Description"],
-                       r["I/O Type"], r["Signal / Range"], r["Units"],
-                       BOX, BOX, BOX, BOX, "", ""])
+        for i, (tag, t, desc, sig, units) in enumerate(pts, 1):
+            ws.append([i, tag, t, desc, sig, units, BOX, BOX, BOX, BOX, "", ""])
             rr = ws.max_row
             for c in range(chk_start, chk_end + 1):
                 cell = ws.cell(row=rr, column=c)
@@ -151,41 +205,39 @@ def write_xlsx(path):
         ws.freeze_panes = f"A{hr + 1}"
 
     wb.save(path)
+    return total_pts
 
 
 # ---------------------------------------------------------------------------
-# HTML (interactive; one print page per controller)
+# HTML (interactive; one print page per panel)
 # ---------------------------------------------------------------------------
-def write_html(path):
-    ctrls = controllers_in_order()
-
+def write_html(path, data, meta):
     def esc(s):
         return html.escape(str(s if s is not None else ""))
 
+    total_pts = sum(len(pts) for _, pts in data)
     blocks = []
-    for cid, panel, devices, pts in ctrls:
-        desc, loc = PANEL_META.get(panel, ("", ""))
-        search_blob = esc((cid + " " + panel + " " + devices).lower())
+    for p, pts in data:
+        search_blob = esc((p["name"] + " " + p["area"] + " " + str(p["no"])).lower())
         rows = []
-        for i, r in enumerate(pts, 1):
+        for i, (tag, t, desc, sig, units) in enumerate(pts, 1):
             rows.append(
-                "<tr><td class=c>{i}</td><td>{tag}</td><td>{dev}</td><td>{d}</td>"
-                "<td class=c>{io}</td><td>{sig}</td><td>{u}</td>"
+                "<tr><td class=c>{i}</td><td>{tag}</td><td class=c>{t}</td><td>{d}</td>"
+                "<td>{sig}</td><td>{u}</td>"
                 "<td class=c><input type=checkbox></td><td class=c><input type=checkbox></td>"
                 "<td class=c><input type=checkbox></td><td class=c><input type=checkbox></td>"
                 "<td><input class=t type=text></td><td><input class=t type=text></td></tr>".format(
-                    i=i, tag=esc(r["Point Tag"]), dev=esc(r["Device ID"]),
-                    d=esc(r["Point Description"]), io=esc(r["I/O Type"]),
-                    sig=esc(r["Signal / Range"]), u=esc(r["Units"])))
+                    i=i, tag=esc(tag), t=esc(t), d=esc(desc), sig=esc(sig), u=esc(units)))
+        note = f'<div>Note: {esc(p["note"])}</div>' if p.get("note") else ""
         blocks.append(
-            f'<details class="ctrl" data-s="{search_blob}"><summary>{esc(cid)}'
-            f'<span class="r">{esc(panel)} · {len(pts)} points</span></summary>'
-            f'<div class="hd"><div>{esc(panel)} — {esc(desc)} · <em>{esc(loc)}</em></div>'
-            f'<div>Serves: {esc(devices)}</div>'
+            f'<details class="ctrl" data-s="{search_blob}"><summary>{esc(p["name"])}'
+            f'<span class="r">#{esc(p["no"])} - {esc(p["area"])} - {len(pts)} points</span></summary>'
+            f'<div class="hd"><div>Panel #{esc(p["no"])} - {esc(p["area"])} - '
+            f'used {p["usedTot"]} / capacity {p["capTot"]}</div>{note}'
             f'<div class="sign">Technician <input class=t type=text> &nbsp; Date <input class=t type=text>'
             f' &nbsp; Signature <input class=t type=text></div></div>'
-            '<table><thead><tr><th class=c>#</th><th>Point Tag</th><th>Device</th><th>Description</th>'
-            '<th class=c>I/O</th><th>Signal / Range</th><th>Units</th>'
+            '<table><thead><tr><th class=c>#</th><th>Point Tag</th><th class=c>Type</th><th>Description</th>'
+            '<th>Signal / Range</th><th>Units</th>'
             '<th class=c>Wired</th><th class=c>Term.</th><th class=c>P2P</th><th class=c>Func.</th>'
             '<th>Observed</th><th>Notes</th></tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table></details>')
@@ -193,7 +245,7 @@ def write_html(path):
     doc = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Red5-DHCP — commissioning checklists</title>
+<title>Red5-DHCP - commissioning checklists</title>
 <style>
   :root {{ --ink:#1b2430; --dim:#5b6675; --line:#d5dbe4; --band:#1F3864; }}
   * {{ box-sizing:border-box; }}
@@ -227,26 +279,26 @@ def write_html(path):
   }}
 </style></head>
 <body><div class="wrap">
-<h1>Red5-DHCP — per-controller commissioning checklists</h1>
-<p class="sub">{len(ctrls)} DDC controllers · {len(g.rows)} points. Point-to-point verify each I/O, then trend 24–48 h before returning to auto. Fill on a tablet or print to PDF (one page per controller).</p>
+<h1>Red5-DHCP - per-panel commissioning checklists</h1>
+<p class="sub">{len(data)} panels - {total_pts} points (physical schedule: {meta['usedTotal']} used / {meta['capTotal']} capacity). Point-to-point verify each I/O, then trend 24-48 h before returning to auto. Fill on a tablet or print to PDF (one page per panel). Tags are positional (panel + type + index) from the 26.07.29 schedule.</p>
 <div class="bar">
-  <input type="search" id="q" placeholder="find controller / panel / device\u2026">
+  <input type="search" id="q" placeholder="find panel / area / no\u2026">
   <button id="expand">Expand all</button>
   <button id="collapse">Collapse all</button>
   <button onclick="window.print()">Print / Save PDF</button>
   <span class="sub" id="count"></span>
 </div>
 {"".join(blocks)}
-<p class="foot">Generated {TODAY} · source: generate_io_list.py · Red5-DHCP savic-net FX2 → new DDC migration.</p>
+<p class="foot">Generated {TODAY} - source: panels_schedule.json (판넬별 포인트 정리 26.07.29) - Red5-DHCP savic-net FX2 -> new DDC migration.</p>
 </div>
 <script>
 const items=[...document.querySelectorAll('details.ctrl')];
-document.getElementById('count').textContent=items.length+' controllers';
+document.getElementById('count').textContent=items.length+' panels';
 document.getElementById('q').addEventListener('input',e=>{{
   const s=e.target.value.trim().toLowerCase();
   let n=0;
   for(const d of items){{const hit=!s||d.dataset.s.includes(s);d.classList.toggle('hidden',!hit);if(hit)n++;d.open=!!s&&hit;}}
-  document.getElementById('count').textContent=n+' / '+items.length+' controllers';
+  document.getElementById('count').textContent=n+' / '+items.length+' panels';
 }});
 document.getElementById('expand').onclick=()=>items.forEach(d=>d.open=true);
 document.getElementById('collapse').onclick=()=>items.forEach(d=>d.open=false);
@@ -255,13 +307,17 @@ document.getElementById('collapse').onclick=()=>items.forEach(d=>d.open=false);
 """
     with open(path, "w", encoding="utf-8") as f:
         f.write(doc)
+    return total_pts
 
 
 if __name__ == "__main__":
     os.makedirs(EXPORT_DIR, exist_ok=True)
+    panels, meta = load_panels()
+    data = panels_with_points(panels)
     stem = os.path.join(EXPORT_DIR, "red5-dhcp_commissioning")
-    write_csv(stem + ".csv")
-    write_xlsx(stem + ".xlsx")
-    write_html(stem + ".html")
-    n = len(controllers_in_order())
-    print(f"commissioning sheets: {n} controllers, {len(g.rows)} points -> {stem}.{{csv,xlsx,html}}")
+    n_csv = write_csv(stem + ".csv", data)
+    n_xlsx = write_xlsx(stem + ".xlsx", data, meta)
+    n_html = write_html(stem + ".html", data, meta)
+    assert n_csv == n_xlsx == n_html, (n_csv, n_xlsx, n_html)
+    print(f"commissioning sheets: {len(data)} panels, {n_csv} points "
+          f"(schedule {meta['usedTotal']} used / {meta['capTotal']} cap) -> {stem}.{{csv,xlsx,html}}")
