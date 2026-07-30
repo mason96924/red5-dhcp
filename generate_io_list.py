@@ -43,7 +43,7 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                   "Red5-DHCP_BMS_IO_List.xlsx")
+                   "exports", "Red5-DHCP_BMS_IO_List.xlsx")
 
 # --------------------------------------------------------------------------
 # Panels (distributed DDC local control panels + central)
@@ -709,6 +709,57 @@ for r in rows:
     r["Controller"] = dev_controller.get(r["Device ID"], "")
 
 # --------------------------------------------------------------------------
+# Physical-panel cross-reference — bridge to the 판넬별 포인트 정리 physical
+# schedule (panels_schedule.json). Each physical RS/RCP/CP panel now lists the
+# equipment it serves (AC-* AHUs, EVU-* OAUs, PCU packaged units, SF/EF fans);
+# we map those tags back to the functional Device IDs to stamp each point with
+# the physical panel + floor it is wired into. Best-effort: air-side AHUs/OAUs
+# match cleanly; SF/EF fans are not individually deviced in the functional model
+# so they stay blank. This never fabricates points.
+# --------------------------------------------------------------------------
+import json as _json
+import re as _re
+
+
+def _load_phys_schedule():
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "panels_schedule.json")
+    try:
+        return _json.load(open(path, encoding="utf-8"))
+    except Exception:
+        return None
+
+
+PHYS_SCHED = _load_phys_schedule()
+
+
+def _equip_tokens(equip):
+    if not equip:
+        return []
+    s = _re.sub(r"\(.*?\)", "", equip)
+    out = []
+    for part in _re.split(r"[,\.;/]", s):
+        t = part.strip().upper().replace(" ", "")
+        if _re.match(r"^(AC|EVU|PCU|PAC|PMAC|SF|EF)-?\d", t):
+            out.append(t)
+    return out
+
+
+DEV2PANEL = {}
+if PHYS_SCHED:
+    for _p in PHYS_SCHED["panels"]:
+        for _t in _equip_tokens(_p.get("equip", "")):
+            DEV2PANEL.setdefault(_t, (_p["name"], _p.get("floor", "")))
+
+
+def _phys_lookup(device_id):
+    d = _re.sub(r"\(.*?\)", "", str(device_id or "")).strip().upper().replace(" ", "")
+    for cand in (d, _re.sub(r"-\d+$", "", d)):
+        if cand in DEV2PANEL:
+            return DEV2PANEL[cand]
+    return ("", "")
+
+
+# --------------------------------------------------------------------------
 # Build the workbook.  The device/point model above (rows, controllers,
 # PANELS, PANEL descriptions) is importable without side effects; only the
 # actual .xlsx write happens under the __main__ guard at the bottom.
@@ -757,7 +808,7 @@ def build_workbook():
     ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
     ("BMS platform", "Azbil savic-net FX2, S/W 機能仕様 dated 2015/04/09 — confirmed from the 144-page Azbil 納入仕様書 (software function spec, not an equipment list)"),
     ("", ""),
-    ("Sheets", "Panels · Controllers · IO_List · IO_Summary · Legend"),
+    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Legend"),
     ("Basis", "Azbil 完成図 savic-net graphics (熱源設備 全体/低層/高層/36,37F/冷却塔/ホットウェル/DHC受入, graphs 1000-1100; PMAC-PAC & 照明一覧), air-side summary graphs (空調関連/客室等), M-* CAD equipment schedules, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
     ("Note", "Device tags/counts read directly from the savic-net graphics. Per-unit packaged (PCU/PAC/PMAC) and per-floor lighting lists are modelled as representative supervised groups — expand from 照明一覧1/2 + PMAC/PAC一覧 for the full point count."),
   ]
@@ -814,13 +865,21 @@ def build_workbook():
   # ---- IO_List ----
   ws = wb.create_sheet("IO_List")
   cols = ["Point Tag", "System", "Device ID", "Device Type", "Area / Served",
-          "Panel", "Controller", "Point Description", "I/O Type",
+          "Panel", "Controller", "Phys. panel (26.07.30)", "Phys. floor",
+          "Point Description", "I/O Type",
           "Signal / Range", "Units", "SP/Sched", "Alarm", "Trend", "Notes / Basis"]
   ws.append(cols)
+  _src_cols = ["Point Tag", "System", "Device ID", "Device Type", "Area / Served",
+               "Panel", "Controller", "Point Description", "I/O Type",
+               "Signal / Range", "Units", "SP/Sched", "Alarm", "Trend", "Notes / Basis"]
   for rr in rows:
-      ws.append([rr[c] for c in cols])
+      pp, pf = _phys_lookup(rr["Device ID"])
+      vals = {c: rr[c] for c in _src_cols}
+      vals["Phys. panel (26.07.30)"] = pp
+      vals["Phys. floor"] = pf
+      ws.append([vals[c] for c in cols])
   style_header(ws, len(cols))
-  set_widths(ws, [16, 13, 12, 24, 34, 10, 13, 34, 8, 15, 8, 8, 7, 7, 46])
+  set_widths(ws, [16, 13, 12, 24, 34, 10, 13, 15, 9, 34, 8, 15, 8, 8, 7, 7, 46])
   ws.freeze_panes = "C2"
   ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
   # system color banding + borders
@@ -871,6 +930,75 @@ def build_workbook():
   ws.cell(row=last + 4, column=2, value=len(controllers))
   ws.cell(row=last + 5, column=1, value="Total I/O points").font = Font(bold=True)
   ws.cell(row=last + 5, column=2, value=len(rows))
+
+  # ---- Reconciliation (functional model vs 26.07.30 physical schedule) ----
+  ws = wb.create_sheet("Reconciliation")
+  func_pts = len(rows)
+  func_type = {"AI": 0, "AO": 0, "BI": 0, "BO": 0}
+  for rr in rows:
+      func_type[rr["I/O Type"]] = func_type.get(rr["I/O Type"], 0) + 1
+  linked = sum(1 for rr in rows if _phys_lookup(rr["Device ID"])[0])
+  if PHYS_SCHED:
+      pt = PHYS_SCHED["typeTotals"]
+      phys_used = PHYS_SCHED["usedTotal"]
+      phys_cap = PHYS_SCHED["capTotal"]
+      phys_pan = len(PHYS_SCHED["panels"])
+      phys_mod = sum(PHYS_SCHED["modTotals"])
+      phys_equip = sum(1 for _p in PHYS_SCHED["panels"] if _p.get("equip"))
+      src = PHYS_SCHED.get("source", "")
+  else:
+      pt = {"DO": 0, "DI": 0, "BTOT": 0, "AI": 0, "AO": 0}
+      phys_used = phys_cap = phys_pan = phys_mod = phys_equip = 0
+      src = "(panels_schedule.json missing)"
+  ws["A1"] = "Reconciliation — functional model vs physical panel schedule"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = (f"This workbook is the drawing-derived FUNCTIONAL model (tagged points + SOO). "
+              f"판넬별 포인트 정리 {src} is the PHYSICAL panel schedule (per-panel type counts).")
+  ws["A2"].font = SUB_FONT
+  ws.append([])
+  block = [
+      ["Metric", "Functional model", f"Physical schedule ({src})"],
+      ["Scope", "tagged points + description + SOO", "per-panel type counts (no per-point tags)"],
+      ["Total I/O points", func_pts, phys_used],
+      ["Panels", len(PANELS), phys_pan],
+      ["Controllers / modules", len(controllers), phys_mod],
+      ["Installed capacity (points)", "—", phys_cap],
+      ["Panels naming equipment served", "—", phys_equip],
+      ["", "", ""],
+      ["Point types", "functional (AI/AO/BI/BO)", "physical (DO/DI/BTOT/AI/AO)"],
+      ["Analog input (AI)", func_type.get("AI", 0), pt["AI"]],
+      ["Analog output (AO)", func_type.get("AO", 0), pt["AO"]],
+      ["Binary input (BI ≈ DI)", func_type.get("BI", 0), pt["DI"]],
+      ["Binary output (BO ≈ DO)", func_type.get("BO", 0), pt["DO"]],
+      ["Pulse / totalizer (BTOT)", "—", pt["BTOT"]],
+      ["", "", ""],
+      ["Overlap (characterized, purpose known)", func_pts, func_pts],
+      ["Newly surfaced, count-only (tags TBD)", "—", max(phys_used - func_pts, 0)],
+      ["Functional points cross-linked to a physical panel",
+       linked, f"{(100 * linked // func_pts) if func_pts else 0}% of {func_pts}"],
+  ]
+  for row in block:
+      ws.append(row)
+  style_header(ws, 3, row=4)
+  set_widths(ws, [46, 30, 40])
+  for rr in range(5, ws.max_row + 1):
+      for c in (1, 2, 3):
+          ws.cell(row=rr, column=c).border = BORDER
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+      ws.cell(row=rr, column=1).font = Font(bold=True, size=10)
+  ws.append([])
+  note_r = ws.max_row + 1
+  ws.cell(row=note_r, column=1, value="Note")
+  ws.cell(row=note_r, column=1).font = Font(bold=True, size=10)
+  ws.cell(row=note_r, column=2, value=(
+      "The physical schedule supplies only per-panel type counts, not individual point tags, so the "
+      f"{max(phys_used - func_pts, 0)} count-only points cannot be expanded into fully-described tagged "
+      "points from that source. The full physical inventory (per panel × type, floor, equipment served) "
+      "lives in Red5-DHCP-Panels-IO; every physical point is enumerated as a positional tag in the "
+      "red5-dhcp_commissioning sheets. The 'Phys. panel' / 'Phys. floor' columns on IO_List link the "
+      "functional AHU/OAU/packaged devices to the physical panel that carries them."))
+  ws.cell(row=note_r, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+  ws.row_dimensions[note_r].height = 90
 
   # ---- Legend ----
   ws = wb.create_sheet("Legend")
