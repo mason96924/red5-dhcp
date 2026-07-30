@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red5-DHCP — Panels · Controllers · I/O</title>
+<style>
+  :root { --ink:#1b2430; --muted:#64748b; --line:#e6eaf0; --bg:#f7f9fc; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--ink);
+         margin:0; background:var(--bg); }
+  .wrap { max-width:1200px; margin:0 auto; padding:28px 22px 60px; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  h2 { font-size:19px; margin:26px 0 8px; }
+  h3 { font-size:15px; margin:0 0 8px; }
+  .sub { color:var(--muted); font-size:13.5px; margin-bottom:18px; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:14px 0; }
+  .stat { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .stat .v { font-size:26px; font-weight:700; }
+  .stat .l { color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .stat.info .v { color:#2563eb; }
+  .callout { border-radius:12px; padding:14px 16px; margin:14px 0; font-size:13.5px; line-height:1.5; }
+  .warn { background:#fff7ed; border:1px solid #fed7aa; }
+  .infoc { background:#eff6ff; border:1px solid #bfdbfe; }
+  .callout b.t { display:block; font-size:14px; margin-bottom:5px; }
+  .bar { display:flex; height:22px; border-radius:7px; overflow:hidden; border:1px solid var(--line); }
+  .seg { height:100%; }
+  .barlbl { display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin:14px 0 5px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start; }
+  table { border-collapse:collapse; width:100%; background:#fff; }
+  table.grid { font-size:12.5px; margin-top:6px; }
+  th,td { border:1px solid var(--line); padding:5px 8px; text-align:right; }
+  th { background:#f0f3f8; position:sticky; top:0; }
+  td:nth-child(2), th:nth-child(2), td:last-child, th:last-child { text-align:left; }
+  table.kv td { text-align:left; } table.kv td.r { text-align:right; }
+  details { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; margin:8px 0; }
+  summary { cursor:pointer; font-size:14px; }
+  .muted { color:var(--muted); font-weight:400; font-size:12.5px; }
+  .foot { color:var(--muted); font-size:12px; margin-top:30px; }
+</style></head>
+<body><div class="wrap">
+  <h1>Red5-DHCP — Panels · Controllers · I/O</h1>
+  <div class="sub">Authoritative physical panel schedule (Delta controllers &amp; modules), reconciled against
+    the prior functional point list. Source: 26.07.29 panel schedule (판넬별 포인트 정리 · 델타 컨트롤러 및 모듈 포함) · generated 2026-07-30.</div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">67</div><div class="l">Physical panels</div></div>
+    <div class="stat"><div class="v">904</div><div class="l">Delta controllers + modules</div></div>
+    <div class="stat info"><div class="v">4467</div><div class="l">Used I/O points</div></div>
+    <div class="stat"><div class="v">5240</div><div class="l">Installed capacity</div></div>
+  </div>
+
+  <div class="callout warn"><b class="t">Reconciliation — overlap vs newly identified</b>
+    The physical schedule lists 4467 used I/O points across 67 panels (904 Delta
+    controllers + modules; 5240 points of installed capacity). Of these, 1160 match points already
+    characterized in the prior functional list (overlap — purpose known); the remaining 3307 are newly
+    surfaced and their function is still to be determined. The schedule gives per-panel type counts
+    (DO / DI / BTOT / AI / AO), not individual tags, so exact point-by-point mapping can’t be resolved from
+    this file alone.</div>
+
+  <div class="barlbl"><span>Used-point reconciliation — 4467 used / 5240 capacity</span>
+    <span>Overlap 1160 · New/TBD 3307 · Spare 773</span></div>
+  <div class="bar"><div class="seg" style="width:22.137%;background:#3fa266" title="Overlap (characterized): 1160"></div><div class="seg" style="width:63.111%;background:#ea7a3c" title="New — purpose TBD: 3307"></div><div class="seg" style="width:14.752%;background:#d7dde5" title="Spare capacity: 773"></div></div>
+
+  <div class="two" style="margin-top:22px">
+    <div>
+      <h3>Delta hardware rollup</h3>
+      <table class="kv"><thead><tr><th style="text-align:left">Controller / module</th><th>Count</th></tr></thead>
+      <tbody><tr><td>Red5-PLUS-ROOM</td><td class='r'>90</td></tr><tr><td>CON-T1L</td><td class='r'>80</td></tr><tr><td>Red5-EXPAND-04</td><td class='r'>100</td></tr><tr><td>Red5-MODULE-4F4xP</td><td class='r'>422</td></tr><tr><td>Red5-MODULE-8xP</td><td class='r'>127</td></tr><tr><td>Red5-MODULE-8PxP</td><td class='r'>85</td></tr></tbody></table>
+    </div>
+    <div>
+      <h3>Used point-type mix</h3>
+      <div class="barlbl"><span>4467 used points</span>
+        <span>DO 1583 · DI 1759 · BTOT 534 · AI 505 · AO 86</span></div>
+      <div class="bar"><div class="seg" style="width:35.438%;background:#7c5cd6" title="DO: 1583"></div><div class="seg" style="width:39.378%;background:#2563eb" title="DI: 1759"></div><div class="seg" style="width:11.954%;background:#e0af22" title="BTOT: 534"></div><div class="seg" style="width:11.305%;background:#3fa266" title="AI: 505"></div><div class="seg" style="width:1.925%;background:#ea7a3c" title="AO: 86"></div></div>
+      <div class="muted" style="margin-top:8px">Type key: DO ≈ binary output (BO), DI ≈ binary input (BI),
+        BTOT = pulse/totalizer meter points (kWh · flow), AI/AO analog.</div>
+    </div>
+  </div>
+
+  <div class="callout infoc"><b class="t">Recognizable equipment overlaps (purpose likely known)</b>
+    Several panels clearly map to already-characterized equipment — CP-R-1 ↔ the R-1 back-up chiller,
+    EVU-6 ↔ an EVU air-handler, P-1 ↔ a pump set, PH / lighting panels ↔ facade &amp; common-area lighting.
+    The bulk of the newly surfaced points sit in the RS-* / RCP-* room and riser panels, whose per-point
+    function still needs confirmation against the drawings.</div>
+
+  <h2>Physical panel schedule — by area</h2>
+  <div class="muted" style="margin-bottom:6px">Per panel: Delta module count
+    (ROOM / CON-T1L / EXPAND-04 / 4F4xP / 8xP / 8PxP), used points by type, used total, installed capacity.</div>
+  
+    <details open>
+      <summary><b>Penthouse (PH)</b> <span class="muted">· 8 panels · 697 used / 794 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>1</td><td>RS-PH2-1</td><td>1</td><td>1</td><td>2</td><td>0</td><td>6</td><td>3</td><td>0</td><td>42</td><td>24</td><td>0</td><td>0</td><td>66</td><td>72</td><td></td></tr><tr><td>2</td><td>RS-PH1-3</td><td>2</td><td>1</td><td>4</td><td>11</td><td>6</td><td>4</td><td>44</td><td>65</td><td>32</td><td>24</td><td>0</td><td>165</td><td>166</td><td></td></tr><tr><td>3</td><td>CP-PH1-3</td><td>1</td><td>1</td><td>0</td><td>0</td><td>2</td><td>1</td><td>0</td><td>0</td><td>4</td><td>7</td><td>2</td><td>13</td><td>14</td><td></td></tr><tr><td>5</td><td>RCP-PH1-3</td><td>2</td><td>1</td><td>2</td><td>15</td><td>0</td><td>0</td><td>58</td><td>25</td><td>0</td><td>14</td><td>3</td><td>100</td><td>118</td><td></td></tr><tr><td>6</td><td>RCP-PH1-2</td><td>2</td><td>1</td><td>2</td><td>16</td><td>0</td><td>0</td><td>64</td><td>28</td><td>0</td><td>18</td><td>6</td><td>116</td><td>132</td><td></td></tr><tr><td>7</td><td>RCP-PH1-1</td><td>2</td><td>1</td><td>2</td><td>12</td><td>0</td><td>1</td><td>45</td><td>25</td><td>2</td><td>8</td><td>4</td><td>84</td><td>116</td><td></td></tr><tr><td>8</td><td>CP-PH-1</td><td>1</td><td>1</td><td>2</td><td>4</td><td>5</td><td>0</td><td>14</td><td>42</td><td>0</td><td>7</td><td>2</td><td>65</td><td>76</td><td></td></tr><tr><td>9</td><td>RS-PH1-1</td><td>1</td><td>1</td><td>2</td><td>4</td><td>6</td><td>2</td><td>14</td><td>41</td><td>14</td><td>16</td><td>3</td><td>88</td><td>100</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 31</b> <span class="muted">· 1 panels · 138 used / 164 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>10</td><td>RS-31-1</td><td>2</td><td>1</td><td>3</td><td>16</td><td>0</td><td>2</td><td>61</td><td>45</td><td>14</td><td>18</td><td>0</td><td>138</td><td>164</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 21</b> <span class="muted">· 1 panels · 152 used / 170 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>11</td><td>RS-21-1</td><td>2</td><td>1</td><td>4</td><td>16</td><td>3</td><td>2</td><td>61</td><td>58</td><td>9</td><td>24</td><td>0</td><td>152</td><td>170</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 10</b> <span class="muted">· 1 panels · 151 used / 164 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>12</td><td>RS-10-1</td><td>2</td><td>1</td><td>3</td><td>17</td><td>2</td><td>1</td><td>65</td><td>57</td><td>8</td><td>19</td><td>2</td><td>151</td><td>164</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 4</b> <span class="muted">· 7 panels · 492 used / 604 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>13</td><td>RCP-4-1</td><td>1</td><td>1</td><td>1</td><td>5</td><td>0</td><td>1</td><td>19</td><td>8</td><td>2</td><td>6</td><td>2</td><td>37</td><td>40</td><td>속판 650*1300 (제일 많은 사이즈)</td></tr><tr><td>14</td><td>RCP-4-2</td><td>2</td><td>1</td><td>2</td><td>12</td><td>0</td><td>2</td><td>45</td><td>22</td><td>11</td><td>12</td><td>6</td><td>96</td><td>114</td><td></td></tr><tr><td>15</td><td>RCP-4-3</td><td>1</td><td>1</td><td>1</td><td>7</td><td>0</td><td>1</td><td>28</td><td>12</td><td>3</td><td>8</td><td>2</td><td>53</td><td>74</td><td></td></tr><tr><td>16</td><td>RCP-4-4</td><td>1</td><td>1</td><td>2</td><td>8</td><td>0</td><td>1</td><td>29</td><td>15</td><td>4</td><td>8</td><td>3</td><td>59</td><td>74</td><td></td></tr><tr><td>17</td><td>CP-4-4</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>7</td><td>0</td><td>1</td><td>0</td><td>9</td><td>20</td><td></td></tr><tr><td>18</td><td>RS-4-1</td><td>2</td><td>1</td><td>2</td><td>7</td><td>2</td><td>4</td><td>28</td><td>38</td><td>32</td><td>2</td><td>2</td><td>102</td><td>110</td><td>속판 580*1800</td></tr><tr><td>19</td><td>RS-4-2</td><td>2</td><td>1</td><td>3</td><td>12</td><td>2</td><td>4</td><td>46</td><td>59</td><td>29</td><td>2</td><td>0</td><td>136</td><td>172</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 3</b> <span class="muted">· 5 panels · 468 used / 518 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>20</td><td>RCP-3-1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>0</td><td>1</td><td>16</td><td>8</td><td>4</td><td>6</td><td>1</td><td>35</td><td>40</td><td></td></tr><tr><td>21</td><td>RCP-3-2</td><td>1</td><td>1</td><td>2</td><td>9</td><td>1</td><td>1</td><td>35</td><td>23</td><td>5</td><td>11</td><td>5</td><td>79</td><td>98</td><td></td></tr><tr><td>22</td><td>RS-3-1</td><td>2</td><td>1</td><td>2</td><td>7</td><td>7</td><td>1</td><td>26</td><td>74</td><td>8</td><td>4</td><td>0</td><td>112</td><td>128</td><td></td></tr><tr><td>23</td><td>RS-3-2A</td><td>2</td><td>1</td><td>4</td><td>13</td><td>4</td><td>6</td><td>50</td><td>60</td><td>44</td><td>16</td><td>2</td><td>172</td><td>182</td><td>RH (AI 4개짜리) 2개 사용 8개 포인트 중 8개 사용  AI기존 포인트에 +8 적용</td></tr><tr><td>24</td><td>RS-3-2B</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>38</td><td>26</td><td>0</td><td>4</td><td>2</td><td>70</td><td>70</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 2</b> <span class="muted">· 5 panels · 434 used / 498 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>25</td><td>RCP-2-2</td><td>2</td><td>1</td><td>4</td><td>22</td><td>0</td><td>0</td><td>87</td><td>22</td><td>0</td><td>37</td><td>3</td><td>149</td><td>170</td><td></td></tr><tr><td>26</td><td>RCP-2-3</td><td>1</td><td>1</td><td>2</td><td>8</td><td>0</td><td>1</td><td>30</td><td>16</td><td>5</td><td>9</td><td>4</td><td>64</td><td>76</td><td></td></tr><tr><td>27</td><td>RS-2-1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td><td>8</td><td>15</td><td>0</td><td>0</td><td>23</td><td>24</td><td></td></tr><tr><td>28</td><td>RS-2-2</td><td>2</td><td>1</td><td>2</td><td>7</td><td>2</td><td>4</td><td>27</td><td>34</td><td>31</td><td>10</td><td>0</td><td>102</td><td>124</td><td>RH (AI 4개짜리) 1개 사용 (4포인트 모두 사용), AARH(AI4개짜리) 1개 사용 (4개 중 2 포인트 사용) - 포인트 적용함</td></tr><tr><td>29</td><td>RS-2-3</td><td>2</td><td>1</td><td>2</td><td>8</td><td>1</td><td>4</td><td>30</td><td>35</td><td>31</td><td>0</td><td>0</td><td>96</td><td>104</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Floor 1</b> <span class="muted">· 5 panels · 224 used / 264 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>30</td><td>RCP-1-1</td><td>1</td><td>1</td><td>0</td><td>3</td><td>0</td><td>0</td><td>11</td><td>8</td><td>0</td><td>4</td><td>0</td><td>23</td><td>26</td><td></td></tr><tr><td>31</td><td>RCP-1-2</td><td>1</td><td>1</td><td>2</td><td>8</td><td>0</td><td>1</td><td>29</td><td>16</td><td>4</td><td>7</td><td>2</td><td>58</td><td>68</td><td></td></tr><tr><td>32</td><td>RCP-1-3</td><td>1</td><td>1</td><td>1</td><td>5</td><td>0</td><td>0</td><td>19</td><td>8</td><td>0</td><td>4</td><td>0</td><td>31</td><td>34</td><td></td></tr><tr><td>33</td><td>RS-1-1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>1</td><td>1</td><td>14</td><td>18</td><td>3</td><td>4</td><td>0</td><td>39</td><td>48</td><td></td></tr><tr><td>34</td><td>RS-1-2</td><td>1</td><td>1</td><td>2</td><td>7</td><td>1</td><td>2</td><td>26</td><td>29</td><td>16</td><td>2</td><td>0</td><td>73</td><td>88</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Basement B1</b> <span class="muted">· 11 panels · 539 used / 650 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>35</td><td>RCP-B1-1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>1</td><td>11</td><td>7</td><td>4</td><td>4</td><td>2</td><td>28</td><td>34</td><td></td></tr><tr><td>36</td><td>RCP-B1-2</td><td>1</td><td>1</td><td>2</td><td>10</td><td>1</td><td>1</td><td>40</td><td>29</td><td>3</td><td>9</td><td>3</td><td>84</td><td>116</td><td>속판 사이즈 650*1400</td></tr><tr><td>37</td><td>RCP-B1-3</td><td>1</td><td>1</td><td>1</td><td>4</td><td>0</td><td>1</td><td>15</td><td>4</td><td>1</td><td>3</td><td>1</td><td>24</td><td>40</td><td>속판 사이즈 600*1100</td></tr><tr><td>38</td><td>RCP-B1-4</td><td>1</td><td>1</td><td>1</td><td>4</td><td>1</td><td>0</td><td>14</td><td>18</td><td>0</td><td>3</td><td>0</td><td>35</td><td>44</td><td></td></tr><tr><td>39</td><td>RCP-B1-5</td><td>1</td><td>1</td><td>0</td><td>4</td><td>0</td><td>0</td><td>14</td><td>8</td><td>0</td><td>4</td><td>0</td><td>26</td><td>28</td><td></td></tr><tr><td>40</td><td>CP-B1-2</td><td>1</td><td>1</td><td>2</td><td>9</td><td>0</td><td>0</td><td>34</td><td>6</td><td>0</td><td>9</td><td>0</td><td>49</td><td>58</td><td></td></tr><tr><td>41</td><td>CP-B1-3</td><td>1</td><td>1</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td>42</td><td>CP-B1-4</td><td>1</td><td>1</td><td>2</td><td>12</td><td>0</td><td>0</td><td>48</td><td>8</td><td>0</td><td>12</td><td>0</td><td>68</td><td>80</td><td></td></tr><tr><td>43</td><td>RS-B1-1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>3</td><td>12</td><td>16</td><td>23</td><td>0</td><td>0</td><td>51</td><td>56</td><td></td></tr><tr><td>44</td><td>RS-B1-2</td><td>2</td><td>1</td><td>2</td><td>10</td><td>3</td><td>2</td><td>40</td><td>52</td><td>10</td><td>12</td><td>0</td><td>114</td><td>122</td><td>RH 제품 2개 있음 풀 사용 적용 속판 사이즈 600*1800</td></tr><tr><td>45</td><td>RS-B1-3</td><td>1</td><td>1</td><td>1</td><td>5</td><td>2</td><td>1</td><td>18</td><td>19</td><td>7</td><td>16</td><td>0</td><td>60</td><td>72</td><td>RH 제품 2개 있음 풀 사용 적용</td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Basement B2</b> <span class="muted">· 14 panels · 835 used / 980 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>47</td><td>RCP-B2-1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>0</td><td>1</td><td>16</td><td>5</td><td>1</td><td>5</td><td>2</td><td>29</td><td>40</td><td></td></tr><tr><td>48</td><td>RCP-B2-2</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>1</td><td>9</td><td>12</td><td>4</td><td>2</td><td>4</td><td>31</td><td>52</td><td></td></tr><tr><td>49</td><td>RCP-B2-3</td><td>1</td><td>1</td><td>0</td><td>2</td><td>1</td><td>1</td><td>5</td><td>6</td><td>2</td><td>1</td><td>2</td><td>16</td><td>26</td><td></td></tr><tr><td>50</td><td>RCP-B2-4</td><td>1</td><td>1</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td>51</td><td>CP-B2-3</td><td>1</td><td>1</td><td>1</td><td>6</td><td>0</td><td>0</td><td>22</td><td>4</td><td>0</td><td>2</td><td>0</td><td>28</td><td>36</td><td></td></tr><tr><td>52</td><td>CP-B2-4</td><td>1</td><td>1</td><td>1</td><td>3</td><td>4</td><td>0</td><td>12</td><td>36</td><td>0</td><td>6</td><td>0</td><td>54</td><td>72</td><td></td></tr><tr><td>53</td><td>RS-B2-1</td><td>1</td><td>1</td><td>2</td><td>6</td><td>4</td><td>1</td><td>22</td><td>37</td><td>4</td><td>9</td><td>4</td><td>76</td><td>92</td><td></td></tr><tr><td>54</td><td>RS-B2-2</td><td>1</td><td>1</td><td>2</td><td>7</td><td>3</td><td>1</td><td>28</td><td>34</td><td>4</td><td>11</td><td>1</td><td>78</td><td>90</td><td></td></tr><tr><td>55</td><td>RS-B2-3</td><td>1</td><td>1</td><td>1</td><td>4</td><td>3</td><td>1</td><td>15</td><td>40</td><td>4</td><td>0</td><td>0</td><td>59</td><td>60</td><td></td></tr><tr><td>56</td><td>RS-B2-4B</td><td>2</td><td>1</td><td>2</td><td>4</td><td>11</td><td>1</td><td>15</td><td>78</td><td>8</td><td>23</td><td>0</td><td>124</td><td>128</td><td></td></tr><tr><td>57</td><td>RS-B2-4A</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>8</td><td>23</td><td>0</td><td>31</td><td>32</td><td></td></tr><tr><td>58</td><td>RS-B2-5</td><td>2</td><td>1</td><td>2</td><td>3</td><td>6</td><td>5</td><td>9</td><td>51</td><td>33</td><td>4</td><td>0</td><td>97</td><td>120</td><td></td></tr><tr><td>59</td><td>RS-B2-6</td><td>1</td><td>1</td><td>2</td><td>4</td><td>4</td><td>3</td><td>13</td><td>42</td><td>24</td><td>4</td><td>0</td><td>83</td><td>92</td><td></td></tr><tr><td>60</td><td>RS-B2-7</td><td>2</td><td>1</td><td>3</td><td>11</td><td>4</td><td>2</td><td>42</td><td>75</td><td>12</td><td>0</td><td>0</td><td>129</td><td>140</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Basement B3</b> <span class="muted">· 5 panels · 275 used / 344 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>61</td><td>RCP-B3-1</td><td>1</td><td>1</td><td>1</td><td>4</td><td>0</td><td>1</td><td>15</td><td>4</td><td>2</td><td>5</td><td>2</td><td>28</td><td>40</td><td></td></tr><tr><td>62</td><td>RCP-B3-2</td><td>1</td><td>1</td><td>0</td><td>2</td><td>1</td><td>1</td><td>5</td><td>6</td><td>2</td><td>1</td><td>2</td><td>16</td><td>26</td><td></td></tr><tr><td>63</td><td>RCP-B3-3</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>1</td><td>9</td><td>12</td><td>4</td><td>2</td><td>4</td><td>31</td><td>52</td><td></td></tr><tr><td>64</td><td>CP-B3-2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>1</td><td>3</td><td>12</td><td>8</td><td>9</td><td>1</td><td>33</td><td>54</td><td></td></tr><tr><td>65</td><td>RS-B3-1</td><td>2</td><td>1</td><td>4</td><td>6</td><td>14</td><td>2</td><td>23</td><td>126</td><td>12</td><td>6</td><td>0</td><td>167</td><td>172</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Heat source (R-1)</b> <span class="muted">· 1 panels · 13 used / 24 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>4</td><td>CP-R-1</td><td>1</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td><td>5</td><td>6</td><td>0</td><td>1</td><td>1</td><td>13</td><td>24</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>System / central</b> <span class="muted">· 1 panels · 25 used / 32 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>46</td><td>시스템 제어반</td><td>6</td><td>16</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>25</td><td>0</td><td>0</td><td>0</td><td>25</td><td>32</td><td></td></tr></tbody></table>
+    </details>
+    <details open>
+      <summary><b>Plant / misc</b> <span class="muted">· 2 panels · 24 used / 34 cap</span></summary>
+      <table class="grid"><thead><tr><th>No</th><th>Panel</th><th>ROOM</th><th>CON</th><th>EXP</th><th>4F4xP</th><th>8xP</th><th>8PxP</th><th>DO</th><th>DI</th><th>BTOT</th><th>AI</th><th>AO</th><th>Used</th><th>Cap</th><th>Note</th></tr></thead><tbody><tr><td>66</td><td>P-1</td><td>1</td><td>1</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td>67</td><td>EVU-6</td><td>1</td><td>1</td><td>0</td><td>3</td><td>1</td><td>0</td><td>9</td><td>7</td><td>0</td><td>7</td><td>1</td><td>24</td><td>34</td><td></td></tr></tbody></table>
+    </details>
+
+  <div class="foot">Red5-DHCP · 26.07.29 panel schedule (판넬별 포인트 정리 · 델타 컨트롤러 및 모듈 포함) · totals reconcile to the schedule TOTAL row
+    (67 panels · 904 modules · 4467 used · 5240 capacity).</div>
+</div></body></html>

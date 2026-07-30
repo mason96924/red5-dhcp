@@ -20,10 +20,14 @@ Each dataset comes in three forms:
 | `red5-dhcp_controller-cutover-plan` | savic-net FX2 → new DDC replacement plan (Apr–May shoulder-season phasing) | 84 controllers · 7 phases; HTML is print-to-PDF |
 | `red5-dhcp_commissioning` | Per-controller point-to-point checklists (tick-box: wired/terminated/P2P/func) | 84 controllers · 1160 points; XLSX = index + sheet/controller, HTML = clickable + 1 print page/controller |
 | `red5-dhcp_control-logic` | Per-controller Sequence of Operations (equipment-class SOO referencing actual tags) | 84 controllers; also `docs/control_logic.md`; XLSX = index + SOO+points per controller |
+| `Red5-DHCP-Panels-IO` | Physical panel schedule (Delta controllers & modules) from the 26.07.29 Excel, reconciled against the functional point list | 67 panels · 904 controllers+modules · 4467 used / 5240 cap; overlap 1160 / new-TBD 3307; XLSX = `Panel schedule` + `Summary` |
 
 The first three are generated from the device/point model in
 [`../generate_io_list.py`](../generate_io_list.py); the switchboard schedule is
-transcribed from the as-built electrical drawings.
+transcribed from the as-built electrical drawings. `Red5-DHCP-Panels-IO` is
+transcribed from `판넬별 포인트 정리(델타 컨트롤러 및 모듈 포함)_26.07.29.xlsx` (the
+authoritative physical panel/module schedule) and reconciled by count against the
+functional list — it carries per-panel type counts (DO/DI/BTOT/AI/AO), not individual tags.
 
 ## Regenerate
 
