@@ -1097,6 +1097,20 @@ def build_workbook():
           ws.cell(row=rr, column=c).border = BORDER
           ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
   set_widths(ws, [14, 26, 8, 46, 10, 10, 46])
+  ws.append([])
+  cav_r = ws.max_row + 1
+  ws.cell(row=cav_r, column=1, value="How to read this").font = Font(bold=True, size=10)
+  ws.cell(row=cav_r, column=2, value=(
+      "The 'Matched physical panels' column is a BEST-EFFORT bridge: a functional device (e.g. AC-17) is "
+      "linked to a physical panel only when that panel's 'equipment served' column names the same tag. "
+      "So coverage is high for the air-side floor LCPs (AHUs/OAUs) and partial elsewhere. Rows at 0% "
+      "coverage (BMS-CENTRAL, LCP-DHC, LCP-CT, LCP-LTG) hold plant / DHC / metering / lighting points that "
+      "are NOT equipment-tagged in the physical schedule — use the drawing location + judgement note for "
+      "those. Caveat: matching is by tag string only, so a repeated fan/unit number can produce a "
+      "cross-floor coincidence (e.g. a 2F SF tag also appearing on a basement fan panel) — verify against "
+      "the drawings before relying on a single-panel assignment."))
+  ws.cell(row=cav_r, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+  ws.row_dimensions[cav_r].height = 96
 
   # ---- Legend ----
   ws = wb.create_sheet("Legend")
