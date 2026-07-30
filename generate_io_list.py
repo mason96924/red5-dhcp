@@ -808,7 +808,7 @@ def build_workbook():
     ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
     ("BMS platform", "Azbil savic-net FX2, S/W 機能仕様 dated 2015/04/09 — confirmed from the 144-page Azbil 納入仕様書 (software function spec, not an equipment list)"),
     ("", ""),
-    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Points-by-Floor · LCP-to-Physical · Legend"),
+    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Points-by-Floor · LCP-to-Physical · Delta-Controllers · Legend"),
     ("Basis", "Azbil 完成図 savic-net graphics (熱源設備 全体/低層/高層/36,37F/冷却塔/ホットウェル/DHC受入, graphs 1000-1100; PMAC-PAC & 照明一覧), air-side summary graphs (空調関連/客室等), M-* CAD equipment schedules, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
     ("Note", "Device tags/counts read directly from the savic-net graphics. Per-unit packaged (PCU/PAC/PMAC) and per-floor lighting lists are modelled as representative supervised groups — expand from 照明一覧1/2 + PMAC/PAC一覧 for the full point count."),
   ]
@@ -1111,6 +1111,105 @@ def build_workbook():
       "the drawings before relying on a single-panel assignment."))
   ws.cell(row=cav_r, column=2).alignment = Alignment(wrap_text=True, vertical="top")
   ws.row_dimensions[cav_r].height = 96
+
+  # ---- Delta-Controllers (physical controller/module tally + 4,467 points by panel) ----
+  ws = wb.create_sheet("Delta-Controllers")
+  ws["A1"] = "Delta controllers & I/O modules — type tally + all 4,467 points grouped by panel"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = ("The physical schedule lists, per panel, the Delta 'controller & I/O module' fleet that "
+              "carries its points. Below: the type tally (unit counts) and every panel's controller "
+              "composition with its used-point total, so the full 4,467 points roll up to the 904 units.")
+  ws["A2"].font = SUB_FONT
+  ws.append([])
+  MOD_LABELS = ["Red5-PLUS-ROOM", "CON-T1L", "Red5-EXPAND-04",
+                "Red5-MODULE-4F4xP", "Red5-MODULE-8xP", "Red5-MODULE-8PxP"]
+  MOD_ROLE = ["Room controller (BACnet, onboard I/O)", "Network/BACnet controller",
+              "Bus expander (hosts I/O modules)", "I/O module", "I/O module", "I/O module"]
+  if PHYS_SCHED:
+      mt = PHYS_SCHED["modTotals"]
+      total_mod = sum(mt)
+      used_tot = PHYS_SCHED["usedTotal"]
+      cap_tot = PHYS_SCHED["capTotal"]
+      # --- type tally ---
+      ws.append(["Controller / module type", "Role", "Units", "Share of fleet"])
+      t_hrow = ws.max_row
+      style_header(ws, 4, row=t_hrow)
+      for i, lab in enumerate(MOD_LABELS):
+          share = f"{(100 * mt[i] / total_mod):.1f}%" if total_mod else "0%"
+          ws.append([lab, MOD_ROLE[i], mt[i], share])
+      ws.append(["TOTAL", "", total_mod, "100%"])
+      for c in range(1, 5):
+          ws.cell(row=ws.max_row, column=c).font = Font(bold=True)
+          ws.cell(row=ws.max_row, column=c).fill = PatternFill("solid", fgColor="D6DCE4")
+      for rr in range(t_hrow, ws.max_row + 1):
+          for c in range(1, 5):
+              ws.cell(row=rr, column=c).border = BORDER
+              ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+      # --- role rollup ---
+      controllers_n = mt[0] + mt[1]
+      expanders_n = mt[2]
+      iomods_n = mt[3] + mt[4] + mt[5]
+      ws.append([])
+      ws.append(["Rollup", "", "", ""])
+      roll_h = ws.max_row
+      ws.cell(row=roll_h, column=1).font = Font(bold=True, size=11)
+      for lab, val in [
+          ("Controllers (ROOM + CON-T1L)", controllers_n),
+          ("Bus expanders (EXPAND-04)", expanders_n),
+          ("I/O modules (4F4xP + 8xP + 8PxP)", iomods_n),
+          ("Total controllers + modules", total_mod),
+          ("Used I/O points", used_tot),
+          ("Installed point capacity", cap_tot),
+          ("Fleet point utilisation", f"{(100 * used_tot / cap_tot):.0f}%" if cap_tot else "—"),
+      ]:
+          ws.append([lab, val])
+          ws.cell(row=ws.max_row, column=1).font = Font(bold=True, size=10)
+      # --- per-panel controller composition + points ---
+      ws.append([])
+      ws.append(["Per-panel controller composition (all 4,467 points grouped to each panel's fleet)"])
+      ws.cell(row=ws.max_row, column=1).font = Font(bold=True, size=11)
+      p_hrow = ws.max_row + 1
+      pcols = ["#", "Panel", "Floor", "ROOM", "CON-T1L", "EXPAND-04",
+               "4F4xP", "8xP", "8PxP", "Modules", "Used pts", "Cap"]
+      ws.append(pcols)
+      style_header(ws, len(pcols), row=p_hrow)
+      AREA_ORD = ["Penthouse (PH)", "Floor 31", "Floor 21", "Floor 10", "Floor 4", "Floor 3",
+                  "Floor 2", "Floor 1", "Basement B1", "Basement B2", "Basement B3"]
+      by_area2 = defaultdict(list)
+      for _p in PHYS_SCHED["panels"]:
+          by_area2[_p["area"]].append(_p)
+      i = 0
+      col_mod = [0, 0, 0, 0, 0, 0]
+      for a in AREA_ORD:
+          for _p in by_area2.get(a, []):
+              i += 1
+              m = _p["mods"]
+              for k in range(6):
+                  col_mod[k] += m[k]
+              ws.append([i, _p["name"], _p.get("floor", ""), m[0], m[1], m[2], m[3], m[4], m[5],
+                         sum(m), _p["usedTot"], _p["capTot"]])
+      ws.append(["", "TOTAL", "", col_mod[0], col_mod[1], col_mod[2], col_mod[3], col_mod[4], col_mod[5],
+                 total_mod, used_tot, cap_tot])
+      for c in range(1, len(pcols) + 1):
+          ws.cell(row=ws.max_row, column=c).font = Font(bold=True)
+      for rr in range(p_hrow, ws.max_row + 1):
+          for c in range(1, len(pcols) + 1):
+              ws.cell(row=rr, column=c).border = BORDER
+              ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+      set_widths(ws, [5, 16, 10, 8, 9, 11, 8, 7, 7, 9, 9, 7])
+      ws.append([])
+      note_r2 = ws.max_row + 1
+      ws.cell(row=note_r2, column=1, value="Note").font = Font(bold=True, size=10)
+      ws.cell(row=note_r2, column=2, value=(
+          "The physical schedule tallies points at the panel level and controllers/modules by type; it "
+          "does not assign each point to a specific module. Points are therefore grouped to the panel's "
+          "whole controller fleet (Used pts vs installed capacity), and the type tally above gives the "
+          "controller-type counts. Naming: Red5-PLUS-ROOM & CON-T1L are controllers; Red5-EXPAND-04 is a "
+          "bus expander; Red5-MODULE-4F4xP/8xP/8PxP are I/O point modules."))
+      ws.cell(row=note_r2, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+      ws.row_dimensions[note_r2].height = 70
+  else:
+      ws.append(["panels_schedule.json not found — controller tally unavailable"])
 
   # ---- Legend ----
   ws = wb.create_sheet("Legend")
