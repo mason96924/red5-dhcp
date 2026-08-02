@@ -52,6 +52,9 @@ LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-2,CP-8
 LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-04,CP-8-3,CP-8-3.KW,AI,Heat source,kW,Power,
 LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-1,HP-4-1.KW,AI,Heat source,kW,Power,
 LCP-3637,"36/37F local heat-source panel (36,37F系統)",DDC-3637-05,HP-4-2,HP-4-2.KW,AI,Heat source,kW,Power,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
 LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-8,EVU-8.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
 LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-9,EVU-9.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
 LCP-4F,4F–5F air-side panel,DDC-4F-03,EVU-10,EVU-10.SPD,AO,Air side,%,Supply fan VFD (INV) speed,INV schedule; demand vent
@@ -61,3 +64,19 @@ LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-01,PAC-2,PAC-2.SS,BO,Package
 LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-3,PAC-3.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
 LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-4,PAC-4.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
 LCP-PKG,Packaged-unit & refrigeration panel,DDC-PKG-02,PAC-5,PAC-5.SS,BO,Packaged units,-,Start/Stop command,24/7 (electrical room)
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-1,MP-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-2,MP-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-3,MP-3.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,MP-4,MP-4.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-1,P-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-2,P-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-3,P-3.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-4,P-4.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-5,P-5.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,P-6,P-6.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-1,BL-1-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-2,BL-1-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-1,BL-2-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-2,BL-2-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-F-1,BL-F-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-12,BL-F-2,BL-F-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,

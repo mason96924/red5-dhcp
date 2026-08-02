@@ -1,6 +1,6 @@
 # Red5-DHCP — control logic / Sequence of Operations
 
-*Generated 2026-07-27 · 84 controllers · 11 panels · 1160 I/O points.*
+*Generated 2026-08-03 · 109 controllers · 15 panels · 1383 I/O points.*
 
 Control strategy is consistent with the implemented engine in [`backend/control.py`](../backend/control.py) and `backend/sim.py`.
 
@@ -748,7 +748,7 @@ Control strategy is consistent with the implemented engine in [`backend/control.
 
 ### DDC-2F-02
 **Equipment:** AC-11, AC-12, AC-13  
-**I/O:** 36 pts (AI 9 · AO 12 · BI 12 · BO 3)
+**I/O:** 39 pts (AI 12 · AO 12 · BI 12 · BO 3)
 
 - **Purpose:**
     - Air-handling units AC-11, AC-12, AC-13: maintain supply-air temperature and space conditions on the occupancy schedule.
@@ -1007,3 +1007,293 @@ Control strategy is consistent with the implemented engine in [`backend/control.
     - Common-area & facade lighting groups on time-program / astronomical clock.
 - **Control:**
     - On/Off `*.CMD` by schedule (and photocell/astro for facade); status `*.ST` proof.
+
+## LCP-DHW — Domestic hot-water (給湯) plant panel
+*B2F / PH plant · 2 controllers*
+
+### DDC-DHW-01
+**Equipment:** DHW-1, DHW-2, DHW-3  
+**I/O:** 21 pts (AI 9 · AO 3 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Domestic-hot-water plant: hold stored/delivered DHW temperature per vertical zone at minimum steam use, with Legionella protection.
+- **Control:**
+    - Modulate the steam charging valve `*.STG-CV` to hold the storage setpoint `*.STG-T` (≥60°C store / ≥55°C delivery); recirc pump `*.PMP-SS` on schedule with duty/standby.
+    - Meter storage steam `*.STM-M`; night/low-demand setback with a periodic thermal-disinfection cycle.
+- **Safeties & monitoring:**
+    - High-temp / scald and low-delivery-temp alarms (`*.SUP-T`); pump fault `*.PMP-TRIP`; low-storage-temp Legionella advisory.
+
+### DDC-DHW-02
+**Equipment:** DHW-4  
+**I/O:** 7 pts (AI 3 · AO 1 · BI 2 · BO 1)
+
+- **Purpose:**
+    - Domestic-hot-water plant: hold stored/delivered DHW temperature per vertical zone at minimum steam use, with Legionella protection.
+- **Control:**
+    - Modulate the steam charging valve `*.STG-CV` to hold the storage setpoint `*.STG-T` (≥60°C store / ≥55°C delivery); recirc pump `*.PMP-SS` on schedule with duty/standby.
+    - Meter storage steam `*.STM-M`; night/low-demand setback with a periodic thermal-disinfection cycle.
+- **Safeties & monitoring:**
+    - High-temp / scald and low-delivery-temp alarms (`*.SUP-T`); pump fault `*.PMP-TRIP`; low-storage-temp Legionella advisory.
+
+## LCP-SAN — Plumbing / sanitary panel (上水・中水・排水)
+*B3F–B2F plant · 12 controllers*
+
+### DDC-SAN-01
+**Equipment:** MP-1, MP-2, MP-3  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+    - Lead/lag/standby across 3 booster pumps (MP-1, MP-2, MP-3): stage on demand, rotate lead on equal run-hours, prove each start before staging the next.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-02
+**Equipment:** MP-4, P-1, P-2  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+    - Lead/lag/standby across 3 booster pumps (MP-4, P-1, P-2): stage on demand, rotate lead on equal run-hours, prove each start before staging the next.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-03
+**Equipment:** P-3, P-4, P-5  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+    - Lead/lag/standby across 3 booster pumps (P-3, P-4, P-5): stage on demand, rotate lead on equal run-hours, prove each start before staging the next.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-04
+**Equipment:** P-6, RCVT-1, ELVT-1  
+**I/O:** 9 pts (AI 2 · AO 0 · BI 6 · BO 1)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-05
+**Equipment:** REUSET-1, FIRET-1, DP-1  
+**I/O:** 8 pts (AI 2 · AO 0 · BI 6 · BO 0)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-06
+**Equipment:** DP-2, DP-3, DP-4  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 9 · BO 0)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-07
+**Equipment:** DP-5, DP-6, DP-7  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 9 · BO 0)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-08
+**Equipment:** DP-8, DP-9, DP-10  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 9 · BO 0)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-09
+**Equipment:** DP-11, DP-12, DP-13  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 9 · BO 0)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-10
+**Equipment:** DP-14, BL-1-1, BL-1-2  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 7 · BO 2)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-11
+**Equipment:** BL-2-1, BL-2-2, BL-F-1  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+### DDC-SAN-12
+**Equipment:** BL-F-2  
+**I/O:** 3 pts (AI 0 · AO 0 · BI 2 · BO 1)
+
+- **Purpose:**
+    - Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and clear drainage/sewage sumps.
+- **Control:**
+    - Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); sump & sewage pumps run on float level with BMS run/high-level supervision.
+    - Aeration blowers cycle on DO/timer for the wastewater-treatment tanks.
+- **Safeties & monitoring:**
+    - Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; fire-reserve tank low-level is statutory; pump fault `*.TRIP`.
+
+## LCP-FILT — Recreational-water filtration panel (ろ過装置)
+*Distributed (2F–5F) · 3 controllers*
+
+### DDC-FILT-01
+**Equipment:** FILT-BATHM, FILT-BATHW, FILT-SAUNA  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Recreational-water (bath / sauna / pool / waterfall / fountain / rainwater) circulation & filtration.
+- **Control:**
+    - Circulation pump `*.SS` on the daily schedule; periodic backwash; prove `*.RUN`, alarm `*.TRIP`; maintain turnover/turbidity per venue.
+
+### DDC-FILT-02
+**Equipment:** FILT-SAUNAC, FILT-OTAKI, FILT-UNKAI  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Recreational-water (bath / sauna / pool / waterfall / fountain / rainwater) circulation & filtration.
+- **Control:**
+    - Circulation pump `*.SS` on the daily schedule; periodic backwash; prove `*.RUN`, alarm `*.TRIP`; maintain turnover/turbidity per venue.
+
+### DDC-FILT-03
+**Equipment:** FILT-FOUNT, FILT-RAIN  
+**I/O:** 6 pts (AI 0 · AO 0 · BI 4 · BO 2)
+
+- **Purpose:**
+    - Recreational-water (bath / sauna / pool / waterfall / fountain / rainwater) circulation & filtration.
+- **Control:**
+    - Circulation pump `*.SS` on the daily schedule; periodic backwash; prove `*.RUN`, alarm `*.TRIP`; maintain turnover/turbidity per venue.
+
+## LCP-SMK — Smoke-control / 排煙 panel
+*Distributed / 防災 · 8 controllers*
+
+### DDC-SMK-01
+**Equipment:** SMF-1, SMF-2, SMF-3  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-02
+**Equipment:** SMF-4, SMF-5, SMF-6  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-03
+**Equipment:** SMF-7, SMF-8, SMF-9  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-04
+**Equipment:** SMF-10, SMF-11, SMF-12  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-05
+**Equipment:** SMF-13, SMF-14, SMF-15  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-06
+**Equipment:** SMF-16, SMF-17, SMF-18  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-07
+**Equipment:** SMF-19, SMF-20, SMF-21  
+**I/O:** 9 pts (AI 0 · AO 0 · BI 6 · BO 3)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.
+
+### DDC-SMK-08
+**Equipment:** SMF-22, SMK-FIRE  
+**I/O:** 4 pts (AI 0 · AO 0 · BI 3 · BO 1)
+
+- **Purpose:**
+    - Smoke exhaust (排煙): clear smoke from the fire zone on alarm.
+- **Life-safety control:**
+    - Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply AHUs/dampers interlock shut.
+    - BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; weekly/periodic run test with runtime logging.

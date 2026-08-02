@@ -813,7 +813,8 @@ LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.RAT,AI,Air side,°C,Return air te
 LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
 LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
 LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.FLT,BI,Air side,-,Filter dirty (DP),
-LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
+LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.CO2,AI,Air side,ppm,Space CO2 concentration,Banquet DCV: resets OA damper / fan to hold ≤1000 ppm (自動制御 A-11)
 LCP-2F,2F air-side panel,DDC-2F-02,AC-11,AC-11.FRZ,BI,Air side,-,Freeze protection stat,
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.RUN,BI,Air side,-,Supply fan run status,
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.TRIP,BI,Air side,-,Supply fan fault,
@@ -825,7 +826,8 @@ LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.RAT,AI,Air side,°C,Return air te
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.FLT,BI,Air side,-,Filter dirty (DP),
-LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
+LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.CO2,AI,Air side,ppm,Space CO2 concentration,Banquet DCV: resets OA damper / fan to hold ≤1000 ppm (自動制御 A-11)
 LCP-2F,2F air-side panel,DDC-2F-02,AC-12,AC-12.FRZ,BI,Air side,-,Freeze protection stat,
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.RUN,BI,Air side,-,Supply fan run status,
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.TRIP,BI,Air side,-,Supply fan fault,
@@ -837,7 +839,8 @@ LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.RAT,AI,Air side,°C,Return air te
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.CCV,AO,Air side,%,Cooling coil (CHW) valve,PID to SAT; zero-energy band
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.HCV,AO,Air side,%,Heating coil (steam) valve,Season enable; deadband vs CCV
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.FLT,BI,Air side,-,Filter dirty (DP),
-LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.OAD,AO,Air side,%,Outdoor-air damper,
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.OAD,AO,Air side,%,Outdoor-air damper,CO2 demand-controlled reset (DCV)
+LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.CO2,AI,Air side,ppm,Space CO2 concentration,Banquet DCV: resets OA damper / fan to hold ≤1000 ppm (自動制御 A-11)
 LCP-2F,2F air-side panel,DDC-2F-02,AC-13,AC-13.FRZ,BI,Air side,-,Freeze protection stat,
 LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.RUN,BI,Air side,-,Supply fan run status,
 LCP-2F,2F air-side panel,DDC-2F-03,EVU-4,EVU-4.TRIP,BI,Air side,-,Supply fan fault,
@@ -1159,3 +1162,223 @@ LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.CMD
 LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-SOFFIT,LTG-SOFFIT.ST,BI,Lighting,-,Group status,
 LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.CMD,BO,Lighting,-,On/Off command,Time/calendar + astronomical (sunset) schedule
 LCP-LTG,Common-area & facade lighting panel,DDC-LTG-03,LTG-TENANT,LTG-TENANT.ST,BI,Lighting,-,Group status,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.STG-T,AI,Domestic hot water,°C,Storage-tank temperature,ST-1-1…4 storage + HP-1 supply pump; hold ≥60°C store / ≥55°C delivery (Legionella)
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.STG-CV,AO,Domestic hot water,%,Steam charging valve,Modulate to storage setpoint
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.SUP-T,AI,Domestic hot water,°C,DHW supply (delivery) temperature,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.STM-M,AI,Domestic hot water,m³,Storage steam-flow meter (貯湯槽蒸気流量),
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.PMP-RUN,BI,Domestic hot water,-,Supply/recirc pump run status,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.PMP-TRIP,BI,Domestic hot water,-,Supply/recirc pump fault,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-1,DHW-1.PMP-SS,BO,Domestic hot water,-,Supply/recirc pump start/stop,Duty/standby; recirc schedule
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.STG-T,AI,Domestic hot water,°C,Storage-tank temperature,ST-2-1/2 storage + HP-2 supply pump; hold ≥60°C store / ≥55°C delivery (Legionella)
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.STG-CV,AO,Domestic hot water,%,Steam charging valve,Modulate to storage setpoint
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.SUP-T,AI,Domestic hot water,°C,DHW supply (delivery) temperature,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.STM-M,AI,Domestic hot water,m³,Storage steam-flow meter (貯湯槽蒸気流量),
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.PMP-RUN,BI,Domestic hot water,-,Supply/recirc pump run status,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.PMP-TRIP,BI,Domestic hot water,-,Supply/recirc pump fault,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-2,DHW-2.PMP-SS,BO,Domestic hot water,-,Supply/recirc pump start/stop,Duty/standby; recirc schedule
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.STG-T,AI,Domestic hot water,°C,Storage-tank temperature,ST-3-1/2 storage + HP-3 supply pump; hold ≥60°C store / ≥55°C delivery (Legionella)
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.STG-CV,AO,Domestic hot water,%,Steam charging valve,Modulate to storage setpoint
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.SUP-T,AI,Domestic hot water,°C,DHW supply (delivery) temperature,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.STM-M,AI,Domestic hot water,m³,Storage steam-flow meter (貯湯槽蒸気流量),
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.PMP-RUN,BI,Domestic hot water,-,Supply/recirc pump run status,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.PMP-TRIP,BI,Domestic hot water,-,Supply/recirc pump fault,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-01,DHW-3,DHW-3.PMP-SS,BO,Domestic hot water,-,Supply/recirc pump start/stop,Duty/standby; recirc schedule
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.STG-T,AI,Domestic hot water,°C,Storage-tank temperature,ST-4-1/2 storage + HP-4 supply pump; hold ≥60°C store / ≥55°C delivery (Legionella)
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.STG-CV,AO,Domestic hot water,%,Steam charging valve,Modulate to storage setpoint
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.SUP-T,AI,Domestic hot water,°C,DHW supply (delivery) temperature,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.STM-M,AI,Domestic hot water,m³,Storage steam-flow meter (貯湯槽蒸気流量),
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.PMP-RUN,BI,Domestic hot water,-,Supply/recirc pump run status,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.PMP-TRIP,BI,Domestic hot water,-,Supply/recirc pump fault,
+LCP-DHW,Domestic hot-water (給湯) plant panel,DDC-DHW-02,DHW-4,DHW-4.PMP-SS,BO,Domestic hot water,-,Supply/recirc pump start/stop,Duty/standby; recirc schedule
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-1,MP-1.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-1,MP-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-1,MP-1.SS,BO,Plumbing/Sanitary,-,Start/Stop command,上水; 高置水槽揚水
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-2,MP-2.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-2,MP-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-2,MP-2.SS,BO,Plumbing/Sanitary,-,Start/Stop command,上水; 高置水槽揚水
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-3,MP-3.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-3,MP-3.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-01,MP-3,MP-3.SS,BO,Plumbing/Sanitary,-,Start/Stop command,中水加圧
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,MP-4,MP-4.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,MP-4,MP-4.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,MP-4,MP-4.SS,BO,Plumbing/Sanitary,-,Start/Stop command,中水加圧
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-1,P-1.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-1,P-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-1,P-1.SS,BO,Plumbing/Sanitary,-,Start/Stop command,上水加圧装置
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-2,P-2.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-2,P-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-02,P-2,P-2.SS,BO,Plumbing/Sanitary,-,Start/Stop command,上水加圧装置
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-3,P-3.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-3,P-3.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-3,P-3.SS,BO,Plumbing/Sanitary,-,Start/Stop command,上水加圧装置
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-4,P-4.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-4,P-4.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-4,P-4.SS,BO,Plumbing/Sanitary,-,Start/Stop command,低層上水 P-1 群
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-5,P-5.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-5,P-5.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-03,P-5,P-5.SS,BO,Plumbing/Sanitary,-,Start/Stop command,高層上水
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,P-6,P-6.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,P-6,P-6.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,P-6,P-6.SS,BO,Plumbing/Sanitary,-,Start/Stop command,高層上水
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,RCVT-1,RCVT-1.LVL,AI,Plumbing/Sanitary,%,Potable receiving tank (上水受水槽) water level,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,RCVT-1,RCVT-1.HI,BI,Plumbing/Sanitary,-,Potable receiving tank (上水受水槽) high-level alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,RCVT-1,RCVT-1.LO,BI,Plumbing/Sanitary,-,Potable receiving tank (上水受水槽) low-level / dry-run alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,ELVT-1,ELVT-1.LVL,AI,Plumbing/Sanitary,%,Potable elevated tank (高置水槽) water level,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,ELVT-1,ELVT-1.HI,BI,Plumbing/Sanitary,-,Potable elevated tank (高置水槽) high-level alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-04,ELVT-1,ELVT-1.LO,BI,Plumbing/Sanitary,-,Potable elevated tank (高置水槽) low-level / dry-run alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,REUSET-1,REUSET-1.LVL,AI,Plumbing/Sanitary,%,Reclaimed receiving tank (中水受水槽) water level,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,REUSET-1,REUSET-1.HI,BI,Plumbing/Sanitary,-,Reclaimed receiving tank (中水受水槽) high-level alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,REUSET-1,REUSET-1.LO,BI,Plumbing/Sanitary,-,Reclaimed receiving tank (中水受水槽) low-level / dry-run alarm,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,FIRET-1,FIRET-1.LVL,AI,Plumbing/Sanitary,%,Fire-reserve tank (消火水槽) water level,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,FIRET-1,FIRET-1.LO,BI,Plumbing/Sanitary,-,Fire-reserve tank (消火水槽) low-level alarm,Fire-reserve; statutory
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,DP-1,DP-1.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,DP-1,DP-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-05,DP-1,DP-1.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-2,DP-2.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-2,DP-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-2,DP-2.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-3,DP-3.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-3,DP-3.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-3,DP-3.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-4,DP-4.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-4,DP-4.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-06,DP-4,DP-4.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-5,DP-5.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-5,DP-5.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-5,DP-5.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-6,DP-6.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-6,DP-6.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-6,DP-6.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-7,DP-7.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-7,DP-7.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-07,DP-7,DP-7.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-8,DP-8.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-8,DP-8.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-8,DP-8.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-9,DP-9.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-9,DP-9.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-9,DP-9.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-10,DP-10.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-10,DP-10.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-08,DP-10,DP-10.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-11,DP-11.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-11,DP-11.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-11,DP-11.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-12,DP-12.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-12,DP-12.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-12,DP-12.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-13,DP-13.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-13,DP-13.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-09,DP-13,DP-13.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,DP-14,DP-14.RUN,BI,Plumbing/Sanitary,-,Pump run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,DP-14,DP-14.TRIP,BI,Plumbing/Sanitary,-,Pump fault,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,DP-14,DP-14.HLV,BI,Plumbing/Sanitary,-,High-water-level alarm,Float; flooding alarm
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-1,BL-1-1.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-1,BL-1-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-1,BL-1-1.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-2,BL-1-2.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-2,BL-1-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-10,BL-1-2,BL-1-2.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-1,BL-2-1.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-1,BL-2-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-1,BL-2-1.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-2,BL-2-2.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-2,BL-2-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-2-2,BL-2-2.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-F-1,BL-F-1.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-F-1,BL-F-1.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-11,BL-F-1,BL-F-1.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-12,BL-F-2,BL-F-2.RUN,BI,Plumbing/Sanitary,-,Run status,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-12,BL-F-2,BL-F-2.TRIP,BI,Plumbing/Sanitary,-,Pump fault / breaker trip,
+LCP-SAN,Plumbing / sanitary panel (上水・中水・排水),DDC-SAN-12,BL-F-2,BL-F-2.SS,BO,Plumbing/Sanitary,-,Start/Stop command,ばっ気; DO/timer control
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHM,FILT-BATHM.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHM,FILT-BATHM.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHM,FILT-BATHM.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHW,FILT-BATHW.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHW,FILT-BATHW.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-BATHW,FILT-BATHW.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-SAUNA,FILT-SAUNA.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-SAUNA,FILT-SAUNA.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-01,FILT-SAUNA,FILT-SAUNA.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-SAUNAC,FILT-SAUNAC.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-SAUNAC,FILT-SAUNAC.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-SAUNAC,FILT-SAUNAC.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-OTAKI,FILT-OTAKI.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-OTAKI,FILT-OTAKI.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-OTAKI,FILT-OTAKI.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-UNKAI,FILT-UNKAI.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-UNKAI,FILT-UNKAI.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-02,FILT-UNKAI,FILT-UNKAI.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-FOUNT,FILT-FOUNT.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-FOUNT,FILT-FOUNT.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-FOUNT,FILT-FOUNT.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-RAIN,FILT-RAIN.RUN,BI,Water filtration,-,Circulation/filtration pump run,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-RAIN,FILT-RAIN.TRIP,BI,Water filtration,-,Pump / filter fault,
+LCP-FILT,Recreational-water filtration panel (ろ過装置),DDC-FILT-03,FILT-RAIN,FILT-RAIN.SS,BO,Water filtration,-,Start/Stop command,Time schedule; backwash cycle
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-1,SMF-1.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-1,SMF-1.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-1,SMF-1.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-2,SMF-2.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-2,SMF-2.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-2,SMF-2.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-3,SMF-3.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-3,SMF-3.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-01,SMF-3,SMF-3.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-4,SMF-4.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-4,SMF-4.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-4,SMF-4.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-5,SMF-5.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-5,SMF-5.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-5,SMF-5.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-6,SMF-6.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-6,SMF-6.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-02,SMF-6,SMF-6.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-7,SMF-7.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-7,SMF-7.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-7,SMF-7.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-8,SMF-8.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-8,SMF-8.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-8,SMF-8.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-9,SMF-9.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-9,SMF-9.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-03,SMF-9,SMF-9.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-10,SMF-10.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-10,SMF-10.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-10,SMF-10.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-11,SMF-11.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-11,SMF-11.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-11,SMF-11.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-12,SMF-12.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-12,SMF-12.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-04,SMF-12,SMF-12.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-13,SMF-13.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-13,SMF-13.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-13,SMF-13.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-14,SMF-14.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-14,SMF-14.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-14,SMF-14.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-15,SMF-15.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-15,SMF-15.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-05,SMF-15,SMF-15.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-16,SMF-16.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-16,SMF-16.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-16,SMF-16.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-17,SMF-17.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-17,SMF-17.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-17,SMF-17.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-18,SMF-18.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-18,SMF-18.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-06,SMF-18,SMF-18.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-19,SMF-19.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-19,SMF-19.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-19,SMF-19.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-20,SMF-20.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-20,SMF-20.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-20,SMF-20.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-21,SMF-21.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-21,SMF-21.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-07,SMF-21,SMF-21.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-08,SMF-22,SMF-22.RUN,BI,Smoke control,-,Fan run status,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-08,SMF-22,SMF-22.SS,BO,Smoke control,-,Smoke-mode start/stop,Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-08,SMF-22,SMF-22.TRIP,BI,Smoke control,-,Fan fault,
+LCP-SMK,Smoke-control / 排煙 panel,DDC-SMK-08,SMK-FIRE,SMK-FIRE.ALM,BI,Smoke control,-,Fire-alarm batch (火災一括) from disaster-prevention panel,Triggers smoke-mode fan start + AHU/damper shutdown interlocks

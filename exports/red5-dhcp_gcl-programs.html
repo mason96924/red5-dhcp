@@ -19,7 +19,7 @@
  @media print{body{background:#fff;padding:0} .bar,button.cp{display:none} details.pg{break-inside:avoid} pre{background:#fff;color:#000;border:1px solid #ccc}}
 </style></head><body><div class="wrap">
 <h1>Red5-DHCP — GCL+ control programs (Delta Controls, vendor8)</h1>
-<p class="sub">84 controllers · generated 2026-07-30. Objects referenced by point-tag name (I/O list). Verify comment token &amp; LOOP/PID against your enteliWEB pg_reference.html.</p>
+<p class="sub">109 controllers · generated 2026-08-03. Objects referenced by point-tag name (I/O list). Verify comment token &amp; LOOP/PID against your enteliWEB pg_reference.html.</p>
 <div class="bar">
  <input type="search" id="q" placeholder="find controller / equipment / strategy…">
  <button id="expand">Expand all</button><button id="collapse">Collapse all</button>
@@ -1181,7 +1181,7 @@ End</pre></details><details class="pg" data-s="ddc-2f-02 lcp-2f ac-11, ac-12, ac
 &#x27; Program (PG): DDC-2F-02   Panel: LCP-2F
 &#x27; Equipment: AC-11, AC-12, AC-13
 &#x27; Strategy : Schedule + SAT coil control + economizer
-&#x27; I/O      : 36 pts (AI 9  AO 12  BI 12  BO 3)
+&#x27; I/O      : 39 pts (AI 12  AO 12  BI 12  BO 3)
 &#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
 &#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
 &#x27;============================================================
@@ -1687,6 +1687,387 @@ End</pre></details><details class="pg" data-s="ddc-ltg-03 lcp-ltg ltg-soffit, lt
 If (&quot;LTG-SOFFIT.CMD&quot; = On) And (&quot;LTG-SOFFIT.ST&quot; = Off) Then &quot;LTG-SOFFIT Fault&quot; = On
 &quot;LTG-TENANT.CMD&quot; = &quot;LTG-TENANT Sched&quot;
 If (&quot;LTG-TENANT.CMD&quot; = On) And (&quot;LTG-TENANT.ST&quot; = Off) Then &quot;LTG-TENANT Fault&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-dhw-01 lcp-dhw dhw-1, dhw-2, dhw-3 steam charging to storage setpoint + legionella cycle"><summary>DDC-DHW-01<span class="r">LCP-DHW · Steam charging to storage setpoint + Legionella cycle</span></summary><div class="eq">DHW-1, DHW-2, DHW-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHW-01   Panel: LCP-DHW
+&#x27; Equipment: DHW-1, DHW-2, DHW-3
+&#x27; Strategy : Steam charging to storage setpoint + Legionella cycle
+&#x27; I/O      : 21 pts (AI 9  AO 3  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-dhw-02 lcp-dhw dhw-4 steam charging to storage setpoint + legionella cycle"><summary>DDC-DHW-02<span class="r">LCP-DHW · Steam charging to storage setpoint + Legionella cycle</span></summary><div class="eq">DHW-4</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-DHW-02   Panel: LCP-DHW
+&#x27; Equipment: DHW-4
+&#x27; Strategy : Steam charging to storage setpoint + Legionella cycle
+&#x27; I/O      : 7 pts (AI 3  AO 1  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+
+End</pre></details><details class="pg" data-s="ddc-san-01 lcp-san mp-1, mp-2, mp-3 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-01<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">MP-1, MP-2, MP-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-01   Panel: LCP-SAN
+&#x27; Equipment: MP-1, MP-2, MP-3
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;MP-1.SS&quot; = &quot;MP-1 Enable&quot;
+If &quot;MP-1.TRIP&quot; = Active Then &quot;MP-1 Alarm&quot; = On
+&quot;MP-2.SS&quot; = &quot;MP-2 Enable&quot;
+If &quot;MP-2.TRIP&quot; = Active Then &quot;MP-2 Alarm&quot; = On
+&quot;MP-3.SS&quot; = &quot;MP-3 Enable&quot;
+If &quot;MP-3.TRIP&quot; = Active Then &quot;MP-3 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-02 lcp-san mp-4, p-1, p-2 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-02<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">MP-4, P-1, P-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-02   Panel: LCP-SAN
+&#x27; Equipment: MP-4, P-1, P-2
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;MP-4.SS&quot; = &quot;MP-4 Enable&quot;
+If &quot;MP-4.TRIP&quot; = Active Then &quot;MP-4 Alarm&quot; = On
+&quot;P-1.SS&quot; = &quot;P-1 Enable&quot;
+If &quot;P-1.TRIP&quot; = Active Then &quot;P-1 Alarm&quot; = On
+&quot;P-2.SS&quot; = &quot;P-2 Enable&quot;
+If &quot;P-2.TRIP&quot; = Active Then &quot;P-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-03 lcp-san p-3, p-4, p-5 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-03<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">P-3, P-4, P-5</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-03   Panel: LCP-SAN
+&#x27; Equipment: P-3, P-4, P-5
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;P-3.SS&quot; = &quot;P-3 Enable&quot;
+If &quot;P-3.TRIP&quot; = Active Then &quot;P-3 Alarm&quot; = On
+&quot;P-4.SS&quot; = &quot;P-4 Enable&quot;
+If &quot;P-4.TRIP&quot; = Active Then &quot;P-4 Alarm&quot; = On
+&quot;P-5.SS&quot; = &quot;P-5 Enable&quot;
+If &quot;P-5.TRIP&quot; = Active Then &quot;P-5 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-04 lcp-san p-6, rcvt-1, elvt-1 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-04<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">P-6, RCVT-1, ELVT-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-04   Panel: LCP-SAN
+&#x27; Equipment: P-6, RCVT-1, ELVT-1
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 2  AO 0  BI 6  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;P-6.SS&quot; = &quot;P-6 Enable&quot;
+If &quot;P-6.TRIP&quot; = Active Then &quot;P-6 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-05 lcp-san reuset-1, firet-1, dp-1 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-05<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">REUSET-1, FIRET-1, DP-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-05   Panel: LCP-SAN
+&#x27; Equipment: REUSET-1, FIRET-1, DP-1
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 8 pts (AI 2  AO 0  BI 6  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-1.TRIP&quot; = Active Then &quot;DP-1 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-06 lcp-san dp-2, dp-3, dp-4 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-06<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">DP-2, DP-3, DP-4</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-06   Panel: LCP-SAN
+&#x27; Equipment: DP-2, DP-3, DP-4
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 9  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-2.TRIP&quot; = Active Then &quot;DP-2 Alarm&quot; = On
+If &quot;DP-3.TRIP&quot; = Active Then &quot;DP-3 Alarm&quot; = On
+If &quot;DP-4.TRIP&quot; = Active Then &quot;DP-4 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-07 lcp-san dp-5, dp-6, dp-7 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-07<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">DP-5, DP-6, DP-7</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-07   Panel: LCP-SAN
+&#x27; Equipment: DP-5, DP-6, DP-7
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 9  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-5.TRIP&quot; = Active Then &quot;DP-5 Alarm&quot; = On
+If &quot;DP-6.TRIP&quot; = Active Then &quot;DP-6 Alarm&quot; = On
+If &quot;DP-7.TRIP&quot; = Active Then &quot;DP-7 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-08 lcp-san dp-8, dp-9, dp-10 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-08<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">DP-8, DP-9, DP-10</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-08   Panel: LCP-SAN
+&#x27; Equipment: DP-8, DP-9, DP-10
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 9  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-8.TRIP&quot; = Active Then &quot;DP-8 Alarm&quot; = On
+If &quot;DP-9.TRIP&quot; = Active Then &quot;DP-9 Alarm&quot; = On
+If &quot;DP-10.TRIP&quot; = Active Then &quot;DP-10 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-09 lcp-san dp-11, dp-12, dp-13 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-09<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">DP-11, DP-12, DP-13</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-09   Panel: LCP-SAN
+&#x27; Equipment: DP-11, DP-12, DP-13
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 9  BO 0)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-11.TRIP&quot; = Active Then &quot;DP-11 Alarm&quot; = On
+If &quot;DP-12.TRIP&quot; = Active Then &quot;DP-12 Alarm&quot; = On
+If &quot;DP-13.TRIP&quot; = Active Then &quot;DP-13 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-10 lcp-san dp-14, bl-1-1, bl-1-2 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-10<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">DP-14, BL-1-1, BL-1-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-10   Panel: LCP-SAN
+&#x27; Equipment: DP-14, BL-1-1, BL-1-2
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 7  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+If &quot;DP-14.TRIP&quot; = Active Then &quot;DP-14 Alarm&quot; = On
+&quot;BL-1-1.SS&quot; = &quot;BL-1-1 Enable&quot;
+If &quot;BL-1-1.TRIP&quot; = Active Then &quot;BL-1-1 Alarm&quot; = On
+&quot;BL-1-2.SS&quot; = &quot;BL-1-2 Enable&quot;
+If &quot;BL-1-2.TRIP&quot; = Active Then &quot;BL-1-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-11 lcp-san bl-2-1, bl-2-2, bl-f-1 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-11<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">BL-2-1, BL-2-2, BL-F-1</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-11   Panel: LCP-SAN
+&#x27; Equipment: BL-2-1, BL-2-2, BL-F-1
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;BL-2-1.SS&quot; = &quot;BL-2-1 Enable&quot;
+If &quot;BL-2-1.TRIP&quot; = Active Then &quot;BL-2-1 Alarm&quot; = On
+&quot;BL-2-2.SS&quot; = &quot;BL-2-2 Enable&quot;
+If &quot;BL-2-2.TRIP&quot; = Active Then &quot;BL-2-2 Alarm&quot; = On
+&quot;BL-F-1.SS&quot; = &quot;BL-F-1 Enable&quot;
+If &quot;BL-F-1.TRIP&quot; = Active Then &quot;BL-F-1 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-san-12 lcp-san bl-f-2 lead/lag booster + float-level sump/sewage"><summary>DDC-SAN-12<span class="r">LCP-SAN · Lead/lag booster + float-level sump/sewage</span></summary><div class="eq">BL-F-2</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SAN-12   Panel: LCP-SAN
+&#x27; Equipment: BL-F-2
+&#x27; Strategy : Lead/lag booster + float-level sump/sewage
+&#x27; I/O      : 3 pts (AI 0  AO 0  BI 2  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;BL-F-2.SS&quot; = &quot;BL-F-2 Enable&quot;
+If &quot;BL-F-2.TRIP&quot; = Active Then &quot;BL-F-2 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-filt-01 lcp-filt filt-bathm, filt-bathw, filt-sauna scheduled circulation + backwash"><summary>DDC-FILT-01<span class="r">LCP-FILT · Scheduled circulation + backwash</span></summary><div class="eq">FILT-BATHM, FILT-BATHW, FILT-SAUNA</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-FILT-01   Panel: LCP-FILT
+&#x27; Equipment: FILT-BATHM, FILT-BATHW, FILT-SAUNA
+&#x27; Strategy : Scheduled circulation + backwash
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;FILT-BATHM.SS&quot; = &quot;FILT-BATHM Enable&quot;
+If &quot;FILT-BATHM.TRIP&quot; = Active Then &quot;FILT-BATHM Alarm&quot; = On
+&quot;FILT-BATHW.SS&quot; = &quot;FILT-BATHW Enable&quot;
+If &quot;FILT-BATHW.TRIP&quot; = Active Then &quot;FILT-BATHW Alarm&quot; = On
+&quot;FILT-SAUNA.SS&quot; = &quot;FILT-SAUNA Enable&quot;
+If &quot;FILT-SAUNA.TRIP&quot; = Active Then &quot;FILT-SAUNA Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-filt-02 lcp-filt filt-saunac, filt-otaki, filt-unkai scheduled circulation + backwash"><summary>DDC-FILT-02<span class="r">LCP-FILT · Scheduled circulation + backwash</span></summary><div class="eq">FILT-SAUNAC, FILT-OTAKI, FILT-UNKAI</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-FILT-02   Panel: LCP-FILT
+&#x27; Equipment: FILT-SAUNAC, FILT-OTAKI, FILT-UNKAI
+&#x27; Strategy : Scheduled circulation + backwash
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;FILT-SAUNAC.SS&quot; = &quot;FILT-SAUNAC Enable&quot;
+If &quot;FILT-SAUNAC.TRIP&quot; = Active Then &quot;FILT-SAUNAC Alarm&quot; = On
+&quot;FILT-OTAKI.SS&quot; = &quot;FILT-OTAKI Enable&quot;
+If &quot;FILT-OTAKI.TRIP&quot; = Active Then &quot;FILT-OTAKI Alarm&quot; = On
+&quot;FILT-UNKAI.SS&quot; = &quot;FILT-UNKAI Enable&quot;
+If &quot;FILT-UNKAI.TRIP&quot; = Active Then &quot;FILT-UNKAI Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-filt-03 lcp-filt filt-fount, filt-rain scheduled circulation + backwash"><summary>DDC-FILT-03<span class="r">LCP-FILT · Scheduled circulation + backwash</span></summary><div class="eq">FILT-FOUNT, FILT-RAIN</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-FILT-03   Panel: LCP-FILT
+&#x27; Equipment: FILT-FOUNT, FILT-RAIN
+&#x27; Strategy : Scheduled circulation + backwash
+&#x27; I/O      : 6 pts (AI 0  AO 0  BI 4  BO 2)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;FILT-FOUNT.SS&quot; = &quot;FILT-FOUNT Enable&quot;
+If &quot;FILT-FOUNT.TRIP&quot; = Active Then &quot;FILT-FOUNT Alarm&quot; = On
+&quot;FILT-RAIN.SS&quot; = &quot;FILT-RAIN Enable&quot;
+If &quot;FILT-RAIN.TRIP&quot; = Active Then &quot;FILT-RAIN Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-01 lcp-smk smf-1, smf-2, smf-3 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-01<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-1, SMF-2, SMF-3</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-01   Panel: LCP-SMK
+&#x27; Equipment: SMF-1, SMF-2, SMF-3
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-1.SS&quot; = &quot;SMF-1 Enable&quot;
+If &quot;SMF-1.TRIP&quot; = Active Then &quot;SMF-1 Alarm&quot; = On
+&quot;SMF-2.SS&quot; = &quot;SMF-2 Enable&quot;
+If &quot;SMF-2.TRIP&quot; = Active Then &quot;SMF-2 Alarm&quot; = On
+&quot;SMF-3.SS&quot; = &quot;SMF-3 Enable&quot;
+If &quot;SMF-3.TRIP&quot; = Active Then &quot;SMF-3 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-02 lcp-smk smf-4, smf-5, smf-6 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-02<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-4, SMF-5, SMF-6</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-02   Panel: LCP-SMK
+&#x27; Equipment: SMF-4, SMF-5, SMF-6
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-4.SS&quot; = &quot;SMF-4 Enable&quot;
+If &quot;SMF-4.TRIP&quot; = Active Then &quot;SMF-4 Alarm&quot; = On
+&quot;SMF-5.SS&quot; = &quot;SMF-5 Enable&quot;
+If &quot;SMF-5.TRIP&quot; = Active Then &quot;SMF-5 Alarm&quot; = On
+&quot;SMF-6.SS&quot; = &quot;SMF-6 Enable&quot;
+If &quot;SMF-6.TRIP&quot; = Active Then &quot;SMF-6 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-03 lcp-smk smf-7, smf-8, smf-9 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-03<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-7, SMF-8, SMF-9</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-03   Panel: LCP-SMK
+&#x27; Equipment: SMF-7, SMF-8, SMF-9
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-7.SS&quot; = &quot;SMF-7 Enable&quot;
+If &quot;SMF-7.TRIP&quot; = Active Then &quot;SMF-7 Alarm&quot; = On
+&quot;SMF-8.SS&quot; = &quot;SMF-8 Enable&quot;
+If &quot;SMF-8.TRIP&quot; = Active Then &quot;SMF-8 Alarm&quot; = On
+&quot;SMF-9.SS&quot; = &quot;SMF-9 Enable&quot;
+If &quot;SMF-9.TRIP&quot; = Active Then &quot;SMF-9 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-04 lcp-smk smf-10, smf-11, smf-12 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-04<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-10, SMF-11, SMF-12</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-04   Panel: LCP-SMK
+&#x27; Equipment: SMF-10, SMF-11, SMF-12
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-10.SS&quot; = &quot;SMF-10 Enable&quot;
+If &quot;SMF-10.TRIP&quot; = Active Then &quot;SMF-10 Alarm&quot; = On
+&quot;SMF-11.SS&quot; = &quot;SMF-11 Enable&quot;
+If &quot;SMF-11.TRIP&quot; = Active Then &quot;SMF-11 Alarm&quot; = On
+&quot;SMF-12.SS&quot; = &quot;SMF-12 Enable&quot;
+If &quot;SMF-12.TRIP&quot; = Active Then &quot;SMF-12 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-05 lcp-smk smf-13, smf-14, smf-15 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-05<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-13, SMF-14, SMF-15</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-05   Panel: LCP-SMK
+&#x27; Equipment: SMF-13, SMF-14, SMF-15
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-13.SS&quot; = &quot;SMF-13 Enable&quot;
+If &quot;SMF-13.TRIP&quot; = Active Then &quot;SMF-13 Alarm&quot; = On
+&quot;SMF-14.SS&quot; = &quot;SMF-14 Enable&quot;
+If &quot;SMF-14.TRIP&quot; = Active Then &quot;SMF-14 Alarm&quot; = On
+&quot;SMF-15.SS&quot; = &quot;SMF-15 Enable&quot;
+If &quot;SMF-15.TRIP&quot; = Active Then &quot;SMF-15 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-06 lcp-smk smf-16, smf-17, smf-18 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-06<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-16, SMF-17, SMF-18</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-06   Panel: LCP-SMK
+&#x27; Equipment: SMF-16, SMF-17, SMF-18
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-16.SS&quot; = &quot;SMF-16 Enable&quot;
+If &quot;SMF-16.TRIP&quot; = Active Then &quot;SMF-16 Alarm&quot; = On
+&quot;SMF-17.SS&quot; = &quot;SMF-17 Enable&quot;
+If &quot;SMF-17.TRIP&quot; = Active Then &quot;SMF-17 Alarm&quot; = On
+&quot;SMF-18.SS&quot; = &quot;SMF-18 Enable&quot;
+If &quot;SMF-18.TRIP&quot; = Active Then &quot;SMF-18 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-07 lcp-smk smf-19, smf-20, smf-21 hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-07<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-19, SMF-20, SMF-21</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-07   Panel: LCP-SMK
+&#x27; Equipment: SMF-19, SMF-20, SMF-21
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 9 pts (AI 0  AO 0  BI 6  BO 3)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-19.SS&quot; = &quot;SMF-19 Enable&quot;
+If &quot;SMF-19.TRIP&quot; = Active Then &quot;SMF-19 Alarm&quot; = On
+&quot;SMF-20.SS&quot; = &quot;SMF-20 Enable&quot;
+If &quot;SMF-20.TRIP&quot; = Active Then &quot;SMF-20 Alarm&quot; = On
+&quot;SMF-21.SS&quot; = &quot;SMF-21 Enable&quot;
+If &quot;SMF-21.TRIP&quot; = Active Then &quot;SMF-21 Alarm&quot; = On
+
+End</pre></details><details class="pg" data-s="ddc-smk-08 lcp-smk smf-22, smk-fire hard-wired fire start; bms monitors + smoke-mode"><summary>DDC-SMK-08<span class="r">LCP-SMK · Hard-wired fire start; BMS monitors + smoke-mode</span></summary><div class="eq">SMF-22, SMK-FIRE</div><button class="cp" onclick="cp(this)">Copy</button><pre>&#x27;============================================================
+&#x27; Program (PG): DDC-SMK-08   Panel: LCP-SMK
+&#x27; Equipment: SMF-22, SMK-FIRE
+&#x27; Strategy : Hard-wired fire start; BMS monitors + smoke-mode
+&#x27; I/O      : 4 pts (AI 0  AO 0  BI 3  BO 1)
+&#x27;  Objects referenced by point-tag name (see I/O list). Verify syntax
+&#x27;  against enteliWEB pg_reference.html (comment token, LOOP vs PID()).
+&#x27;============================================================
+
+&#x27; --- Supervise: enable, prove status, alarm ---
+&quot;SMF-22.SS&quot; = &quot;SMF-22 Enable&quot;
+If &quot;SMF-22.TRIP&quot; = Active Then &quot;SMF-22 Alarm&quot; = On
 
 End</pre></details>
 <p class="foot">Source: build_gcl.py from the control-logic model. GCL+ syntax to confirm on site.</p>

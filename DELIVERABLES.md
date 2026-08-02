@@ -10,7 +10,7 @@ Canvas files live outside the repo, in the Cursor project canvas folder:
 
 | Canvas | What it shows | File |
 |--------|---------------|------|
-| Panels × Controllers × I/O | Full BMS I/O pivot (12 panels, 84 controllers, 1160 pts) | `dhcp-panels-io-pivot.canvas.tsx` |
+| Panels × Controllers × I/O | Full BMS I/O pivot (16 panels, 109 controllers, 1383 pts) | `dhcp-panels-io-pivot.canvas.tsx` |
 | Control logic / SOO | Per-controller Sequence of Operations | `dhcp-control-logic.canvas.tsx` |
 | Controller cutover plan | BMS controller replacement, phased shoulder-season cutover | `dhcp-controller-cutover-plan.canvas.tsx` |
 | Lighting I/O | Lighting-only I/O pivot | `dhcp-lighting-io-pivot.canvas.tsx` |
@@ -39,8 +39,8 @@ are multi-sheet workbooks; `.csv` for import.
 
 | Doc | Contents |
 |-----|----------|
-| `docs/control_logic.md` | All 84 controllers' SOO in Markdown |
-| `docs/gcl_programs.md` | All 84 GCL+ programs |
+| `docs/control_logic.md` | All 109 controllers' SOO in Markdown |
+| `docs/gcl_programs.md` | All 109 GCL+ programs |
 | `docs/R-1_control_narrative.md` | R-1 chiller control & optimisation narrative |
 
 ## Regenerate anything — build scripts

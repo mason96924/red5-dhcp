@@ -38,7 +38,7 @@ kitchen-refrigeration alarms and common-area/façade lighting (照明一覧).
 | File | Purpose |
 |------|---------|
 | `generate_io_list.py` | Reproducible generator for the BMS I/O list + panel / controller schedule (single source of truth for the point model) |
-| `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 1,160 points, 190 devices, 12 panels, 84 DDC controllers |
+| `Red5-DHCP_BMS_IO_List.xlsx` | Generated deliverable — 1,383 points, 259 devices, 16 panels, 109 DDC controllers (incl. DHW / sanitary / filtration / smoke-control + Comms-Network sheet) |
 | `backend/` | FastAPI supervisory service (loads the point model, simulates live telemetry) |
 | `backend/control.py` | R-1 chiller control / optimisation engine (economic dispatch, CW/CHW reset, staging, live COP, FDD) |
 | `frontend/index.html` | Read-only monitoring dashboard (R-1 optimiser panel, systems, equipment tiles, per-device point tables) |
@@ -155,6 +155,27 @@ Key basis documents:
   5–20F and 21–35F, each **N/NE/SE/S/SW** — with batch valve-fault monitoring
   (冷水BV / 温水BV 一括故障). Individual room FCUs run on local thermostats.
 
+## Central monitoring architecture (Azbil savic-netFX2 ESCO delivery spec, 工番 1-LHP1-11)
+
+Read directly from the hardware delivery drawings (`Central monitoring system
+(hardware).pdf`, LHP1-11-200-01/02, -100-B0xx, -202-xx). Full detail:
+[`docs/reconciliation_2026-08.md`](docs/reconciliation_2026-08.md).
+
+- **Servers:** `BMS` building-management server (NEC FC-E21A) + `SMS`
+  system-management + `DSS` data-storage (Azbil SI-net) on an IPv4/IPv6 Ethernet
+  backbone (100BASE-TX, fibre risers; switches `ESW1`/`ESW3` 8-port, `ESW2`
+  16-port; IP plan `192.168.30.x` / `.31.x`).
+- **Operator consoles:** `監視用PC1` in **B2F 防災室** and `監視用PC2` in **2F
+  防災センター** (Fujitsu ESPRIMO, EIZO 22″ LCD, Brother colour laser `CLP`).
+- **Fieldbus:** **6 × `SCS` System Core Servers** on `ESW2`; **each SCS heads up to
+  4 `NC-bus` lines**, each a daisy-chain of **`RS` remote stations + `DDC`** over
+  transmission trunk **IPEV-S 0.9 mm²**; `IFGD1` fire/external-signal module
+  (DI16/DO8). The **`RS` remote stations are the 67 physical panels** in
+  `panels_schedule.json`; the flat "16 panels / 109 DDC" figure is the *functional*
+  abstraction, while the network drawings show **6 SCS → ≤24 NC-bus lines → 67
+  RS/DDC**. The 2002 base-building **伝送幹線系統図** (`UIC1–4` LINE segments by floor)
+  is the trunk this savic-netFX2 retrofit rides on.
+
 ## BMS platform (confirmed by OCR of the 144-page 納入仕様書)
 
 The central station is **Azbil savic-netFX2** (S/W 機能仕様, 2015/04/09). The
@@ -168,6 +189,16 @@ operations; power-failure / restoration handling; user & access management; and
 maintenance / spare-parts management.
 
 ## Notes
+
+The live savic-net FX operator summary screens (`アズビル BMS サマリーグラフ画面.pdf`)
+surface several supervised subsystems that are **counted in the 4,467-point
+physical schedule but not yet named as devices** in the functional model —
+candidates to add (see [`docs/reconciliation_2026-08.md`](docs/reconciliation_2026-08.md) §5):
+**給湯/DHW** (`ST-*` steam-heated storage + `HP-1…4` **DHW zone supply pumps** by
+vertical zone: B3F–5F / 5F–15F / 16F–25F / 26F–37F), **衛生/plumbing**
+(上水/中水/排水/消火/雨水 — `MP/P/DP` pumps, `WT/T` tanks, `BL-*` blowers), pool/bath/
+sauna/fountain **ろ過装置**, **排煙** smoke-exhaust fans (`SMF-1…22`), and CO₂ DCV on
+banquet AHUs `AC-11/12/13`.
 
 Device tags, counts and point sets were read directly from the savic-net
 graphics, so the heat-source model no longer carries the earlier fabricated

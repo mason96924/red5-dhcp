@@ -83,6 +83,18 @@ PANELS = [
      "PCU/PAC/PMAC packaged air-conditioners (status/alarm), kitchen refrigeration/cold-store alarms"),
     ("LCP-LTG", "Common-area & facade lighting panel", "Distributed EPS",
      "Facade (aviation light, neon, balcony) + per-floor common-area lighting groups (照明一覧)"),
+    ("LCP-DHW", "Domestic hot-water (給湯) plant panel", "B2F / PH plant",
+     "Steam-heated DHW storage ST-1…4 banks + zone supply/recirc pumps by vertical zone "
+     "(B3F-5F / 5F-15F / 16F-25F / 26F-37F) with storage steam-flow metering — per 給湯系統図 (graph 4100)"),
+    ("LCP-SAN", "Plumbing / sanitary panel (上水・中水・排水)", "B3F–B2F plant",
+     "Potable (上水) & reclaimed (中水) booster sets (MP/P), receiving/elevated/fire tanks, "
+     "drainage sump & sewage pumps (DP) + aeration blowers (BL) — per 衛生系統図 (graphs 4200/4300)"),
+    ("LCP-FILT", "Recreational-water filtration panel (ろ過装置)", "Distributed (2F–5F)",
+     "Bath (男/女) / sauna / pool / waterfall (大滝・雲海) / fountain / rainwater filtration & "
+     "circulation — per ろ過装置 (graph 4400)"),
+    ("LCP-SMK", "Smoke-control / 排煙 panel", "Distributed / 防災",
+     "Smoke-exhaust fans SMF-1…22 with fire-mode batch (火災一括); BMS status + smoke-mode "
+     "start/stop — per 排煙系統図 (graph 5000)"),
 ]
 
 # device -> air-side panel by floor grouping
@@ -120,6 +132,7 @@ SIG = {
     "status": ("DI dry contact", "-"),
     "cmd":    ("DO relay", "-"),
     "pulse":  ("Pulse/Modbus", "unit"),
+    "co2":    ("4-20mA", "ppm"),
 }
 
 rows = []   # each: dict of columns
@@ -160,6 +173,7 @@ AC_KITCHEN = {5, 6, 7, 9, 15, 16, 17, 18, 21, 22, 23}   # supply-air low-temp ki
 AC_NO_INV = {1, 2, 3, 8, 9}                              # "制御無し" / INV故障 per schedule
 AC_HAS_HEAT = set(range(1, 28)) - {2, 3, 4}              # most have steam heat; a few cool-only
 AC_HUMID = {10, 14, 19, 24, 27}                          # halls/lounges with humidification
+AC_CO2 = {11, 12, 13}                                    # banquet halls w/ CO2 demand-controlled vent (自動制御 A-11 sheet)
 
 EVU_AREAS = {
     1: "1F ceremony/photo/dress/beauty/corridor", 2: "1F small banquet/corridor/store",
@@ -420,7 +434,11 @@ def ahu_points(n):
         add(f"{dev}.HUM", "Air side", dev, "AHU (public/kitchen)", area, "Steam humidifier valve", AO, "pct", sp="Y")
         add(f"{dev}.RH", "Air side", dev, "AHU (public/kitchen)", area, "Return/space humidity", AI, "rh", trend="Y")
     add(f"{dev}.FLT", "Air side", dev, "AHU (public/kitchen)", area, "Filter dirty (DP)", BI, "status", alarm="Y")
-    add(f"{dev}.OAD", "Air side", dev, "AHU (public/kitchen)", area, "Outdoor-air damper", AO, "pct", sp="Y")
+    add(f"{dev}.OAD", "Air side", dev, "AHU (public/kitchen)", area, "Outdoor-air damper", AO, "pct", sp="Y",
+        notes="CO2 demand-controlled reset (DCV)" if n in AC_CO2 else "")
+    if n in AC_CO2:
+        add(f"{dev}.CO2", "Air side", dev, "AHU (public/kitchen)", area, "Space CO2 concentration", AI, "co2",
+            sp="Y", alarm="Y", trend="Y", notes="Banquet DCV: resets OA damper / fan to hold ≤1000 ppm (自動制御 A-11)")
     if n in AC_HAS_HEAT:
         add(f"{dev}.FRZ", "Air side", dev, "AHU (public/kitchen)", area, "Freeze protection stat", BI, "status", alarm="Y")
 
@@ -514,6 +532,151 @@ def common_points():
     add("POOL-FP.SS", "Common", "POOL-FP", "Pool filtration pump", "Pool plant", "Start/Stop command", BO, "cmd", sp="Y", notes="Time schedule 8:00-19:00")
     add("POOL-FP.RUN", "Common", "POOL-FP", "Pool filtration pump", "Pool plant", "Run status", BI, "status")
     add("POOL-FP.TRIP", "Common", "POOL-FP", "Pool filtration pump", "Pool plant", "Fault", BI, "status", alarm="Y")
+
+# --------------------------------------------------------------------------
+# Domestic hot water (給湯 / graph 4100): steam-heated storage banks with a
+# supply/recirc pump per vertical zone.  Drawing tags reuse ST-*/HP-* which
+# collide with the OA-station / heat-source pumps, so these are given DHW-n
+# device IDs and the drawing tags are cited in the notes.
+# --------------------------------------------------------------------------
+DHW_ZONES = [
+    ("DHW-1", "B3F–5F DHW zone",  "ST-1-1…4 storage + HP-1 supply pump"),
+    ("DHW-2", "5F–15F DHW zone",  "ST-2-1/2 storage + HP-2 supply pump"),
+    ("DHW-3", "16F–25F DHW zone", "ST-3-1/2 storage + HP-3 supply pump"),
+    ("DHW-4", "26F–37F DHW zone", "ST-4-1/2 storage + HP-4 supply pump"),
+]
+
+def dhw_points(dev, area, basis):
+    PANEL_HINT[dev] = "LCP-DHW"
+    T = "Domestic-hot-water plant (steam-heated storage)"
+    S = "Domestic hot water"
+    add(f"{dev}.STG-T", S, dev, T, area, "Storage-tank temperature", AI, "temp", sp="Y", alarm="Y", trend="Y",
+        notes=f"{basis}; hold ≥60°C store / ≥55°C delivery (Legionella)")
+    add(f"{dev}.STG-CV", S, dev, T, area, "Steam charging valve", AO, "pct", sp="Y", notes="Modulate to storage setpoint")
+    add(f"{dev}.SUP-T", S, dev, T, area, "DHW supply (delivery) temperature", AI, "temp", alarm="Y", trend="Y")
+    add(f"{dev}.STM-M", S, dev, T, area, "Storage steam-flow meter (貯湯槽蒸気流量)", AI, "pulse", units="m³", trend="Y")
+    add(f"{dev}.PMP-RUN", S, dev, T, area, "Supply/recirc pump run status", BI, "status", trend="Y")
+    add(f"{dev}.PMP-TRIP", S, dev, T, area, "Supply/recirc pump fault", BI, "status", alarm="Y")
+    add(f"{dev}.PMP-SS", S, dev, T, area, "Supply/recirc pump start/stop", BO, "cmd", sp="Y", notes="Duty/standby; recirc schedule")
+
+# --------------------------------------------------------------------------
+# Plumbing / sanitary (衛生 / graphs 4200 上水・中水, 4300 排水).
+# Potable (上水) + reclaimed (中水) booster sets, receiving/elevated/fire tanks,
+# drainage sump & sewage pumps, wastewater-treatment aeration blowers.
+# --------------------------------------------------------------------------
+def san_pump_points(dev, area, role, note=""):
+    PANEL_HINT[dev] = "LCP-SAN"
+    S = "Plumbing/Sanitary"
+    add(f"{dev}.RUN", S, dev, role, area, "Run status", BI, "status", trend="Y")
+    add(f"{dev}.TRIP", S, dev, role, area, "Pump fault / breaker trip", BI, "status", alarm="Y")
+    add(f"{dev}.SS", S, dev, role, area, "Start/Stop command", BO, "cmd", sp="Y", notes=note or "Lead/lag; tank-level float control")
+
+def san_sump_points(dev, area, note=""):
+    PANEL_HINT[dev] = "LCP-SAN"
+    S = "Plumbing/Sanitary"
+    T = "Drainage sump / sewage pump"
+    add(f"{dev}.RUN", S, dev, T, area, "Pump run status", BI, "status", trend="Y")
+    add(f"{dev}.TRIP", S, dev, T, area, "Pump fault", BI, "status", alarm="Y")
+    add(f"{dev}.HLV", S, dev, T, area, "High-water-level alarm", BI, "status", alarm="Y", notes=note or "Float; flooding alarm")
+
+def san_tank_points(dev, area, name, fire=False):
+    PANEL_HINT[dev] = "LCP-SAN"
+    S = "Plumbing/Sanitary"
+    T = "Water tank"
+    add(f"{dev}.LVL", S, dev, T, area, f"{name} water level", AI, "level", alarm="Y", trend="Y")
+    if fire:
+        add(f"{dev}.LO", S, dev, T, area, f"{name} low-level alarm", BI, "status", alarm="Y", notes="Fire-reserve; statutory")
+    else:
+        add(f"{dev}.HI", S, dev, T, area, f"{name} high-level alarm", BI, "status", alarm="Y")
+        add(f"{dev}.LO", S, dev, T, area, f"{name} low-level / dry-run alarm", BI, "status", alarm="Y")
+
+SAN_BOOST = [   # (dev, area, role, note)
+    ("MP-1", "B3F 受水槽室", "Potable transfer/booster pump", "上水; 高置水槽揚水"),
+    ("MP-2", "B3F 受水槽室", "Potable transfer/booster pump", "上水; 高置水槽揚水"),
+    ("MP-3", "B3F 中水室",   "Reclaimed-water booster pump",  "中水加圧"),
+    ("MP-4", "B3F 中水室",   "Reclaimed-water booster pump",  "中水加圧"),
+    ("P-1", "B3F 加圧ポンプ室", "Domestic-water booster pump", "上水加圧装置"),
+    ("P-2", "B3F 加圧ポンプ室", "Domestic-water booster pump", "上水加圧装置"),
+    ("P-3", "B3F 加圧ポンプ室", "Domestic-water booster pump", "上水加圧装置"),
+    ("P-4", "B3F 加圧ポンプ室", "Domestic-water booster pump", "低層上水 P-1 群"),
+    ("P-5", "B3F 加圧ポンプ室", "Domestic-water booster pump", "高層上水"),
+    ("P-6", "B3F 加圧ポンプ室", "Domestic-water booster pump", "高層上水"),
+]
+SAN_TANKS = [   # (dev, area, name, fire?)
+    ("RCVT-1", "B3F 受水槽室", "Potable receiving tank (上水受水槽)", False),
+    ("ELVT-1", "PH2F 高置水槽", "Potable elevated tank (高置水槽)", False),
+    ("REUSET-1", "B3F 中水受水槽", "Reclaimed receiving tank (中水受水槽)", False),
+    ("FIRET-1", "B3F 消火水槽", "Fire-reserve tank (消火水槽)", True),
+]
+SAN_SUMPS = [   # DP-1..14 sump / sewage pumps (graph 4300)
+    ("DP-1", "B3F 汚水槽-1"), ("DP-2", "B3F 汚水槽-2"), ("DP-3", "B3F 排水槽-1"),
+    ("DP-4", "B3F 雑排水槽"), ("DP-5", "B3F 雑排水放流槽"), ("DP-6", "B3F 雑排水移送槽"),
+    ("DP-7", "B3F 雑排水移送槽-2"), ("DP-8", "B3F 排水槽-2"), ("DP-9", "B3F トレンチ排水槽-1"),
+    ("DP-10", "B3F トレンチ排水槽-2"), ("DP-11", "B3F 湧水槽-1"), ("DP-12", "B3F 湧水槽-2"),
+    ("DP-13", "B3F 湧水放流槽"), ("DP-14", "B3F 雑排水放流槽-2"),
+]
+SAN_BLOWERS = [ # aeration blowers for wastewater treatment (graph 4300)
+    ("BL-1-1", "B3F ブロアー室1 (厨房排水処理)"), ("BL-1-2", "B3F ブロアー室1 (厨房排水処理)"),
+    ("BL-2-1", "B3F ブロアー室2 (雑排水処理)"),   ("BL-2-2", "B3F ブロアー室2 (雑排水処理)"),
+    ("BL-F-1", "B3F 厨房排水処理槽ばっ気"),        ("BL-F-2", "B3F 厨房排水処理槽ばっ気"),
+]
+
+def sanitary_points():
+    for dev, area, role, note in SAN_BOOST:
+        san_pump_points(dev, area, role, note)
+    for dev, area, name, fire in SAN_TANKS:
+        san_tank_points(dev, area, name, fire)
+    for dev, area in SAN_SUMPS:
+        san_sump_points(dev, area)
+    for dev, area in SAN_BLOWERS:
+        san_pump_points(dev, area, "Wastewater aeration blower", note="ばっ気; DO/timer control")
+
+# --------------------------------------------------------------------------
+# Recreational-water filtration (ろ過装置 / graph 4400): circulation +
+# filtration plant for baths, sauna, pool, waterfalls and the rainwater tank.
+# (Pool filtration is already modelled as POOL-FP under Common.)
+# --------------------------------------------------------------------------
+FILT_PLANTS = [
+    ("FILT-BATHM", "5F 男子浴室 ろ過装置"), ("FILT-BATHW", "5F 女子浴室 ろ過装置"),
+    ("FILT-SAUNA", "4F サウナ浴室 ろ過装置"), ("FILT-SAUNAC", "4F サウナ水風呂 ろ過装置"),
+    ("FILT-OTAKI", "2F 大滝 ろ過装置 / 循環水"), ("FILT-UNKAI", "3F 雲海庭園の滝 ろ過"),
+    ("FILT-FOUNT", "B2F ロータリーの噴水 ろ過"), ("FILT-RAIN", "B3F 雨水ろ過装置"),
+]
+
+def filt_points(dev, area):
+    PANEL_HINT[dev] = "LCP-FILT"
+    S = "Water filtration"
+    T = "Filtration / circulation plant"
+    add(f"{dev}.RUN", S, dev, T, area, "Circulation/filtration pump run", BI, "status", trend="Y")
+    add(f"{dev}.TRIP", S, dev, T, area, "Pump / filter fault", BI, "status", alarm="Y")
+    add(f"{dev}.SS", S, dev, T, area, "Start/Stop command", BO, "cmd", sp="Y", notes="Time schedule; backwash cycle")
+
+def filtration_points():
+    for dev, area in FILT_PLANTS:
+        filt_points(dev, area)
+
+# --------------------------------------------------------------------------
+# Smoke control (排煙 / graph 5000): SMF-1..22 smoke-exhaust fans with a
+# building fire-alarm batch (火災一括).  BMS monitors status and can start the
+# smoke-mode fans; life-safety start is hard-wired from the fire panel.
+# --------------------------------------------------------------------------
+def smoke_fan_points(n):
+    dev = f"SMF-{n}"
+    PANEL_HINT[dev] = "LCP-SMK"
+    S = "Smoke control"
+    T = "Smoke-exhaust fan (排煙機)"
+    area = "Smoke zone / floor per 排煙系統図"
+    add(f"{dev}.RUN", S, dev, T, area, "Fan run status", BI, "status", trend="Y")
+    add(f"{dev}.SS", S, dev, T, area, "Smoke-mode start/stop", BO, "cmd", notes="Life-safety start hard-wired from fire panel; BMS monitors + smoke-mode start")
+    add(f"{dev}.TRIP", S, dev, T, area, "Fan fault", BI, "status", alarm="Y")
+
+def smoke_points():
+    for n in range(1, 23):
+        smoke_fan_points(n)
+    PANEL_HINT["SMK-FIRE"] = "LCP-SMK"
+    add("SMK-FIRE.ALM", "Smoke control", "SMK-FIRE", "Fire-alarm interface", "Building",
+        "Fire-alarm batch (火災一括) from disaster-prevention panel", BI, "status", alarm="Y",
+        notes="Triggers smoke-mode fan start + AHU/damper shutdown interlocks")
 
 # --------------------------------------------------------------------------
 # Build all points  (order follows the savic-net 熱源系統 menu:
@@ -635,6 +798,13 @@ for tag, area, always in PKG_UNITS:
     pkg_points(tag, area, always)
 refrigeration_points()
 
+# Domestic hot water (給湯) + sanitary/plumbing (衛生) + filtration (ろ過) + smoke (排煙)
+for dev, area, basis in DHW_ZONES:
+    dhw_points(dev, area, basis)
+sanitary_points()
+filtration_points()
+smoke_points()
+
 # Lighting (common-area / facade) + metering + common
 lighting_points()
 meter_points()
@@ -672,6 +842,10 @@ def dev_category(d: str) -> str:
     if d.startswith("EX-"): return "hex"
     if d.startswith("ST-"): return "oa"
     if d.startswith("MTR-"): return "meter"
+    if d.startswith("DHW-"): return "dhw"
+    if d.startswith(("MP-", "P-", "DP-", "BL-", "RCVT", "ELVT", "REUSET", "FIRET")): return "sanitary"
+    if d.startswith("FILT-"): return "filtration"
+    if d.startswith(("SMF-", "SMK-")): return "smoke"
     if d.startswith("POOL"): return "pool"
     if d.startswith("AC-"): return "ahu"
     if d.startswith("EVU-"): return "oau"
@@ -684,7 +858,8 @@ def dev_category(d: str) -> str:
 # Order categories so controllers list reads DHC -> plant -> air -> aux
 CAT_ORDER = ["dhc_chw", "steam", "hotwell", "tower", "cwp", "freecool",
              "chiller", "hex", "chwp3637", "chwp", "hwpump", "vessel", "valve",
-             "oa", "ahu", "oau", "fcu", "fan", "pkg", "refr", "ltg", "pool", "meter"]
+             "oa", "ahu", "oau", "fcu", "fan", "pkg", "dhw", "sanitary",
+             "filtration", "smoke", "refr", "ltg", "pool", "meter"]
 
 dev_controller = {}
 controllers = []   # (ctrl_id, panel, devices)
@@ -775,6 +950,8 @@ def build_workbook():
   SYS_FILL = {
       "DHC interface": "FFF2CC", "Heat source": "FCE4D6", "Condenser water": "DDEBF7",
       "Air side": "E2EFDA", "Ventilation": "DEEBF7", "Packaged units": "FCE8F3",
+      "Domestic hot water": "FBE2D5", "Plumbing/Sanitary": "DAEEF3",
+      "Water filtration": "E4F0D0", "Smoke control": "F4CCCC",
       "Lighting": "FFF7DA", "Metering": "EDEDED", "Common": "F2F2F2",
   }
 
@@ -805,10 +982,12 @@ def build_workbook():
       ("Condenser water", "CT-1 (2 INV cells) + CT-2 (2 cells + filtration) + CDP-1 ×3 / CDP-2 ×2 pumps rejecting heat from packaged units (PCU/PAC/PMAC) & kitchen refrigeration; EX-1 winter free-cooling; 2 emergency cooling HX to DHC"),
       ("Air side", "AC-1..27 AHUs (public/kitchen), EVU-1..15 outdoor-air units, guest-room FCU zone-groups (5-20F & 21-35F × N/NE/SE/S/SW, 4-pipe) + 36/37F FCU, EF/SF/RF fans"),
       ("Also on savic-net", "Packaged units PCU/PAC/PMAC (status/alarm), kitchen refrigeration alarms, common-area/facade lighting (照明一覧)"),
+    ("Building services", "Domestic hot water (給湯: steam-heated storage DHW-1..4 by vertical zone), plumbing/sanitary (上水/中水 booster MP/P, receiving/elevated/fire tanks, drainage sump pumps DP-1..14 + aeration blowers BL), recreational-water filtration (baths/sauna/pool/waterfalls/fountain/rainwater), smoke control (排煙 fans SMF-1..22) — surfaced from the live savic-net FX summary graphs (graphs 4100/4200/4300/4400/5000)"),
+    ("Comms / network", "savic-netFX2: BMS/SMS/DSS servers + 2 operator PCs (B2F 防災室 / 2F 防災センター) on Ethernet (ESW1/2/3); 6 SCS System Core Servers → ≤24 NC-bus lines → RS/DDC (= 67 physical panels), IPEV-S 0.9mm² trunk — see Comms-Network sheet"),
     ("ESCO control scope", "Pump optimization, outdoor-air-unit optimization, thermal-demand control (per 共-01 spec)"),
     ("BMS platform", "Azbil savic-net FX2, S/W 機能仕様 dated 2015/04/09 — confirmed from the 144-page Azbil 納入仕様書 (software function spec, not an equipment list)"),
     ("", ""),
-    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Points-by-Floor · LCP-to-Physical · Delta-Controllers · Legend"),
+    ("Sheets", "Panels · Controllers · IO_List (+ Phys. panel/floor cross-ref) · IO_Summary · Reconciliation · Points-by-Floor · LCP-to-Physical · Delta-Controllers · Comms-Network · Legend"),
     ("Basis", "Azbil 完成図 savic-net graphics (熱源設備 全体/低層/高層/36,37F/冷却塔/ホットウェル/DHC受入, graphs 1000-1100; PMAC-PAC & 照明一覧), air-side summary graphs (空調関連/客室等), M-* CAD equipment schedules, 共-01 ESCO spec, 空調機スケジュール_20251127.xlsx"),
     ("Note", "Device tags/counts read directly from the savic-net graphics. Per-unit packaged (PCU/PAC/PMAC) and per-floor lighting lists are modelled as representative supervised groups — expand from 照明一覧1/2 + PMAC/PAC一覧 for the full point count."),
   ]
@@ -897,7 +1076,8 @@ def build_workbook():
   # ---- IO_Summary ----
   ws = wb.create_sheet("IO_Summary")
   systems = ["DHC interface", "Heat source", "Condenser water", "Air side",
-             "Ventilation", "Packaged units", "Lighting", "Metering", "Common"]
+             "Ventilation", "Packaged units", "Domestic hot water", "Plumbing/Sanitary",
+             "Water filtration", "Smoke control", "Lighting", "Metering", "Common"]
   counts = {s: {"AI": 0, "AO": 0, "BI": 0, "BO": 0} for s in systems}
   for rr in rows:
       counts.setdefault(rr["System"], {"AI": 0, "AO": 0, "BI": 0, "BO": 0})
@@ -1210,6 +1390,68 @@ def build_workbook():
       ws.row_dimensions[note_r2].height = 70
   else:
       ws.append(["panels_schedule.json not found — controller tally unavailable"])
+
+  # ---- Comms-Network (savic-netFX2 central + fieldbus architecture) ----
+  ws = wb.create_sheet("Comms-Network")
+  ws["A1"] = "Central monitoring & fieldbus architecture (Azbil savic-netFX2)"
+  ws["A1"].font = TITLE_FONT
+  ws["A2"] = ("Read from the ESCO hardware delivery spec 工番 1-LHP1-11 (2015/04/09): drawings "
+              "LHP1-11-200-01 system config, -200-02 trunk, -100-B0xx equipment lists, -202-xx SCS "
+              "connections. Trunk floor layout from the 2002 伝送幹線系統図 (dwg A-20).")
+  ws["A2"].font = SUB_FONT
+  ws.append([])
+  ws.append(["Central station (Ethernet backbone — IPv4/IPv6, 100BASE-TX, fibre risers)"])
+  ws.cell(row=ws.max_row, column=1).font = Font(bold=True, size=11)
+  h1 = ws.max_row + 1
+  ws.append(["Component", "Role", "Model / detail", "Location"])
+  style_header(ws, 4, row=h1)
+  central = [
+      ("BMS", "Building-management server", "NEC FC-E21A (ビルマネジメントサーバ)", "B2F 防災室 (panel LHP1-11-101)"),
+      ("SMS", "System-management server", "Azbil SI-net BCY45300W0020", "B2F 防災室 (101)"),
+      ("DSS", "Data-storage server", "Azbil SI-net BCY46300W0020", "B2F 防災室 (101)"),
+      ("監視用PC1", "Operator workstation #1", "Fujitsu ESPRIMO D551/G · EIZO 22\" LCD", "B2F 防災室 (101)"),
+      ("監視用PC2", "Operator workstation #2", "Fujitsu ESPRIMO D551/G · EIZO 22\" LCD", "2F 防災センター (panel LHP1-11-103)"),
+      ("CLP", "Colour laser printer", "Brother HL-4570CDW", "B2F 防災室 (101)"),
+      ("ESW1 / ESW3", "Ethernet switches (8-port)", "Hitachi APLGB108SS", "101 / 103"),
+      ("ESW2", "Ethernet switch (16-port)", "Allied Telesis FS816S", "System-control panel 102"),
+      ("IP plan", "Addressing", "192.168.30.x / 192.168.31.x (+ IPv6 FE80::)", "per -200-02 address table"),
+  ]
+  for row in central:
+      ws.append(list(row))
+  for rr in range(h1, ws.max_row + 1):
+      for c in range(1, 5):
+          ws.cell(row=rr, column=c).border = BORDER
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+  ws.append([])
+  ws.append(["Fieldbus hierarchy (system-control panel 102 → field)"])
+  ws.cell(row=ws.max_row, column=1).font = Font(bold=True, size=11)
+  h2 = ws.max_row + 1
+  ws.append(["Tier", "Device", "Qty", "Notes"])
+  style_header(ws, 4, row=h2)
+  fieldbus = [
+      ("Sub-server", "SCS — システム・コア・サーバ (System Core Server)", "6", "BCY44200W0000, on ESW2; each heads up to 4 NC-bus lines"),
+      ("Fieldbus", "NC-bus lines", "≤24", "≤4 lines per SCS; transmission trunk IPEV-S 0.9 mm² (TX-IN→TX-OUT daisy-chain)"),
+      ("Remote station", "RS / DDC (= the 67 physical panels)", "67", "RS-* / RCP-* / CP-* cabinets — see Points-by-Floor & Delta-Controllers sheets (4,467 pts)"),
+      ("Fire/ext I/O", "IFGD1 Inf-GD module", "1", "DI 16 / DO 8 — fire-alarm & external signals (火災入力・外部信号)"),
+  ]
+  for row in fieldbus:
+      ws.append(list(row))
+  for rr in range(h2, ws.max_row + 1):
+      for c in range(1, 5):
+          ws.cell(row=rr, column=c).border = BORDER
+          ws.cell(row=rr, column=c).alignment = Alignment(wrap_text=True, vertical="top")
+  set_widths(ws, [16, 44, 8, 60])
+  ws.append([])
+  nr = ws.max_row + 1
+  ws.cell(row=nr, column=1, value="Note").font = Font(bold=True, size=10)
+  ws.cell(row=nr, column=2, value=(
+      "The functional model in this workbook groups points into 16 logical LCP panels for control-logic "
+      "authoring; the drawings show the true physical segmentation is 6 SCS → ≤24 NC-bus lines → 67 RS/DDC "
+      "remote stations. The 2002 伝送幹線系統図 organises those panels by floor onto named UIC1–4 LINE "
+      "segments (high-rise risers to 10F/21F/31F; basement UIC4 group) — the trunk this FX2 retrofit rides on. "
+      "Full write-up: docs/reconciliation_2026-08.md."))
+  ws.cell(row=nr, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+  ws.row_dimensions[nr].height = 84
 
   # ---- Legend ----
   ws = wb.create_sheet("Legend")

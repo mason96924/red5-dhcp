@@ -71,6 +71,14 @@ def classify(dev: str) -> str:
         return "ahu"
     if d.startswith(("OAU", "EVU", "SEV", "SA", "EA", "EF", "SF", "FAN")):
         return "vent"
+    if d.startswith("DHW-"):
+        return "dhw"
+    if d.startswith(("MP-", "P-", "DP-", "BL-", "RCVT", "ELVT", "REUSET", "FIRET")):
+        return "sanitary"
+    if d.startswith("FILT-"):
+        return "filtration"
+    if d.startswith(("SMF-", "SMK-")):
+        return "smoke"
     if d.startswith("ST-"):
         return "oa_station"
     if d.startswith("FCU"):
@@ -107,6 +115,10 @@ CLASS_LABEL = {
     "packaged": "Packaged DX unit",
     "lighting": "Lighting group",
     "meter": "Energy meter",
+    "dhw": "Domestic-hot-water plant (steam-heated storage)",
+    "sanitary": "Plumbing / sanitary pumps & tanks",
+    "filtration": "Recreational-water filtration plant",
+    "smoke": "Smoke-exhaust (排煙) fans",
     "generic": "Field device",
 }
 
@@ -334,6 +346,57 @@ def soo_changeover(devs, sfx):
                          "position feedback and end-switch supervision."])]
 
 
+def soo_dhw(devs, sfx):
+    return [
+        ("Purpose", ["Domestic-hot-water plant: hold stored/delivered DHW temperature per vertical "
+                     "zone at minimum steam use, with Legionella protection."]),
+        ("Control", [
+            "Modulate the steam charging valve `*.STG-CV` to hold the storage setpoint `*.STG-T` "
+            "(≥60°C store / ≥55°C delivery); recirc pump `*.PMP-SS` on schedule with duty/standby.",
+            "Meter storage steam `*.STM-M`; night/low-demand setback with a periodic thermal-"
+            "disinfection cycle."]),
+        ("Safeties & monitoring", [
+            "High-temp / scald and low-delivery-temp alarms (`*.SUP-T`); pump fault `*.PMP-TRIP`; "
+            "low-storage-temp Legionella advisory."]),
+    ]
+
+
+def soo_sanitary(devs, sfx):
+    return [
+        ("Purpose", ["Plumbing / sanitary: maintain potable (上水) & reclaimed (中水) supply and "
+                     "clear drainage/sewage sumps."]),
+        ("Control", [
+            "Booster / transfer pumps lead/lag on tank level & pressure (`*.SS`, prove `*.RUN`); "
+            "sump & sewage pumps run on float level with BMS run/high-level supervision.",
+            "Aeration blowers cycle on DO/timer for the wastewater-treatment tanks."]
+            + _lead_lag([d for d in devs if d.startswith(("MP", "P-"))], "booster pumps")),
+        ("Safeties & monitoring", [
+            "Tank high/low-level & dry-run alarms; sump high-water (flooding) alarm `*.HLV`; "
+            "fire-reserve tank low-level is statutory; pump fault `*.TRIP`."]),
+    ]
+
+
+def soo_filtration(devs, sfx):
+    return [
+        ("Purpose", ["Recreational-water (bath / sauna / pool / waterfall / fountain / rainwater) "
+                     "circulation & filtration."]),
+        ("Control", ["Circulation pump `*.SS` on the daily schedule; periodic backwash; "
+                     "prove `*.RUN`, alarm `*.TRIP`; maintain turnover/turbidity per venue."]),
+    ]
+
+
+def soo_smoke(devs, sfx):
+    return [
+        ("Purpose", ["Smoke exhaust (排煙): clear smoke from the fire zone on alarm."]),
+        ("Life-safety control", [
+            "Life-safety start is HARD-WIRED from the disaster-prevention (fire) panel — the BMS does "
+            "not gate it. On the fire batch `SMK-FIRE.ALM`, the affected `SMF-*` start and supply "
+            "AHUs/dampers interlock shut.",
+            "BMS provides monitoring (`*.RUN`, `*.TRIP`) and a supervised smoke-mode start `*.SS`; "
+            "weekly/periodic run test with runtime logging."]),
+    ]
+
+
 def soo_generic(devs, sfx):
     return [("Purpose", [f"Supervise {', '.join(devs)}: start/stop, status and alarm as available."])]
 
@@ -344,6 +407,7 @@ CLASS_SOO = {
     "hx": soo_hx, "ahu": soo_ahu, "vent": soo_vent, "oa_station": soo_oa_station,
     "fcu": soo_fcu, "packaged": soo_packaged, "lighting": soo_lighting, "meter": soo_meter,
     "hotwell": soo_hotwell, "expansion": soo_expansion, "changeover": soo_changeover,
+    "dhw": soo_dhw, "sanitary": soo_sanitary, "filtration": soo_filtration, "smoke": soo_smoke,
     "generic": soo_generic,
     "cond_pump": lambda d, s: soo_pumps(d, s, "cond"),
     "chw_pump": lambda d, s: soo_pumps(d, s, "chw"),
@@ -375,6 +439,10 @@ STRATEGY = {
     "hotwell": "Level control + makeup",
     "expansion": "Loop pressurisation",
     "changeover": "Bumpless source transfer + flow proof",
+    "dhw": "Steam charging to storage setpoint + Legionella cycle",
+    "sanitary": "Lead/lag booster + float-level sump/sewage",
+    "filtration": "Scheduled circulation + backwash",
+    "smoke": "Hard-wired fire start; BMS monitors + smoke-mode",
     "generic": "Start/stop + status/alarm",
 }
 
