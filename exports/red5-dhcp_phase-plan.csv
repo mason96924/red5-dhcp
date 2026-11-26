@@ -1,0 +1,103 @@
+﻿Phase,Name,Nature of work,Licence question,Window,Objective,Continues from,How the delivery continues
+Phase 1,"Panel fabrication, supply & factory acceptance",Off-site manufacture / supply,Likely NOT 建設業 (goods manufacture + supply) — confirm,C+0 to C+6 mo,"Deliver every DDC panel to site already built, loaded and factory-tested, so that on-site time is reduced to swapping an enclosure and landing wires.",—,"Hands panels to Phase 3 in wave order. Bench-load needs the programs from Phase 5, which starts in month C+1."
+Phase 2,Device-network cabling,"New field network, inside the same contract",Same licence question as the site electrical work — confirm,C+0 survey · C+2 to C+6 install · proved before each wave,"Identify the installed Azbil cable and, where it is IEIEJ p-A or otherwise unsuitable, install a new device network before cutover. This phase does not add a month.","Starts with Phase 1, in the contract month",Each cutover wave lands on a run this phase has already proved.
+Phase 3,Panel replacement & field termination,Electrical installation (on-site construction),電気工事業 — almost certainly required,C+5 mo mobilise · C+6 to C+8 mo by wave,"Physically replace the Azbil RS/RCP/CP panels with the new DDC panels and transfer every field termination, without the hotel losing conditioning.","Phase 1 panels for that wave, and the Phase 2 run for that wave",The same night continues into instruments and programming.
+Phase 4,Field instrumentation replacement & calibration,Instrumentation installation (on-site construction),管工事 / 電気 / 計装 — category to be confirmed,"C+6 to C+8 mo, inside each wave after the panel is energised","Replace and calibrate the analog field devices so the new controllers read true values, which is what the optimisation sequences depend on.",Phase 3 (panel live for that area),The same night continues into the functional test.
+Phase 5,"Programming, integration, tuning & handover",Engineering / software services,情報通信工事 — or arguably not 建設業 at all; confirm,C+1 mo authoring · C+5 mo head-end · C+6 mo through completion,"Make the installed hardware behave: load the control logic, prove every point, tune the sequences and hand a working system to the hotel.",Phase 3 and Phase 4 for that area wave. Authoring itself starts in month C+1.,Closes the project at the contract date plus nine months.
+
+"Scope, deliverables and acceptance"
+Phase,Section,Item
+Phase 1,Scope,Procure 904 Delta controllers and I/O modules against the panel schedule
+Phase 1,Scope,"Build and wire 67 enclosures to 5,240-point capacity (4,467 used, 773 spare)"
+Phase 1,Scope,Head-end hardware: replacement of the BMS / SMS / DSS server role and the two operator consoles
+Phase 1,Scope,Bench-load the GCL+ programs and simulate I/O at the factory
+Phase 1,Scope,"Panel general-arrangement and termination drawings, spares schedule"
+Phase 1,Deliverable,"67 panels delivered to site, labelled per the panel schedule"
+Phase 1,Deliverable,"FAT certificate per panel (module count, addressing, power-up, simulated I/O)"
+Phase 1,Deliverable,As-built panel drawings + terminal schedules
+Phase 1,Deliverable,Head-end hardware delivered and staged
+Phase 1,Deliverable,Spare-parts list and recommended holding
+Phase 1,Acceptance,Module count reconciles to 904 against panels_schedule.json
+Phase 1,Acceptance,FAT witnessed and signed per panel; no panel ships on a failed FAT
+Phase 1,Acceptance,"Delivery note signed at site — this is the transfer of title, no site work involved"
+Phase 2,Scope,Survey panels and risers. The 2002 drawing names IPEV-S 0.9 mm². The installed cable may be IEIEJ p-A.
+Phase 2,Scope,Reuse a run only when a test shows it meets the new network specification. IEIEJ p-A is not assumed reusable.
+Phase 2,Scope,Design and pull the new risers and floor cabling while the old network is still in service
+Phase 2,Scope,"Prove continuity, insulation and communications on each run before that wave starts"
+Phase 2,Scope,Record abandoned cable so a later crew does not land a new panel on it
+Phase 2,Deliverable,Cable identification record
+Phase 2,Deliverable,Reuse or replace decision per riser
+Phase 2,Deliverable,Network drawings and cable schedule
+Phase 2,Deliverable,Segment test certificate before each wave
+Phase 2,Deliverable,As-built network drawings
+Phase 2,Acceptance,Cable type recorded before the network design is approved
+Phase 2,Acceptance,Each wave's new run tested before that wave's first panel is cut over
+Phase 2,Acceptance,IEIEJ p-A not landed on the new panels unless a test says the run meets the specification
+Phase 3,Scope,"Remove 67 existing Azbil RS/RCP/CP panels, install their replacements"
+Phase 3,Scope,"Transfer and land 4,467 field terminations (3,342 binary, 534 pulse, 591 analog)"
+Phase 3,Scope,Land each panel on the device-network run proved in Phase 2. Do not reuse IEIEJ p-A unless that test passed
+Phase 3,Scope,"Panel power, earthing, containment and making good"
+Phase 3,Scope,Old controller left landed on a marshalling strip for rollback
+Phase 3,Deliverable,67 panels installed and energised
+Phase 3,Deliverable,Per-panel wiring completion certificate
+Phase 3,Deliverable,Continuity / insulation test records
+Phase 3,Deliverable,Marked-up termination drawings (as-installed)
+Phase 3,Deliverable,Rollback arrangement demonstrated per area wave
+Phase 3,Acceptance,"""Wired"" and ""Terminated"" signed for all 4,467 points on the commissioning checklist"
+Phase 3,Acceptance,"Insulation and continuity results within limits, per panel"
+Phase 3,Acceptance,The panel is on the proved new run before the wave is closed
+Phase 4,Scope,"Replace 505 analog input devices — temperature, humidity, pressure, flow, energy"
+Phase 4,Scope,Replace 86 analog output devices — modulating valves and damper actuators
+Phase 4,Scope,Verify (not replace) 534 pulse / totalizer interfaces from existing meters
+Phase 4,Scope,Re-range and calibrate each loop against the I/O list engineering units
+Phase 4,Scope,"Immersion wells, averaging elements and impulse lines made good"
+Phase 4,Deliverable,591 analog devices installed
+Phase 4,Deliverable,"Calibration certificate per loop, traceable"
+Phase 4,Deliverable,Loop schedules marked with as-installed range and units
+Phase 4,Deliverable,534 pulse interfaces proven for count and scaling
+Phase 4,Acceptance,"""P2P verified"" signed for all 591 analog points"
+Phase 4,Acceptance,Two-point calibration recorded for every AI; stroke test for every AO
+Phase 4,Acceptance,Reading agreement against a reference instrument within tolerance
+Phase 5,Scope,"Load and commission 109 DDC control programs (GCL+, one PG object per controller)"
+Phase 5,Scope,"Build the head-end point database and graphics for 1,383 characterised points across 259 devices"
+Phase 5,Scope,"R-1 chiller optimiser: economic dispatch, CW/CHW reset, staging, FDD"
+Phase 5,Scope,"Trend, alarm, time-program, calendar and reporting configuration"
+Phase 5,Scope,"Functional test of all 4,467 points; 24–48 h trend per panel before auto"
+Phase 5,Scope,Seasonal tuning through first cooling season; operator training; O&M documentation
+Phase 5,Deliverable,109 programs loaded and version-controlled
+Phase 5,Deliverable,Head-end graphics and database live on the new servers
+Phase 5,Deliverable,"Functional test sheets, complete"
+Phase 5,Deliverable,Trend evidence per panel
+Phase 5,Deliverable,Sequence-of-Operations compliance record against docs/control_logic.md
+Phase 5,Deliverable,Training delivered; as-built documentation issued
+Phase 5,Acceptance,"""Func. test"" signed for all 4,467 points"
+Phase 5,Acceptance,Each controller demonstrated against its SOO
+Phase 5,Acceptance,24–48 h stable trend per panel before hand-back to auto
+Phase 5,Acceptance,Operator sign-off after training
+
+Execution — phases overlap by cutover area wave
+Wave,Area,Panels,Points,Phase 1 fabricate,Phase 2 network,Phase 3 install,Phase 4 instruments,Phase 5 program
+0,Central head-end (B2F 시스템 제어반),1,25,C+0–C+2,proved before C+5,C+5,n/a,C+5 — alongside FX2
+1,"Penthouse PH1/PH2 — rooftop plant, R-1, OAUs",9,710,C+0–C+3,proved before C+6,C+6,C+6,C+6
+2,"Guest & public floors — 31F, 21F, 10F, 4F–1F",26,2083,C+1–C+4,proved before C+6,C+6–C+7,C+6–C+7,C+6–C+7
+3,"Basements B1–B3 — plant, hydronics, DHC intake",31,1649,C+2–C+5,proved before C+6,"C+6–C+7, last",C+6–C+7,C+7–C+8
+TOTAL,,67,4467,,,,,
+
+Quantity reconciliation
+Quantity,Phase 1,Phase 2,Phase 3,Phase 4,Phase 5,Basis
+Panels,67 built,—,67 installed,—,—,panels_schedule.json
+Controllers + modules,904,—,—,—,109 programs,modTotals / functional model
+Field points,"5,240 capacity",—,"4,467 terminated",591 calibrated,"4,467 function-tested",usedTotal / typeTotals
+Device network,—,"survey, new cable, proved per wave",landed at cutover,—,comms proved,installed cable may be IEIEJ p-A
+Analog devices,—,—,—,505 AI + 86 AO,—,typeTotals
+Pulse / totalizer,—,—,534 landed,534 verified,—,typeTotals
+Checklist column,FAT record,run proved,Wired + Terminated,P2P verified,Func. test,build_commissioning.py
+
+Open items requiring confirmation
+Item,Severity,Detail
+Threshold basis,crit,"特定建設業許可 is triggered by the value a prime contractor SUBCONTRACTS OUT (4,500万円, or 7,000万円 for 建築一式工事) — not by the headline contract value. If that is the operative test, then how much the prime subcontracts matters more than how the contract is divided. DEJ is the prime. TYBMS is subcontracted to DEJ, so the test is the value DEJ places with TYBMS and any other subcontractor. Confirm with counsel against that subcontract, not against a four-way split."
+Licence category for BMS,warn,"Whether BMS work is 電気工事, 管工事, 情報通信工事 or a combination is still unresolved. It decides which phases need a licence. Phase 1 is manufacture. Phase 5 is largely services. The site exposure sits in Phase 2, Phase 3 and Phase 4."
+One delivery,info,"The proposal is one continuous project under DEJ. It is not a four-segment split, and it is not four payment contracts. A split whose only purpose is a value cap is the arrangement this plan no longer presents."
+Prime contractor identity,info,Furukawa Denki has backed out. DEJ submits the proposal and holds the main contract. TYBMS is subcontracted to DEJ.
+Continuity of control,crit,"Phases 3, 4 and 5 run inside the same area wave. If installation finished building-wide before programming started, the hotel would sit on manual control for months. The playbook supports one panel at a time."
+Foreign personnel,info,"Scope of work permitted for Korean crews, insurance liability and safety responsibility are unresolved in writing. They bear on the on-site phases, Phase 3 and Phase 4."

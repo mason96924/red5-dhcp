@@ -29,6 +29,9 @@ To open one: click the file in Cursor, or just ask the agent to open it by name.
 | Control logic / SOO | `red5-dhcp_control-logic.{csv,xlsx,html}` |
 | Per-controller commissioning checklists | `red5-dhcp_commissioning.{csv,xlsx,html}` |
 | Controller cutover plan | `red5-dhcp_controller-cutover-plan.{csv,xlsx,html}` |
+| Continuous delivery, by phase | `red5-dhcp_phase-plan.{csv,xlsx,html}` |
+| System architecture SLD — existing vs proposed | `red5-dhcp_sld.html` · `red5-dhcp_sld-{existing,proposed}.svg` |
+| Workflow plan, one project, nine months from the contract date | `red5-dhcp_workflow-plan.{csv,xlsx,html}` · `red5-dhcp_workflow-gantt.svg` |
 | GCL+ control programs (Delta Controls) | `red5-dhcp_gcl-programs.{gcl,html}` |
 | **Master I/O workbook** (repo root) | `../Red5-DHCP_BMS_IO_List.xlsx` |
 
@@ -42,6 +45,8 @@ are multi-sheet workbooks; `.csv` for import.
 | `docs/control_logic.md` | All 109 controllers' SOO in Markdown |
 | `docs/gcl_programs.md` | All 109 GCL+ programs |
 | `docs/R-1_control_narrative.md` | R-1 chiller control & optimisation narrative |
+| `docs/phase_plan.md` | Continuous delivery in five overlapping phases |
+| `docs/workflow_plan.md` | One-project workflow: workstreams, hold points, per-panel cutover, new device network |
 
 ## Regenerate anything — build scripts
 
@@ -56,4 +61,7 @@ Run with the repo's venv (`.venv/bin/python <script>`). Each writes to `exports/
 | `build_control_logic.py` | Control logic / SOO (md, csv, xlsx, html, canvas) |
 | `build_commissioning.py` | Per-controller commissioning checklists |
 | `build_cutover.py` | Controller cutover plan (csv, xlsx, html) |
+| `build_segmentation.py` | Phase plan of the one continuous delivery (csv, xlsx, html, md) |
+| `build_sld.py` | System architecture SLDs, existing vs proposed (svg, html) |
+| `build_workflow.py` | One-project workflow, panel cycle, device network, hold points (csv, xlsx, html, svg, md) |
 | `build_gcl.py` | GCL+ programs (md, .gcl, html) |

@@ -1,0 +1,218 @@
+﻿"Red5-DHCP — workflow plan, one project"
+"Continuous delivery of the same 67 panels and 4,467 points under one contract. Five phases overlap across nine months: P1 fabrication, P2 device network, P3 installation, P4 instruments, P5 programming. The completion date is the contract date plus nine months. DEJ is the prime contractor. TYBMS is subcontracted to DEJ. Furukawa Denki is not a party."
+Generated 2026-11-26
+
+"Phase 1 — Panel fabrication, supply & factory acceptance"
+Off-site manufacture / supply,C+0 to C+6 mo — same six-month off-site window
+Entry criteria
+,"The single contract is executed, and the licence position for off-site manufacture versus site work is recorded in writing"
+,Panel schedule and I/O list frozen as the contract baseline
+,As-built Azbil termination drawings available for the old→new cross-reference
+Step,Stage,Activity,Detail,Owner,Duration,Output / evidence,Hold point
+P1.1,Award,Contract award & kickoff,"DEJ submits the proposal and holds the main contract with the client. TYBMS is subcontracted to DEJ for the BMS scope. Furukawa Denki is not a party. Appoint a PM at DEJ and at TYBMS, and record the licence position in writing. Off-site manufacture can proceed while any construction-licence question for the site work is still open.",DEJ / TYBMS,2 wk,"Signed contract, subcontract, PM appointments, licence position memo",Licence position confirmed in writing
+P1.2,Design,Panel schedule & point-list freeze,"Sign off 67 panels / 904 controllers and modules / 5,240-point capacity and the 4,467-point I/O list as the frozen baseline. Everything downstream is quantified against this, so any later change is a priced variation rather than a silent scope creep.","TYBMS, accepted by DEJ",2 wk,"Frozen panel schedule and I/O list, rev A",Baseline frozen before any PO
+P1.3,Design,"Panel GA, wiring & termination drawings","Produce general-arrangement, internal wiring and terminal schedules per panel, including the old Azbil terminal → new DDC terminal cross-reference. That cross-reference is what turns P3's night work into a core-for-core transfer instead of an interpretation exercise.",TYBMS,3 wk,"GA + termination drawings, old→new cross-reference",Drawing approval by DEJ
+P1.4,Interface,Receive GCL+ bench package from P5,Take the program set from Phase 5 so panels can ship pre-loaded. Authoring starts in month C+1 under the same contract. There is no second award to wait for.,P5 → TYBMS,interface,Program package issued for bench load,—
+P1.5,Procure,PO release — long-lead controllers,Release the Delta controller and I/O module orders about one month after the contract date. At 12–16 weeks this lead still sets the site window. A later purchase order does not lengthen the nine months; it pushes the cutover out of the shoulder season if the contract date was early October.,"TYBMS, under DEJ",12–16 wk lead,"PO acknowledgements, delivery schedule",PO about one month after the contract date
+P1.6,Build,Enclosure fabrication & internal wiring,Build and wire the enclosures in cutover-wave order — Wave 0 central and Wave 1 penthouse first — so delivery sequence matches the site sequence and nothing sits in storage for months.,FAB,8 wk rolling,"Panels built, internal wiring complete",—
+P1.7,Build,Bench load & simulated I/O,"Load each panel's GCL+ program, address the modules, and simulate every I/O channel on the bench. Faults found here cost minutes; the same fault found at 03:00 on site costs the night.",FAB + TYBMS,1 d / panel,Bench test record per panel,—
+P1.8,Test,"Factory acceptance test, witnessed","Witnessed FAT per panel: module count against the schedule, addressing, power-up, simulated I/O and program verification.","TYBMS, witnessed by DEJ",1 d / batch,FAT certificate per panel,No panel ships on a failed FAT
+P1.9,Build,Head-end hardware staging,"Assemble, image and stage the servers replacing the BMS / SMS / DSS roles plus the two operator console positions, ready for P5 to stand up in parallel with the FX2 central.",TYBMS,3 wk,Head-end staged and imaged,—
+P1.10,Ship,"Labelling, packing & spares","Label every panel per the panel schedule, pack for the actual site access route and lift constraints, and issue the spares schedule with a recommended holding.",FAB,2 wk,"Packing list, spares schedule",—
+P1.11,Deliver,Delivery to site by wave,Deliver in wave order to agreed lay-down areas. The signed delivery note transfers the panels. No site work is involved in the delivery itself.,FAB → DEJ,rolling,Signed delivery notes,Delivery acceptance per wave
+P1.12,Close,As-built panel documentation,"Issue as-built panel drawings and terminal schedules reflecting what was actually built, since this is what P3 wires to.",TYBMS,2 wk,"As-built drawings, terminal schedules",P1 completion certificate
+Exit criteria
+,67 panels delivered to site against signed delivery notes
+,FAT certificate held for every panel; none shipped on a failed FAT
+,As-built panel drawings and terminal schedules issued to P3
+,Head-end hardware staged; spares schedule issued
+
+Phase 2 — Device-network cabling
+"New field network, inside the same contract",C+0 survey · C+2 to C+6 install · proved before each wave
+Entry criteria
+,"Access to sample panels, risers and the 2002 transmission-trunk drawing"
+,The new controller network cable specification is known before the survey is closed
+Step,Stage,Activity,Detail,Owner,Duration,Output / evidence,Hold point
+P2.1,Survey,Identify the installed device-network cable,"Open a sample of panels and risers and record what is actually installed. The 2002 trunk drawing names IPEV-S 0.9 mm². The installed Azbil network may instead be IEIEJ p-A, or a mix of the two. Photograph the legend on the cable and the terminations. This survey runs with the drawing freeze and does not add a month.",TYBMS,2 wk,"Cable identification record, photo set",Cable type recorded before the network design is approved
+P2.2,Decide,"Reuse test, or new cable","IEIEJ p-A is not reused for the new controller network. A run is reused only when a test shows that the installed cable meets the new network specification. Anything that fails, including IEIEJ p-A, is designed out and left abandoned or removed. The decision is one hold point for the whole building, not a discovery on the cutover night.","TYBMS, accepted by DEJ",1 wk,Reuse / replace decision per riser,IEIEJ p-A excluded unless a test says otherwise
+P2.3,Design,New device-network design,"Specify the new cable, segment lengths, shields and grounds, and the routes. Use existing containment where it has room. Follow the same floor groups as the old trunk so each cutover wave has its own segment ready. This design sits inside the same three-week drawing window as the panel GA.",TYBMS,3 wk,Network drawings and cable schedule,Network design approved with the panel drawings
+P2.4,Install,Pull the new cable ahead of cutover,"Install the new risers and floor cabling during the fabrication window, while the old Azbil network is still in service. The overnight cutover then lands a panel onto a cable that is already in the building. This pull does not extend the nine months.",TYBMS,"rolling, C+2 to C+6",Installed-cable record per segment,—
+P2.5,Test,Prove each segment before its wave,"Continuity, insulation, and a communications proof on the new segment with no panel cut over yet. A wave does not start until its segment has passed.","TYBMS, accepted by DEJ",before each wave,Segment test certificate,Segment certificate signed before the wave's first panel
+P2.6,Close,As-built network and abandoned cable,"Issue the as-built cable schedule. Record IEIEJ p-A and any other unused trunk as abandoned in place or removed, so a later crew does not land a new panel on it.",TYBMS,2 wk,As-built network drawings,Abandoned cable recorded before final acceptance
+Exit criteria
+,"Every installed run is identified as IEIEJ p-A, IPEV-S 0.9 mm², or something else"
+,IEIEJ p-A is not landed on the new panels
+,Each wave's new segment is tested before that wave's first panel is cut over
+,As-built cable schedule issued; abandoned cable recorded
+
+Phase 3 — Panel replacement & field termination
+Electrical installation (on-site construction),C+5 mo mobilise · C+6 to C+8 mo by wave
+Entry criteria
+,P1 panels delivered and FAT'd for that wave
+,Method statement and night-work window approved by the hotel
+,"Foreign-personnel scope, insurance liability and safety responsibility confirmed in writing"
+,Manual-operation arrangement accepted by hotel operations for the plant affected
+Step,Stage,Activity,Detail,Owner,Duration,Output / evidence,Hold point
+P3.1,Mobilise,Award & site mobilisation,"Site office and store, access routes, lift and hoist bookings, waste route, and hotel security induction for every crew member including any Korean personnel.",DEJ / TYBMS,2 wk,"Mobilisation record, induction register","Foreign-personnel scope, insurance and safety responsibility confirmed in writing"
+P3.2,Plan,Method statement & risk assessment per wave,"Per-area method statement and RAMS: permit regime, night-work windows, noise and dust control, guest-impact plan, and the escape and life-safety routes that must stay clear.",TYBMS,1 wk / wave,Approved method statement + RAMS,Hotel approval of method statement
+P3.3,Survey,Pre-cutover panel survey,"Per panel, verify the as-built terminations against the schedule, photograph the existing panel, and tag every core. Discrepancies are raised as variations before the night, not discovered during it.",TYBMS,0.5 d / panel,"Marked-up survey sheet, photo record",—
+P3.4,Prep,Establish manual-operation arrangement,"Put that panel's plant into the playbook state — COS→手元, fans hand-ON, OA damper ~100 % for economizer, pumps hand-ON at fixed speed, DHC coil valves left crackable — and rehearse it with hotel operations. Only one system sits in manual at a time.",TYBMS + HOTEL,2 h / panel,"Manual arrangement sheet, ops acknowledgement",Hotel ops accept the manual state before isolation
+P3.5,Isolate,Permit to work & isolation,"Lock off, prove dead, and confirm no life-safety interlock is affected — smoke control, stair pressurization and exhaust stay live and coordinated with the fire-alarm system, and the aviation obstruction light stays lit.",TYBMS + HOTEL + FA,1 h / panel,"Permit, isolation certificate",Life-safety interlocks confirmed unaffected
+P3.6,Remove,"Remove Azbil panel, retain rollback","Remove the RS / RCP / CP panel but leave the old controller landed on a marshalling strip, so FX2 can be restored within minutes if the night goes wrong.",TYBMS,1–2 h / panel,Rollback arrangement photographed,—
+P3.7,Install,Install and energise the DDC panel,"Mount, power, earth and dress the containment; confirm supply quality and that panel labelling matches the schedule before any field core is moved.",TYBMS,2 h / panel,Panel installed and energised,—
+P3.8,Terminate,Transfer field terminations,"Land the cores core-for-core against the P1 cross-reference — 4,467 across the estate (3,342 binary, 534 pulse, 591 analog).",TYBMS,3–5 h / panel,"Terminations complete, schedule marked as-installed",—
+P3.9,Network,Land the panel on the new device network,"Connect the new panel to the device-network segment already proved under phase P2. Do not land it on IEIEJ p-A, and do not treat the old IPEV-S trunk as reusable unless P2.2 recorded that the installed cable passed the new-network test. Neighbours on the new segment must still be communicating when the crew leaves.",TYBMS,1 h / panel,Panel on the proved new segment,New segment proved before this panel is cut over
+P3.10,Test,Continuity & insulation testing,"Test and record per panel. Any core outside limits is investigated before loads are energised, not after.",TYBMS,1 h / panel,Continuity and insulation records,—
+P3.11,Sign,Sign Wired + Terminated,Sign the two wiring columns of the per-panel commissioning checklist. This is the stage gate for this panel under the single contract.,"TYBMS, accepted by DEJ",per panel,Per-panel wiring completion certificate,Wiring completion certificate witnessed
+P3.12,Handover,Release the panel to P4 and P5,"Release the panel the same night so instrumentation and programming happen inside the same window. DEJ names the night-shift authority, so the handover note is timed.",TYBMS,—,Timed handover note,—
+P3.13,Close,Making good & wave close-out,"Containment, labels, penetrations and fire-stopping, cleaning down, and clearing the snag list for the area before the wave is signed off.",TYBMS,1 wk / wave,Wave close-out certificate,Area wave close-out
+Exit criteria
+,"""Wired"" and ""Terminated"" signed for all 4,467 points"
+,Continuity and insulation records within limits for every panel
+,Every new device-network segment proved before its wave; IEIEJ p-A not reused
+,Rollback arrangement demonstrated and then withdrawn per wave
+
+Phase 4 — Field instrumentation replacement & calibration
+Instrumentation installation (on-site construction),"C+6 to C+8 mo, following panel replacement inside each wave"
+Entry criteria
+,Panel energised and analog cores landed by P3 for that area
+,Reference instruments carrying in-date traceable calibration certificates
+,Hydronic and air-side isolations agreed against the manual-operation state
+Step,Stage,Activity,Detail,Owner,Duration,Output / evidence,Hold point
+P4.1,Mobilise,Award & calibration setup,"Mobilise the instrument crew and prove the reference instruments carry in-date, traceable calibration certificates — without traceability the calibration records are not acceptance evidence.",DEJ / TYBMS,1 wk,Reference instrument certificates,Traceability evidence accepted
+P4.2,Plan,Loop schedule review,"Reconcile 591 analog loops (505 AI + 86 AO) and 534 pulse interfaces against the I/O list engineering units, and flag which wells, averaging elements and impulse lines need mechanical isolation.",TYBMS,1 wk,Loop schedule rev A with as-found ranges,—
+P4.3,Isolate,Mechanical isolation per loop,"Isolate, drain or vent as required, coordinating every hydronic isolation with the manual-operation state so duty or standby plant always remains available.",TYBMS + HOTEL,per loop,Isolation record,Duty / standby availability confirmed
+P4.4,Replace,Replace 505 analog input devices,"Temperature, humidity, pressure, flow and energy devices, renewing immersion wells, averaging elements and impulse lines where the existing installation will not give a true reading.",TYBMS,1–2 h / loop,Devices installed,—
+P4.5,Replace,Replace 86 analog output devices,Modulating valve and damper actuators. Fail-safe position and direction of action are confirmed on installation — a valve that fails the wrong way is a plant risk the sequences cannot correct.,TYBMS,2 h / loop,"Actuators installed, fail position confirmed",Fail-safe position verified before auto operation
+P4.6,Configure,Re-range & scale each loop,"Configure each transmitter to the I/O list engineering units and confirm the controller-side scaling matches, so the head-end and the field agree on what the number means.",TYBMS,per loop,Configuration record,—
+P4.7,Test,"Two-point calibration, every AI","Calibrate each analog input at two points against the reference instrument, recording as-found and as-left values.",TYBMS,per loop,Calibration certificate per loop,—
+P4.8,Test,"Stroke test, every AO","Drive 0–50–100–0 %, verifying travel, position feedback and tight closure.",TYBMS,per loop,Stroke test record,—
+P4.9,Test,Verify 534 pulse / totalizer interfaces,"Prove count and scaling from the existing meters. These are verified, not replaced — the meters stay, only the interface into the new controller changes.",TYBMS,per meter,Pulse verification record,—
+P4.10,Sign,Sign P2P verified,"Sign the P2P column for the analog loops, with the new controller reading true value against the reference instrument. This is the instrument stage gate for this panel.","TYBMS, accepted by DEJ",per panel,P2P signature + calibration certificates,P4 acceptance per panel
+P4.11,Close,Issue as-installed loop schedules,"Issue loop schedules marked with as-installed range, units and calibration date, so the next recalibration cycle starts from fact.",TYBMS,1 wk / wave,As-installed loop schedules,P4 completion per wave
+Exit criteria
+,"""P2P verified"" signed for all 591 analog points"
+,Two-point calibration recorded for every AI (505); stroke test for every AO (86)
+,534 pulse interfaces proven for count and scaling
+,"Loop schedules issued marked with as-installed range, units and calibration date"
+
+"Phase 5 — Programming, integration, tuning & handover"
+Engineering / software services,C+1 mo authoring · C+5 mo head-end · C+6 mo through completion
+Entry criteria
+,Programming starts in month C+1 under the same contract — the factory cannot bench-load without the programs
+,"Sequence of operations baselined (docs/control_logic.md, R-1 narrative)"
+,"Panel released by P3 and its analog loops verified by P4, per panel"
+Step,Stage,Activity,Detail,Owner,Duration,Output / evidence,Hold point
+P5.1,Start,Engineering kickoff in month C+1,"Programming starts in the contract month's successor, under the same contract as fabrication. The factory cannot bench-load a panel with a program that has not been written. This is a sequence inside the nine months, not a separate award.",DEJ / TYBMS,1 wk,"Engineering programme, point-naming convention",Kickoff in month C+1
+P5.2,Build,Build the point database,"Build the head-end database for 1,383 characterised points across 259 devices, keyed to the I/O list point tags so the graphics, programs and checklist all reference one naming scheme.",TYBMS,4 wk,Point database rev A,—
+P5.3,Build,Author 109 GCL+ programs,"One PG object per controller, authored from docs/control_logic.md and the R-1 narrative, every program version-controlled. Must complete before the fabrication batches need bench loading.",TYBMS,8 wk,"109 programs, versioned",Program review against the SOO
+P5.4,Build,"Graphics, alarms, trends, schedules & reports","Build the graphics set, alarm priorities and routing, trend logs, time programs, calendars and the periodic reporting that the operators currently get from the FX2 head-end.",TYBMS,6 wk,Head-end configuration,—
+P5.5,Deploy,Stand up the head-end in parallel with FX2,"Run the new head-end alongside the savic-netFX2 central and migrate the two 監視用PC consoles one at a time, so monitoring is never dark. The FX2 central is not decommissioned until the parallel run proves out.",TYBMS,3 wk,Parallel-run record,Parallel run proven before any FX2 decommissioning
+P5.6,Interface,Issue the bench-load package to P1,"Hand the program set to the factory, feeding P1.7. Late issue here pushes program loading onto the overnight site window, where there is no slack.",TYBMS,—,Issue record,—
+P5.7,Deploy,Per-panel download & comms verification,"Once the panel is released: download the program, verify BACnet addressing, and confirm the panel and its neighbours on the new device-network segment all communicate.",TYBMS,1 h / panel,Comms verification record,—
+P5.8,Test,"Functional test, every point","Function-test every point on the panel against the I/O list — 4,467 across the estate — and sign the Func. test column. This is the functional-test stage gate for this panel.","TYBMS, accepted by DEJ",4–8 h / panel,Functional test sheets,P5 point acceptance per panel
+P5.9,Test,SOO demonstration per controller,"Demonstrate each controller against its sequence of operations, including interlocks, staging and fail modes, witnessed by DEJ and hotel operations.",TYBMS + DEJ + HOTEL,per controller,SOO compliance record,Witnessed demonstration
+P5.10,Prove,24–48 h supervised trend,Trend the panel for 24–48 h under supervision and review it before the plant is released to automatic control.,TYBMS,1–2 d / panel,Trend evidence per panel,Stable trend before return to auto
+P5.11,Handover,Return to auto & withdraw manual operation,"Release to automatic control, withdraw the manual-operation arrangement, and have hotel operations accept the area. Until this happens the area is still consuming the manual playbook.",TYBMS + HOTEL,per wave,Area acceptance certificate,Hotel ops area acceptance
+P5.12,Optimise,Commission the R-1 chiller optimiser,"Economic dispatch against DHC, condenser- and chilled-water reset, staging and fault detection. This needs genuine cooling load to tune against, which is why it lands in month C+8, after the waves, rather than during cutover.",TYBMS,4 wk,Optimiser commissioning record,—
+P5.13,Optimise,Seasonal tuning,"Tune through the first cooling season, revisiting setpoints, resets and staging against measured performance rather than design intent.",TYBMS,through season,Tuning log with before / after evidence,—
+P5.14,Close,Operator training & O&M documentation,"Train the operators on the new head-end and issue as-built documentation, O&M manuals and the program source set.",TYBMS,2 wk,"Training record, O&M documentation set",Operator sign-off
+P5.15,Close,Final acceptance & defects liability start,"Final acceptance of the single project once every phase's evidence is complete, including the new device-network as-built. This date is the contract date plus nine months. The defects liability period starts here.",DEJ / TYBMS,—,Final acceptance certificate,Project completion
+Exit criteria
+,"""Func. test"" signed for all 4,467 points"
+,109 programs loaded and version-controlled
+,Every controller demonstrated against its SOO; 24–48 h stable trend before auto
+,"R-1 optimiser commissioned, seasonal tuning complete, operator sign-off obtained"
+
+Per-panel cutover cycle — repeated 67 times
+Clock,Activity,Phase,Owner,Evidence / gate
+T−14 d,New device-network segment for this panel already proved,P2,TYBMS + DEJ,GATE — segment certificate; IEIEJ p-A not in use
+T−7 d,"Panel surveyed, spares confirmed, bench record for this panel checked",P3 + P5,TYBMS,"Survey sheet, bench test record"
+T−1 d,"Method statement confirmed, hotel notified, manual arrangement rehearsed",P3,TYBMS + HOTEL,Ops acknowledgement
+22:00,Manual operation established on the panel's plant,P3,TYBMS + HOTEL,GATE — manual arrangement accepted
+22:30,"Permit to work, isolate, prove dead, confirm interlocks unaffected",P3,TYBMS + HOTEL,GATE — isolation certificate
+23:00,Old Azbil panel removed; old controller left on the marshalling strip,P3,TYBMS,Rollback arrangement photographed
+00:00,"New DDC panel mounted, powered, earthed, labelled",P3,TYBMS,—
+00:30,Field terminations transferred core-for-core,P3,TYBMS,Marked-up termination schedule
+03:00,"Continuity and insulation tested, panel energised, Wired + Terminated signed",P3,TYBMS + DEJ,GATE — P3 acceptance for this panel
+03:00,"Analog loops replaced, re-ranged, calibrated and P2P verified",P4,TYBMS + DEJ,GATE — P4 acceptance for this panel
+04:00,Program downloaded onto the new device-network segment; BACnet comms and functional test started,P5,TYBMS,"Comms verification on the proved segment, not IEIEJ p-A"
+05:00,GO / NO-GO decision,all,TYBMS + HOTEL,GATE — NO-GO reverts to FX2 via the marshalling strip
+05:00,Plant returned to supervised operation; 24–48 h trend started,P5,TYBMS,Trend start record
+T+2 d,"Trend reviewed, SOO demonstrated, Func. test signed",P5,TYBMS + DEJ + HOTEL,GATE — P5 acceptance for this panel
+T+2 d,Panel returned to auto; manual arrangement withdrawn,P3 / P5,TYBMS + HOTEL,GATE — area acceptance
+
+Handoffs between phases
+From,To,What passes,Evidence,If it is missed
+P5,P1,GCL+ program set for factory bench loading,Program issue record,"Panels ship unloaded, so every panel needs a site download — adding an hour to a window that has none"
+P1,P3,"Panels, FAT certificates, as-built terminal schedules, old→new cross-reference",Signed delivery note,"Crews terminate from unverified drawings, which is the classic cause of an overrun night"
+P3,P4,Panel energised with analog cores landed,Wired + Terminated signature,The instrument crew cannot verify a loop with no live controller to read it
+P2,P3,Proved device-network segment for the wave,P2.5 segment certificate,"The night has no new cable, so the crew either stops or lands the panel on IEIEJ p-A"
+P3,P5,"Panel live on the new device-network segment, neighbours still communicating",P2.5 certificate plus the night comms check,"The download fails, the panel is landed on IEIEJ p-A, or adjacent panels go dark"
+P4,P5,Calibrated loops reading true engineering units,P2P verified + calibration certificates,Sequences get tuned against false values — a mistuned optimiser is worse than none
+P5,HOTEL,Area on automatic control with proven trend,Func. test + trend evidence + area acceptance,"The area stays on manual, and the playbook only covers one panel at a time"
+P3,HOTEL,"Manual-operation state in force, then withdrawn",Manual arrangement sheet,Plant is left in an undefined state between two stages of the same night
+
+Hold points / witness schedule
+Step,Phase,Activity,Hold point — work stops until signed,Witness,Evidence
+P1.1,P1,Contract award & kickoff,Licence position confirmed in writing,DEJ / TYBMS,"Signed contract, subcontract, PM appointments, licence position memo"
+P1.2,P1,Panel schedule & point-list freeze,Baseline frozen before any PO,"TYBMS, accepted by DEJ","Frozen panel schedule and I/O list, rev A"
+P1.3,P1,"Panel GA, wiring & termination drawings",Drawing approval by DEJ,TYBMS,"GA + termination drawings, old→new cross-reference"
+P1.5,P1,PO release — long-lead controllers,PO about one month after the contract date,"TYBMS, under DEJ","PO acknowledgements, delivery schedule"
+P1.8,P1,"Factory acceptance test, witnessed",No panel ships on a failed FAT,"TYBMS, witnessed by DEJ",FAT certificate per panel
+P1.11,P1,Delivery to site by wave,Delivery acceptance per wave,FAB → DEJ,Signed delivery notes
+P1.12,P1,As-built panel documentation,P1 completion certificate,TYBMS,"As-built drawings, terminal schedules"
+P2.1,P2,Identify the installed device-network cable,Cable type recorded before the network design is approved,TYBMS,"Cable identification record, photo set"
+P2.2,P2,"Reuse test, or new cable",IEIEJ p-A excluded unless a test says otherwise,"TYBMS, accepted by DEJ",Reuse / replace decision per riser
+P2.3,P2,New device-network design,Network design approved with the panel drawings,TYBMS,Network drawings and cable schedule
+P2.5,P2,Prove each segment before its wave,Segment certificate signed before the wave's first panel,"TYBMS, accepted by DEJ",Segment test certificate
+P2.6,P2,As-built network and abandoned cable,Abandoned cable recorded before final acceptance,TYBMS,As-built network drawings
+P3.1,P3,Award & site mobilisation,"Foreign-personnel scope, insurance and safety responsibility confirmed in writing",DEJ / TYBMS,"Mobilisation record, induction register"
+P3.2,P3,Method statement & risk assessment per wave,Hotel approval of method statement,TYBMS,Approved method statement + RAMS
+P3.4,P3,Establish manual-operation arrangement,Hotel ops accept the manual state before isolation,TYBMS + HOTEL,"Manual arrangement sheet, ops acknowledgement"
+P3.5,P3,Permit to work & isolation,Life-safety interlocks confirmed unaffected,TYBMS + HOTEL + FA,"Permit, isolation certificate"
+P3.9,P3,Land the panel on the new device network,New segment proved before this panel is cut over,TYBMS,Panel on the proved new segment
+P3.11,P3,Sign Wired + Terminated,Wiring completion certificate witnessed,"TYBMS, accepted by DEJ",Per-panel wiring completion certificate
+P3.13,P3,Making good & wave close-out,Area wave close-out,TYBMS,Wave close-out certificate
+P4.1,P4,Award & calibration setup,Traceability evidence accepted,DEJ / TYBMS,Reference instrument certificates
+P4.3,P4,Mechanical isolation per loop,Duty / standby availability confirmed,TYBMS + HOTEL,Isolation record
+P4.5,P4,Replace 86 analog output devices,Fail-safe position verified before auto operation,TYBMS,"Actuators installed, fail position confirmed"
+P4.10,P4,Sign P2P verified,P4 acceptance per panel,"TYBMS, accepted by DEJ",P2P signature + calibration certificates
+P4.11,P4,Issue as-installed loop schedules,P4 completion per wave,TYBMS,As-installed loop schedules
+P5.1,P5,Engineering kickoff in month C+1,Kickoff in month C+1,DEJ / TYBMS,"Engineering programme, point-naming convention"
+P5.3,P5,Author 109 GCL+ programs,Program review against the SOO,TYBMS,"109 programs, versioned"
+P5.5,P5,Stand up the head-end in parallel with FX2,Parallel run proven before any FX2 decommissioning,TYBMS,Parallel-run record
+P5.8,P5,"Functional test, every point",P5 point acceptance per panel,"TYBMS, accepted by DEJ",Functional test sheets
+P5.9,P5,SOO demonstration per controller,Witnessed demonstration,TYBMS + DEJ + HOTEL,SOO compliance record
+P5.10,P5,24–48 h supervised trend,Stable trend before return to auto,TYBMS,Trend evidence per panel
+P5.11,P5,Return to auto & withdraw manual operation,Hotel ops area acceptance,TYBMS + HOTEL,Area acceptance certificate
+P5.14,P5,Operator training & O&M documentation,Operator sign-off,TYBMS,"Training record, O&M documentation set"
+P5.15,P5,Final acceptance & defects liability start,Project completion,DEJ / TYBMS,Final acceptance certificate
+
+RACI
+Activity,DEJ,TYBMS,HOTEL,Others
+Proposal and main contract,A / R,C,I,—
+Panel design & point baseline,A,R,C,—
+"Device-network survey, new cable, segment proof",A,R,I,—
+Procurement & fabrication,A,C,—,R — FAB
+Factory acceptance testing,A,R,I,R — FAB
+Site installation & termination,A,R,C,—
+Manual-operation arrangement,C,R,A,—
+Life-safety interlock coordination,A,C,R,R — FA
+Instrument replacement & calibration,A,R,C,—
+DHC intake coordination,A,C,R,R — DHC
+Programming & head-end,A,R,C,—
+Functional test & SOO demonstration,A,R,C,—
+Return to auto & area acceptance,C,R,A,—
+Final acceptance & DLP,A,R,C,—
+
+Schedule tensions
+Item,Severity,Detail
+"DEJ is prime, TYBMS is the subcontractor",info,"Furukawa Denki has backed out and does not witness. DEJ submits the proposal and holds the main contract. TYBMS is subcontracted to DEJ for the BMS work: design, programming, installation supervision and commissioning. Stage gates that Furukawa would have signed are accepted by DEJ. Hotel operations still accept the plant back to automatic control."
+"One contract, same nine months",info,"Fabrication, cabling, installation, instrumentation and programming are overlapping phases of one continuous delivery. The elapsed duration is still nine months. The completion date is the contract date plus nine months. Moving the contract date moves the whole programme. It does not lengthen it."
+Programs still have to exist before the factory loads them,crit,"Bench loading still happens in months C+3 to C+5, and it still needs the application programs. Under one contract that is a sequence, not a second award: authoring starts in month C+1. If the programs are not ready, reduce the factory step to a harness test and load every program on site. That adds about an hour per panel to a night that has no spare hour."
+One night-shift authority,crit,"Panel replacement, instruments and the program download still meet inside one night, 67 times. They are stages of the same contract now, so there is no second contract to wait for at 03:00. DEJ names the person who makes the 05:00 GO/NO-GO. TYBMS makes the technical recommendation."
+"The contract date sets the season, not the duration",warn,"Controller lead is still 12–16 weeks, and the purchase order still has to go out about a month after the contract date. The cutover is months C+6 and C+7. If the contract date is early October, those months are the April–May shoulder season. A later contract date keeps the nine months and lands the cutover later in the year, possibly in cooling season. The duration is not stretched to chase the shoulder season. The next comfortable slot after a missed shoulder season is about a year later, which means a later contract date, not a longer project."
+IEIEJ p-A may force new device-network cabling,crit,"The 2002 trunk drawing says IPEV-S 0.9 mm². The installed Azbil cable may be IEIEJ p-A. That cable is not reused unless a test shows it meets the new network specification. New cabling is surveyed in month C+0, designed with the panel drawings, and pulled during the fabrication window so each wave lands on a segment that is already proved. Finding IEIEJ p-A on the cutover night is the failure this phase exists to prevent. It does not add a month."
+Rate check the durations,info,"Every quantity here is derived from panels_schedule.json, but the durations are planning estimates. 3–5 h to transfer a panel's terminations and 4–8 h to function-test it are the two that set the night window — have the installer confirm both against their own productivity figures before the waves are fixed."
+Instrumentation may not need a full replacement,info,"The instrument phase assumes all 591 analog devices are replaced. If as-found calibration shows a population that is still within tolerance, that work shrinks to verification and re-ranging. Survey a sample before that scope is frozen inside the single contract."
