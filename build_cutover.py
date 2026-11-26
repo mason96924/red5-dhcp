@@ -11,6 +11,13 @@ portable, print-friendly files under exports/: HTML (print-to-PDF), XLSX
 Phase→area mapping is an engineering-judgement grouping (idle rooftop/heat-source
 plant first, occupied floors on economizer overnight, basement plant/hydronics
 last with DHC-intake coordination). It is documented in the output.
+
+Network context (from docs/reconciliation_2026-08.md, the savic-netFX2 hardware
+delivery spec 1-LHP1-11 + 2002 伝送幹線系統図): the head-end is BMS/SMS/DSS servers
++ two operator consoles (監視用PC1 B2F 防災室 / 監視用PC2 2F 防災センター) on
+ESW1/2/3; the field is 6 SCS System Core Servers → ≤24 NC-bus lines (IPEV-S
+0.9 mm²) → the 67 RS/DDC panels. The phasing swaps one NC-bus line / riser at a
+time and migrates the two consoles one at a time so monitoring is never dark.
 """
 from __future__ import annotations
 
@@ -71,14 +78,21 @@ WHY = ("Tokyo shoulder-season OA (~10–22 °C, low enthalpy) lets the airside e
 ENABLER = ("Each motor starter has a 手元/遠方 (local/remote) selector + DC24V ext start-stop + status "
            "feedback (confirmed on E-01/13-4). During a swap the equipment runs in LOCAL manual — fan "
            "hand-on, OA damper fixed ~100%, pump fixed-speed — independent of the BMS.")
+NETWORK = ("Cut over by comms segment. The savic-netFX2 head-end is BMS + SMS + DSS servers + two "
+           "operator consoles — 監視用PC1 (B2F 防災室) and 監視用PC2 (2F 防災センター) — on ESW1/2/3 "
+           "switches; the field is 6 SCS System Core Servers → up to 24 NC-bus lines (IPEV-S 0.9 mm²) "
+           "→ the 67 RS/DDC panels. Swap one NC-bus line / riser at a time and migrate the two consoles "
+           "one at a time so monitoring is never dark. Basis: docs/reconciliation_2026-08.md + the "
+           "Comms-Network sheet in Red5-DHCP_BMS_IO_List.xlsx.")
 
 # phase -> (n, window, label, predicate, state, method, risk)
 PHASE_DEFS = [
     ("0", "March (prep)", "System / central head-end (B2F)",
      _is_central,
      "n/a — runs in parallel",
-     f"Stand up new head-end alongside FX2; prefab panels; bench-test programs; point-verify vs the "
-     f"{N_POINTS:,}-pt I/O list", "Prep"),
+     f"Stand up the new head-end alongside the savic-netFX2 central (BMS+SMS+DSS servers + the two "
+     f"監視用PC consoles on ESW1/2/3); prefab panels; bench-test programs; point-verify vs the "
+     f"{N_POINTS:,}-pt I/O list; migrate the two operator consoles one at a time so monitoring is never dark", "Prep"),
     ("1", "early Apr", "Penthouse (PH1/PH2) — rooftop plant, R-1 chiller, OAUs",
      lambda p: p["area"] == "Penthouse (PH)",
      "Idle — no mechanical cooling; rooftop towers / R-1 / OAU off",
@@ -199,6 +213,7 @@ def write_xlsx(path):
     ws.append([])
     ws.append(["Why April–May", WHY])
     ws.append(["Enabler — local/remote", ENABLER])
+    ws.append(["Network & central migration", NETWORK])
     widths(ws, [30, 90])
     for rr in range(1, ws.max_row + 1):
         ws.cell(row=rr, column=2).alignment = Alignment(wrap_text=True, vertical="top")
@@ -303,6 +318,7 @@ def write_html(path):
 <div class="cols">
   <div class="call" style="background:#e7f6ec"><b>Why April–May</b><p>{html.escape(WHY)}</p></div>
   <div class="call" style="background:#eef2fb"><b>The enabler: local/remote at every starter</b><p>{html.escape(ENABLER)}</p></div>
+  <div class="call" style="background:#f3eefb"><b>Cut over by comms segment (savic-netFX2 → new head-end)</b><p>{html.escape(NETWORK)}</p></div>
 </div>
 <h2>Phased sequence — coldest/idle first, primary source last</h2>
 <p class="note">Row shading = comfort/continuity risk during that phase. One system in manual at a time; guest floors overnight. Panel / point counts are from the {SRC} physical schedule (grouped by the panel's own floor) and sum to {_TOT_PAN} panels / {_TOT_PTS:,} points.</p>
@@ -314,7 +330,7 @@ def write_html(path):
 <tbody>{_play_html()}</tbody></table>
 <h2>Risk controls & rollback</h2>
 <div class="grid2">{_risk_html()}</div>
-<p class="foot">Generated {TODAY} · Red5-DHCP · savic-net FX2 → new DDC migration · source: panels_schedule.json (판넬별 포인트 정리 {SRC}). Print to PDF for distribution.</p>
+<p class="foot">Generated {TODAY} · Red5-DHCP · savic-net FX2 (6 SCS → ≤24 NC-bus → 67 RS/DDC) → new DDC migration · source: panels_schedule.json (판넬별 포인트 정리 {SRC}) + docs/reconciliation_2026-08.md. Print to PDF for distribution.</p>
 </div></body></html>
 """
     with open(path, "w", encoding="utf-8") as f:
